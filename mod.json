@@ -1,0 +1,11 @@
+{
+    "id": "wii_kristal",
+    "name": "Wii BIOS Mod Loader",
+    "subtitle": "",
+
+    "version": "v0.0.0",
+    "engineVer": "v0.8.1-dev",
+
+    "map": "room1",
+    "party": ["kris", "susie", "ralsei"],
+}
