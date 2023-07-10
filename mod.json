@@ -5,4 +5,6 @@
 
     "version": "v0.0.0",
     "engineVer": "v0.8.1-dev",
+	
+	"useSaves": false,
 }
