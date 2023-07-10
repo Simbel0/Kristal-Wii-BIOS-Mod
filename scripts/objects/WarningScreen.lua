@@ -3,9 +3,10 @@ local WarningScreen, super = Class(Object)
 function WarningScreen:init()
 	super.init(self, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
-	self.font_big = Assets.getFont("main_mono", 40)
-	self.font_small = Assets.getFont("main_mono", 24)
-	self.font = Assets.getFont("main_mono")
+	self.font_big = Assets.getFont("wii_font", 28)
+	self.font_small = Assets.getFont("wii_font", 16)
+	self.font = Assets.getFont("wii_font", 24)
+	self.font:setLineHeight( 1.25 )
 
 	self.confirm_alpha = 0
 	self.siner = 0.5
@@ -18,7 +19,7 @@ function WarningScreen:init()
 	end)
 
 	self.widths = {
-		Text("WARNING-HEALTH AND SAFETY", 0, 0, {font_size=40}):getTextWidth()/2
+		Text("WARNING-HEALTH AND SAFETY", 0, 0, {font_size=28}):getTextWidth()/2
 	}
 end
 
@@ -56,21 +57,21 @@ function WarningScreen:draw()
 
 	love.graphics.setFont(self.font_big)
 	love.graphics.setColor(1, 1, 1, self.alpha)
-	love.graphics.print("WARNING-HEALTH AND SAFETY", (SCREEN_WIDTH/2)-self.widths[1], 60)
+	love.graphics.print("WARNING-HEALTH AND SAFETY", (SCREEN_WIDTH/2)-self.widths[1]-75, 60)
 
 	love.graphics.setFont(self.font)
-	love.graphics.printf("BEFORE PLAYING, READ YOUR OPERATIONS MANUAL FOR IMPORTANT INFORMATION ABOUT YOUR HEALTH AND SAFETY", (SCREEN_WIDTH/2)-300, 150, 600, "center")
+	love.graphics.printf("BEFORE PLAYING, READ YOUR OPERATIONS MANUAL FOR IMPORTANT INFORMATION ABOUT YOUR HEALTH AND SAFETY", 0, 150, SCREEN_WIDTH - 10, "center")
 	--ve.graphics.printf("THIS MOD LOADER")
 
 	love.graphics.setFont(self.font_small)
-	love.graphics.printf("Report bugs at", (SCREEN_WIDTH/2)-255/2, 280, 225, "center")
+	love.graphics.printf("Report bugs at", 0, 280, SCREEN_WIDTH, "center")
 	--love.graphics.setFont(self.font)
 	love.graphics.setColor(0.5, 0.7, 1, self.alpha)
-	love.graphics.printf("https://discord.gg/8ZGuKXJE2C", (SCREEN_WIDTH/2)-465/2, 315, 465, "center")
+	love.graphics.printf("https://discord.gg/8ZGuKXJE2C", 0, 315, SCREEN_WIDTH, "center")
 
 	love.graphics.setFont(self.font)
 	love.graphics.setColor(1, 1, 1, self.show_confirm and (math.cos((self.siner*5)) * 1)*self.alpha or 0)
-	love.graphics.printf("Press "..Input.getText("confirm").." to continue.", (SCREEN_WIDTH/2)-355/2, 380, 355, "center")
+	love.graphics.printf("Press "..Input.getText("confirm").." to continue.", 0, 380, SCREEN_WIDTH, "center")
 
 	super.draw(self)
 end
