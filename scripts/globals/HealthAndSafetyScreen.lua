@@ -2,15 +2,15 @@
 local HealthAndSafetyScreen = {}
 
 function HealthAndSafetyScreen:init()
-	local america_fuck_yeah = Mod:getRegion() == "en-US"
+	local america_fuck_yeah = Mod:isAmerican()
 	self.warning = Assets.getTexture("health_and_safety/warning")
 
 	self.font_continue = Assets.getFont("main_mono")
 
 	self.timer = LibTimer.new()
 
-	self.r = Mod:getRegion()
-	print(america_fuck_yeah, Mod:getRegion())
+	self.r = Mod:isAmerican()
+	print(america_fuck_yeah, Mod:isAmerican())
 end
 
 function HealthAndSafetyScreen:enter()

@@ -1,34 +1,13 @@
-local ffi = require("ffi")
-
-if love.system.getOS() == "Windows" and not ffi.typeof("SETLOCINFOEX") then
-  ffi.cdef[[
-    typedef struct _setlocaleinfoex {
-      int LCType;
-      char* lpLCData;
-    } SETLOCINFOEX;
-
-    int GetUserDefaultLocaleName(char* lpLocaleName, int cchLocaleName);
-    int GetSystemDefaultLocaleName(char* lpLocaleName, int cchLocaleName);
-    int SetLocaleInfoEx(const char* lpLocaleName, int LCType, const char* lpLCData);
-  ]]
-end
-
--- Helper function to convert a C string to a Lua string
-local function cstringToString(cstring)
-  if cstring ~= nil then
-    return ffi.string(cstring, 11)
-  end
-  return nil
-end
-
--- Function to get the region using GetUserDefaultLocaleName
-function Mod:getRegion()
-  local localeName = ffi.new("char[?]", 11)  -- Allocate a buffer to hold the locale name
-  local result = ffi.C.GetUserDefaultLocaleName(localeName, 11)  -- Call the WinAPI function
-
-  if result ~= 0 then
-    return cstringToString(localeName):gsub("%z", "")
+-- For some reason, USA Wii consoles are the only ones where the warning screen was all white instead of colored
+function Mod:isAmerican()
+  local locale
+  if love.system.getOS() == "Windows" then
+    locale = os.setlocale("")
+    local start = locale:find("_")
+    local end_str = locale:find("%.", start+1)
+    return locale:sub(start+1, end_str-1) == "United States"
   end
 
-  return nil
-end
+  locale = os.getenv("LC_ALL") or os.getenv("LANG")
+  return locale:match("%a%a.(%a%a)") == "US"
+end 
