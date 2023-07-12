@@ -14,6 +14,7 @@ function Mod:init()
 end
 
 function Mod:postInit()
+    Game.state = nil
     self:setState("HealthAndSafety")
 end
 
