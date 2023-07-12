@@ -34,11 +34,9 @@ function preview:draw()
         Draw.pushCanvas(self.canvas)
         love.graphics.clear(COLORS.white)
         love.graphics.setColor(1, 1, 1, 0.1)
-        local stripes_num_v_anim = math.floor(
-            self.stripes_num_v_base
+        local stripes_num_v_anim = self.stripes_num_v_base
             + ((self.stripes_num_v - self.stripes_num_v_base) * math.sin((Kristal.getTime() - self.init_time)*0.8))
-        )
-        for i = 0, stripes_num_v_anim do
+        for i = 0, math.ceil(stripes_num_v_anim) do
             local cur_y = self.stripes_h - self.stripe_h * i
             for j = 0, self.stripes_num_h do
                 local cur_x = self.stripe_w * j
