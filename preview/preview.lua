@@ -1,5 +1,7 @@
 local preview = {}
 
+preview.hide_background = true
+
 function preview:init(mod, _, _)
     self.bg = love.graphics.newImage(mod.path .. "/preview/bg.png")
 
@@ -24,43 +26,45 @@ function preview:init(mod, _, _)
 end
 
 function preview:draw()
-    love.graphics.clear(COLORS.white)
-    love.graphics.draw(self.bg)
+    if self.selected then
+        love.graphics.setColor(1, 1, 1, self.fade)
+        love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+        love.graphics.draw(self.bg)
 
-    Draw.pushCanvas(self.canvas)
-    love.graphics.clear(COLORS.white)
-    love.graphics.setColor(1, 1, 1, 0.1)
-    local stripes_num_v_anim = math.floor(
-        self.stripes_num_v_base
-        + ((self.stripes_num_v - self.stripes_num_v_base) * math.sin((Kristal.getTime() - self.init_time)*0.8))
-    )
-    for i = 0, stripes_num_v_anim do
-        local cur_y = self.stripes_h - self.stripe_h * i
-        for j = 0, self.stripes_num_h do
-            local cur_x = self.stripe_w * j
-            love.graphics.draw(self.stripe, cur_x, cur_y)
+        Draw.pushCanvas(self.canvas)
+        love.graphics.clear(COLORS.white)
+        love.graphics.setColor(1, 1, 1, 0.1)
+        local stripes_num_v_anim = math.floor(
+            self.stripes_num_v_base
+            + ((self.stripes_num_v - self.stripes_num_v_base) * math.sin((Kristal.getTime() - self.init_time)*0.8))
+        )
+        for i = 0, stripes_num_v_anim do
+            local cur_y = self.stripes_h - self.stripe_h * i
+            for j = 0, self.stripes_num_h do
+                local cur_x = self.stripe_w * j
+                love.graphics.draw(self.stripe, cur_x, cur_y)
+            end
         end
+        Draw.popCanvas()
+
+        local prev_shader = love.graphics.getShader()
+        local shader = Kristal.Shaders.GradientV
+        love.graphics.setShader(shader)
+        shader:sendColor("from", self.stripes_grad_from)
+        shader:sendColor("to", self.stripes_grad_to)
+        local real_h = self.stripe_h * stripes_num_v_anim
+        local crop_y = self.stripes_h - real_h
+        love.graphics.setColor(1, 1, 1, self.fade)
+        Draw.drawPart(self.canvas,
+            self.stripes_x, self.stripes_y + crop_y,
+            0, crop_y,
+            self.stripes_w, real_h
+        )
+        love.graphics.setShader(prev_shader)
+
+        love.graphics.setColor(0.25, 0.25, 0.25, self.fade * 0.2)
+        love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
     end
-    Draw.popCanvas()
-    love.graphics.setColor(1, 1, 1)
-
-    local prev_shader = love.graphics.getShader()
-    local shader = Kristal.Shaders.GradientV
-    love.graphics.setShader(shader)
-    shader:sendColor("from", self.stripes_grad_from)
-    shader:sendColor("to", self.stripes_grad_to)
-    love.graphics.setScissor()
-    local real_h = self.stripe_h * stripes_num_v_anim
-    local crop_y = self.stripes_h - real_h
-    Draw.drawPart(self.canvas,
-        self.stripes_x, self.stripes_y + crop_y,
-        0, crop_y,
-        self.stripes_w, real_h
-    )
-    love.graphics.setShader(prev_shader)
-
-    love.graphics.setColor(0.25, 0.25, 0.25, 0.2)
-    love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 end
 
 function preview:update() end
