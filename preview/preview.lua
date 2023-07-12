@@ -26,7 +26,7 @@ function preview:init(mod, _, _)
 end
 
 function preview:draw()
-    if self.selected then
+    if self.fade > 0 then
         love.graphics.setColor(1, 1, 1, self.fade)
         love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
         love.graphics.draw(self.bg)
