@@ -4,6 +4,8 @@
 ---@type table<WiiStates, table>
 Mod.States = {}
 
+modRequire("_luals_annonations/getComputerRegion")
+
 function Mod:init()
     Mod.States = {
         ["HealthAndSafety"] = HealthAndSafetyScreen
