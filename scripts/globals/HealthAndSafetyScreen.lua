@@ -31,7 +31,7 @@ function HealthAndSafetyScreen:update(dt)
 	if self.show_confirm then
 		self.siner = self.siner + DTMULT / 25
 
-		if Input.pressed("confirm") and self.state == "IDLE" then
+		if love.mouse.isDown(1) and self.state == "IDLE" then
 			self.state = "TRANSITIONING"
 			self.timer:tween(0.5, self, { alpha = 0 }, "linear", function()
 				-- Commented because it crashes both Kristal and LÖVE otherwise if the BIOS doesn't exist
@@ -53,7 +53,7 @@ function HealthAndSafetyScreen:draw()
 	love.graphics.setColor(1, 1, 1, self.show_confirm and math.sin(self.siner * 5) * self.alpha or 0)
 	local press_w = 355
 	-- TODO: controller button icon support
-	love.graphics.printf("Press "..Input.getText("confirm").." to continue.", SCREEN_WIDTH/2-press_w/2, 390, press_w, "center")
+	love.graphics.printf("Press LMB to continue.", SCREEN_WIDTH/2-press_w/2, 390, press_w, "center")
 end
 
 return HealthAndSafetyScreen
