@@ -2,7 +2,10 @@ local preview = {}
 
 preview.hide_background = true
 
-function preview:init(mod, _, _)
+function preview:init(mod, button, _)
+    button:setColor(Utils.hexToRgb("#99DCFF", 1))
+    button:setFavoritedColor(Utils.hexToRgb("#66CBFF", 1))
+
     self.bg = love.graphics.newImage(mod.path .. "/preview/bg.png")
 
     self.stripe = love.graphics.newImage(mod.path .. "/preview/stripe.png")
