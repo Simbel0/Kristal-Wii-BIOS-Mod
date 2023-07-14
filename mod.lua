@@ -41,7 +41,8 @@ function Mod:postInit()
 			["theme"] = "default",
 			["channels"] = {},
 			["military"] = not self:isAmerican(),
-			["messages"] = {}
+			["messages"] = {},
+			["am_right"] = not self:isJapanese()
 		}
 		love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
 	else
@@ -81,4 +82,18 @@ function Mod:isAmerican()
 
     locale = os.getenv("LC_ALL") or os.getenv("LANG")
     return locale:match("%a%a.(%a%a)") == "US"
+end
+
+function Mod:isJapanese()
+    local locale
+    if love.system.getOS() == "Windows" then
+        -- On MS-Win LOCALE is probably not set normally
+        locale = os.setlocale("")
+        local start = locale:find("_")
+        local end_str = locale:find("%.", start+1)
+        return locale:sub(start+1, end_str-1) == "Japan"
+    end
+
+    locale = os.getenv("LC_ALL") or os.getenv("LANG")
+    return locale:match("%a%a.(%a%a)") == "JP"
 end
