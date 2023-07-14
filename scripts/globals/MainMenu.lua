@@ -30,6 +30,15 @@ function MainMenu:draw()
 	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 	self.tvSheet:draw(self.alpha)
+	
+	love.graphics.setColor(1, 1, 1, self.alpha)
+	local x, y = love.mouse.getPosition( )
+	local cursor_tex = "cursor/cursor_1"
+	if love.mouse.isDown(1) then
+		cursor_tex = "cursor/cursor_2"
+	end
+	local cursor = Assets.getTexture(cursor_tex)
+	love.graphics.draw(cursor, (x - 10) / Kristal.getGameScale(), y / Kristal.getGameScale())
 end
 
 return MainMenu
