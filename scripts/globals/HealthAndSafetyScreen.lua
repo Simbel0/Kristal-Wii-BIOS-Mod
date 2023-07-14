@@ -2,7 +2,7 @@
 local HealthAndSafetyScreen = {}
 
 function HealthAndSafetyScreen:init()
-	local america_fuck_yeah = Mod:isAmerican()
+	local america_fuck_yeah = Game.wii_data["american"]
 	self.warning = Assets.getTexture(america_fuck_yeah and "health_and_safety/warning_usa" or "health_and_safety/warning")
 
 	self.font_continue = Assets.getFont("main_mono")
