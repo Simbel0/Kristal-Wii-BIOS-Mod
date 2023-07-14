@@ -34,6 +34,20 @@ end
 
 function Mod:postInit()
     Game.state = nil
+	
+	if not love.filesystem.getInfo("wii_settings.json") then
+		Game.wii_data = {
+			["american"] = self:isAmerican(),
+			["theme"] = "default",
+			["channels"] = {},
+			["military"] = not self:isAmerican(),
+			["messages"] = {}
+		}
+		love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
+	else
+		Game.wii_data = JSON.decode(love.filesystem.read("wii_settings.json"))
+	end
+	
     self:setState("HealthAndSafety")
 end
 
