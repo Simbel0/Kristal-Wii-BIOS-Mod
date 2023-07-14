@@ -38,7 +38,7 @@ function HealthAndSafetyScreen:update(dt)
 		if love.mouse.isDown(1) and self.state == "IDLE" then
 			self.state = "TRANSITIONING"
 			self.timer:tween(0.5, self, { alpha = 0 }, "linear")
-			self.timer:after(1, function() Mod:setState("MainMenu") end)
+			self.timer:after(3, function() Mod:setState("MainMenu") end)
 			Assets.playSound("wii/click")
 		end
 	end
