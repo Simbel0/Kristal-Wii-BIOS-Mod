@@ -94,7 +94,7 @@ function MenuClock:draw(alpha)
 			love.graphics.draw(self.numbers[tonumber(hour:sub(1, 1))+1], self.x, self.y)
 			love.graphics.draw(self.numbers[tonumber(hour:sub(-1))+1], self.x+(30), self.y)
 		else
-			love.graphics.draw(self.numbers[1], self.x, self.y)
+			-- love.graphics.draw(self.numbers[1], self.x, self.y) -- DNE
 			love.graphics.draw(self.numbers[tonumber(hour)+1], self.x+(30), self.y)
 		end
 
@@ -111,7 +111,11 @@ function MenuClock:draw(alpha)
 		end
 
 		if not Game.wii_data["military"] then
-			love.graphics.draw(ampm, self.x+(30*6), self.y+18)
+			if Game.wii_data["am_right"] then
+				love.graphics.draw(ampm, self.x+(30*6), self.y+18)
+			else
+				love.graphics.draw(ampm, self.x-45, self.y+18)
+			end
 		end
 
 		love.graphics.setShader(last_shader)
