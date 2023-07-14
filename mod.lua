@@ -49,6 +49,10 @@ function Mod:postInit()
 	end
 	
     self:setState("HealthAndSafety")
+	
+	if love.math.random(1,50) == 50 then
+		Game.cursor_troll = true
+	end
 end
 
 --- Switches the Gamestate to the given one.
