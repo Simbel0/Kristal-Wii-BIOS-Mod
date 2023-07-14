@@ -6,9 +6,25 @@ Mod.States = {}
 
 modRequire("_luals_annonations/getComputerRegion")
 
+Mod.Shaders = {}
+
+Mod.Shaders["RemoveColor"] = love.graphics.newShader([[
+    vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+    {
+        vec4 pixel = Texel(tex, texture_coords);
+
+        float transparency = 0.0 + pixel.r;
+        
+        vec4 final_color = vec4(color.r, color.g, color.b, (transparency-0.1)*color.a);
+
+        return final_color;
+    }
+]])
+
 function Mod:init()
     Mod.States = {
-        ["HealthAndSafety"] = HealthAndSafetyScreen
+        ["HealthAndSafety"] = HealthAndSafetyScreen,
+        ["MainMenu"] = MainMenu
     }
 
     ---@diagnostic disable-next-line: redundant-return-value
