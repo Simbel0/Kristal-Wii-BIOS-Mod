@@ -22,6 +22,8 @@ function MainMenu:update()
 			self.state = "IDLE"
 		end
 	end
+
+	self.tvSheet.clock:update()
 end
 
 function MainMenu:draw()

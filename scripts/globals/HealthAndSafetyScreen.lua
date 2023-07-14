@@ -10,7 +10,6 @@ function HealthAndSafetyScreen:init()
 	self.timer = LibTimer.new()
 
 	self.r = Mod:isAmerican()
-	print(america_fuck_yeah, Mod:isAmerican())
 end
 
 function HealthAndSafetyScreen:enter()

@@ -15,7 +15,8 @@ function MenuTVSheet:init()
 	self.lower_background = Assets.getTexture("menu/my_TVSheet_e.tpl")
 	self.lower_border = Assets.getTexture("menu/my_TVSheet_f.tpl")
 	self.lower_shadow = Assets.getTexture("menu/my_TVSheet_g.tpl")
-	print(self.lower_background, self.lower_border, self.lower_shadow)
+
+	self.clock = MenuClock(232, 337)
 
 	--self.monitor = Monitor(100, 100)
 end
@@ -59,6 +60,8 @@ function MenuTVSheet:draw(alpha)
 	love.graphics.draw(self.lower_border, SCREEN_WIDTH, (330)+2, 0, -1.25, 1.1)
 
 	love.graphics.setShader(last_shader)
+
+	self.clock:draw(alpha)
 
 	--love.graphics.setColor(r, g, b, alpha)
 	--self.monitor:draw(self.alpha)
