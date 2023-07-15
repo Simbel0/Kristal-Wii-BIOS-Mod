@@ -32,7 +32,7 @@ function MainMenu:draw()
 	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 	love.graphics.setColor(130/255, 130/255, 130/255, self.alpha)
-	love.graphics.print(Utils.titleCase(os.date("%a")):sub(1,-2), 230, 400, 0, 1.25, 1.25)
+	love.graphics.print(Utils.titleCase(os.date("%a")):sub(1,3), 230, 400, 0, 1.25, 1.25)
 	love.graphics.print(os.date("%d").."/"..os.date("%m"), 320, 400, 0, 1.25, 1.25)
 
 	self.tvSheet:draw(self.alpha)
