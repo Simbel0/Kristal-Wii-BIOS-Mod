@@ -97,3 +97,12 @@ function Mod:isJapanese()
     locale = os.getenv("LC_ALL") or os.getenv("LANG")
     return locale:match("%a%a.(%a%a)") == "JP"
 end
+
+function Mod:getModIDs()
+	local a = {}
+	for i,mod in ipairs(Kristal.Mods.getMods()) do
+		table.insert(a, mod.id)
+	end
+	
+	return a
+end
