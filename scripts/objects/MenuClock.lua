@@ -1,23 +1,13 @@
+---@class MenuClock : Object
 local MenuClock, super = Class(Object)
 
 function MenuClock:init(x, y)
 	super.init(self, x, y)
 
-	self.numbers = {
-		Assets.getTexture("menu/my_Clock_a0.tpl"),
-		Assets.getTexture("menu/my_Clock_a1.tpl"),
-		Assets.getTexture("menu/my_Clock_a2.tpl"),
-		Assets.getTexture("menu/my_Clock_a3.tpl"),
-		Assets.getTexture("menu/my_Clock_a4.tpl"),
-		Assets.getTexture("menu/my_Clock_a5.tpl"),
-		Assets.getTexture("menu/my_Clock_a6.tpl"),
-		Assets.getTexture("menu/my_Clock_a7.tpl"),
-		Assets.getTexture("menu/my_Clock_a8.tpl"),
-		Assets.getTexture("menu/my_Clock_a9.tpl")
-	}
-	self.seperator = Assets.getTexture("menu/my_Clock_ab.tpl")
-	self.am = Assets.getTexture("menu/my_Clock_b0.tpl")
-	self.pm = Assets.getTexture("menu/my_Clock_b1.tpl")
+	self.numbers = Assets.getFrames("menu/my_Clock_a")
+	self.seperator = Assets.getTexture("menu/my_Clock_ab")
+	self.am = Assets.getTexture("menu/my_Clock_b0")
+	self.pm = Assets.getTexture("menu/my_Clock_b1")
 
 	self.alpha = 1
 

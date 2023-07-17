@@ -28,24 +28,33 @@ function Mod:init()
         ["MainMenu"] = MainMenu
     }
 
+    self._mouse_sprite_bak = MOUSE_SPRITE
+    MOUSE_SPRITE = nil
     ---@diagnostic disable-next-line: redundant-return-value
     Utils.hook(Game, "save", function() return {} end)
+
+    self.cursor_1_tex = Assets.getTexture("cursor/cursor_1")
+    self.cursor_1t_tex = Assets.getTexture("cursor/cursor_t")
+    self.cursor_2_tex = Assets.getTexture("cursor/cursor_2")
+end
+
+function Mod:unload()
+    MOUSE_SPRITE = self._mouse_sprite_bak
 end
 
 function Mod:postInit()
-    Game.state = nil
-	
+    Game.state = nil	
     
     local mods = Kristal.Mods.getMods()
-
+  -- FIXME: its not like other mods cant access mods/wii_kristal
 	if not love.filesystem.getInfo("wii_settings.json") then
 		Game.wii_data = {
-			["american"] = self:isAmerican(),
+			["american"] = self:localeIs("US"),
 			["theme"] = "default",
 			["channels"] = {},
-			["military"] = not self:isAmerican(),
+			["military"] = not self:localeIs("US"),
 			["messages"] = {},
-			["am_right"] = not self:isJapanese()
+			["am_right"] = not self:localeIs("JP")
 		}
 
         --Put the channels in the table
@@ -85,16 +94,39 @@ function Mod:postInit()
             love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
         end
 	end
-	
-    self:setState("HealthAndSafety")
-	
+
 	if love.math.random(1,50) == 50 then
-		Game.cursor_troll = true
+		self.cursor_troll = true
 	end
+
+    self:setState("HealthAndSafety")
 end
 
---- Switches the Gamestate to the given one.
----@param state table|WiiStates The gamestate to switch to.
+function Mod:postDraw()
+    love.graphics.setColor(1, 1, 1)
+    if (not Kristal.Config["systemCursor"]) and (Kristal.Config["alwaysShowCursor"] or MOUSE_VISIBLE) and love.window
+        and (Input.usingGamepad() or love.window.hasMouseFocus()) then
+        local x, y
+        if Input.usingGamepad() then
+            x = Input.gamepad_cursor_x
+            y = Input.gamepad_cursor_y
+        else
+            x, y = love.mouse.getPosition()
+            x, y = x / Kristal.getGameScale(), y / Kristal.getGameScale()
+        end
+        local cursor_tex = self.cursor_1_tex
+        if self.cursor_troll then
+            cursor_tex = self.cursor_1t_tex
+        end
+        --[[if love.mouse.isDown(1) then
+            cursor_tex = self.cursor_2_tex
+        end]]
+        love.graphics.draw(cursor_tex, x - 10, y)
+    end
+end
+
+--- Switches the gamestate to the given one.
+---@param state table|WiiStates|string The gamestate to switch to.
 ---@param ... any Arguments passed to the gamestate.
 function Mod:setState(state, ...)
     if type(state) == "string" then
@@ -104,35 +136,23 @@ function Mod:setState(state, ...)
     end
 end
 
--- Whether to use US-ENG-style HAS screen or not.
--- For some reason, USA Wii consoles are the only ones where the warning screen
--- was all white instead of colored
-function Mod:isAmerican()
+function Mod:localeIs(short_name, long_name)
+    long_name = long_name or ({
+        ["US"] = "United States",
+        ["JP"] = "Japan",
+    })[short_name]
+
     local locale
     if love.system.getOS() == "Windows" then
         -- On MS-Win LOCALE is probably not set normally
         locale = os.setlocale("")
         local start = locale:find("_")
         local end_str = locale:find("%.", start+1)
-        return locale:sub(start+1, end_str-1) == "United States"
+        return locale:sub(start+1, end_str-1) == long_name
     end
 
     locale = os.getenv("LC_ALL") or os.getenv("LANG")
-    return locale:match("%a%a.(%a%a)") == "US"
-end
-
-function Mod:isJapanese()
-    local locale
-    if love.system.getOS() == "Windows" then
-        -- On MS-Win LOCALE is probably not set normally
-        locale = os.setlocale("")
-        local start = locale:find("_")
-        local end_str = locale:find("%.", start+1)
-        return locale:sub(start+1, end_str-1) == "Japan"
-    end
-
-    locale = os.getenv("LC_ALL") or os.getenv("LANG")
-    return locale:match("%a%a.(%a%a)") == "JP"
+    return locale:match("%a%a.(%a%a)") == short_name
 end
 
 function Mod:getModIDs()

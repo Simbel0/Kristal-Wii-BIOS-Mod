@@ -1,9 +1,10 @@
+---@class Monitor : Object
 local Monitor, super = Class(Object)
 
 function Monitor:init(x, y)
 	super.init(self, x, y)
 
-	self.edge = Assets.getTexture("menu/IplTopMaskEgde4x3.tpl")
+	self.edge = Assets.getTexture("menu/IplTopMaskEgde4x3")
 end
 
 function Monitor:draw(alpha)
