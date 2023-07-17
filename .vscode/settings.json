@@ -1,0 +1,21 @@
+{
+    "Lua.runtime.version": "LuaJIT",
+    "Lua.diagnostics.disable": [
+        "duplicate-set-field",
+        "need-check-nil",
+        "undefined-global"
+    ],
+    "Lua.type.weakNilCheck": true,
+    "Lua.type.weakUnionCheck": true,
+    "Lua.runtime.builtin": {
+        "utf8": "enable"
+    },
+    "Lua.runtime.special": {
+        "modRequire": "require"
+    },
+    "Lua.workspace.library": [
+        "${3rd}/love2d/library",
+        "${env:KRISTAL_PATH}",
+        //"${extensionInstallFolder:tomblind.local-lua-debugger-vscode}/debugger"
+    ]
+}
