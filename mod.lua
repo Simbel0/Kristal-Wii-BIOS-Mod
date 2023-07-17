@@ -59,6 +59,18 @@ end
 
 function Mod:unload()
     MOUSE_SPRITE = self._mouse_sprite_bak
+
+    if MOUSE_VISIBLE then
+        Kristal.showCursor()
+    elseif not MOUSE_VISIBLE then
+        Kristal.hideCursor()
+    end
+
+    if not Kristal.Config["systemCursor"] then
+        love.mouse.setVisible(false)
+    else
+        if Kristal.Config["alwaysShowCursor"] then love.mouse.setVisible(true) end
+    end
 end
 
 function Mod:postInit()
