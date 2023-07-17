@@ -1,3 +1,4 @@
+---@class MenuTVSheet : Object
 local MenuTVSheet, super = Class(Object)
 
 function MenuTVSheet:init()

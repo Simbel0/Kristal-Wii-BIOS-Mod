@@ -1,3 +1,4 @@
+---@class Monitor : Object
 local Monitor, super = Class(Object)
 
 function Monitor:init(x, y)
