@@ -30,6 +30,25 @@ function Mod:init()
 
     self._mouse_sprite_bak = MOUSE_SPRITE
     MOUSE_SPRITE = nil
+    Utils.hook(Kristal, "showCursor", function()
+        MOUSE_VISIBLE = true
+
+        love.mouse.setVisible(false)
+    end)
+    Utils.hook(Kristal, "hideCursor", function()
+        MOUSE_VISIBLE = false
+
+        love.mouse.setVisible(false)
+    end)
+    Utils.hook(Kristal, "updateCursor", function()
+        if MOUSE_VISIBLE then
+            Kristal.showCursor()
+        elseif not MOUSE_VISIBLE then
+            Kristal.hideCursor()
+        end
+
+        love.mouse.setVisible(false)
+    end)
     ---@diagnostic disable-next-line: redundant-return-value
     Utils.hook(Game, "save", function() return {} end)
 
@@ -43,10 +62,10 @@ function Mod:unload()
 end
 
 function Mod:postInit()
-    Game.state = nil	
-    
+    Game.state = nil
+
     local mods = Kristal.Mods.getMods()
-  -- FIXME: its not like other mods cant access mods/wii_kristal
+    -- FIXME: its not like other mods cant access mods/wii_kristal
 	if not love.filesystem.getInfo("wii_settings.json") then
 		Game.wii_data = {
 			["american"] = self:localeIs("US"),
@@ -79,7 +98,7 @@ function Mod:postInit()
         end)
 
         if #new_mods>0 then
-            for i,mod in ipairs(new_mods) do
+            for _,mod in ipairs(new_mods) do
                 table.insert(Game.wii_data["channels"], mod.id)
                 print("[BIOS] New mod detected, adding "..mod.name)
             end
@@ -89,7 +108,7 @@ function Mod:postInit()
         end
 
         if #removed_mods>0 then
-            for i,mod_id in ipairs(removed_mods) do
+            for _,mod_id in ipairs(removed_mods) do
                 Utils.removeFromTable(Game.wii_data["channels"], mod_id)
                 print("[BIOS] Mod with id "..mod_id.." not found! Removing it.")
             end
@@ -106,7 +125,8 @@ end
 
 function Mod:postDraw()
     love.graphics.setColor(1, 1, 1)
-    if love.window and MOUSE_VISIBLE then
+    if (Kristal.Config["alwaysShowCursor"] or MOUSE_VISIBLE) and love.window
+        and (Input.usingGamepad() or love.window.hasMouseFocus()) then
         local x, y
         if Input.usingGamepad() then
             x = Input.gamepad_cursor_x
