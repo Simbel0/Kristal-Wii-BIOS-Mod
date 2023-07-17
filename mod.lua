@@ -59,8 +59,10 @@ function Mod:postInit()
 
         --Put the channels in the table
         for i,mod in ipairs(mods) do
-            table.insert(Game.wii_data["channels"], mod.id)
-            print("[BIOS] Initialize channels, adding "..mod.name)
+            if mod.id ~= "wii_kristal" then
+                table.insert(Game.wii_data["channels"], mod.id)
+                print("[BIOS] Initialize channels, adding "..mod.name)
+            end
         end
 
 		love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
