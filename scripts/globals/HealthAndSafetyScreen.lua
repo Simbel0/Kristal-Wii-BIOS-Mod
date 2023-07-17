@@ -2,14 +2,12 @@
 local HealthAndSafetyScreen = {}
 
 function HealthAndSafetyScreen:init()
+	self.timer = LibTimer.new()
+
 	local america_fuck_yeah = Game.wii_data["american"]
 	self.warning = Assets.getTexture(america_fuck_yeah and "health_and_safety/warning_usa" or "health_and_safety/warning")
 
 	self.font_continue = Assets.getFont("main_mono")
-
-	self.timer = LibTimer.new()
-
-	self.r = Mod:isAmerican()
 end
 
 function HealthAndSafetyScreen:enter()
@@ -19,6 +17,8 @@ function HealthAndSafetyScreen:enter()
 	self.state = "IDLE"
 	self.show_confirm = false
 
+	Kristal.hideCursor()
+
 	self.timer:after(0.5, function()
 		self.timer:tween(0.5, self, { alpha = 1 }, "linear", function()
 			self.timer:after(1, function()
@@ -26,6 +26,10 @@ function HealthAndSafetyScreen:enter()
 			end)
 		end)
 	end)
+end
+
+function HealthAndSafetyScreen:leave()
+	Kristal.showCursor()
 end
 
 function HealthAndSafetyScreen:update(dt)
@@ -44,6 +48,9 @@ function HealthAndSafetyScreen:update(dt)
 end
 
 function HealthAndSafetyScreen:draw()
+    love.graphics.clear(0, 0, 0, 1)
+    love.graphics.push()
+
 	love.graphics.setColor(0, 0, 0)
 	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -55,6 +62,12 @@ function HealthAndSafetyScreen:draw()
 	local press_w = 355
 	-- TODO: controller button icon support
 	love.graphics.printf("Press LMB to continue.", SCREEN_WIDTH/2-press_w/2, 390, press_w, "center")
+
+    love.graphics.pop()
+
+    love.graphics.push()
+    Kristal.callEvent("postDraw")
+    love.graphics.pop()
 end
 
 return HealthAndSafetyScreen
