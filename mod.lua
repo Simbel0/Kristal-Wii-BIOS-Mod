@@ -35,6 +35,9 @@ end
 function Mod:postInit()
     Game.state = nil
 	
+    
+    local mods = Kristal.Mods.getMods()
+
 	if not love.filesystem.getInfo("wii_settings.json") then
 		Game.wii_data = {
 			["american"] = self:isAmerican(),
@@ -44,9 +47,43 @@ function Mod:postInit()
 			["messages"] = {},
 			["am_right"] = not self:isJapanese()
 		}
+
+        --Put the channels in the table
+        for i,mod in ipairs(mods) do
+            table.insert(Game.wii_data["channels"], mod.id)
+            print("[BIOS] Initialize channels, adding "..mod.name)
+        end
+
 		love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
 	else
 		Game.wii_data = JSON.decode(love.filesystem.read("wii_settings.json"))
+
+        --Check if there's any new mods in the mod list
+        local new_mods = Utils.filter(mods, function(mod)
+            return not Utils.containsValue(Game.wii_data["channels"], mod.id)
+        end)
+
+        local removed_mods = Utils.filter(Game.wii_data["channels"], function(mod_id)
+            return not Utils.containsValue(mods, Kristal.Mods.getMod(mod_id))
+        end)
+
+        if #new_mods>0 then
+            for i,mod in ipairs(new_mods) do
+                table.insert(Game.wii_data["channels"], mod.id)
+                print("[BIOS] New mod detected, adding "..mod.name)
+            end
+            love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
+        else
+            print("[BIOS] No new mods.")
+        end
+
+        if #removed_mods>0 then
+            for i,mod_id in ipairs(removed_mods) do
+                Utils.removeFromTable(Game.wii_data["channels"], mod_id)
+                print("[BIOS] Mod with id "..mod_id.." not found! Removing it.")
+            end
+            love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
+        end
 	end
 	
     self:setState("HealthAndSafety")
