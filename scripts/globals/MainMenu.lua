@@ -12,6 +12,10 @@ function MainMenu:init()
 
 	Assets.playSound("wii/start")
 	self.music = Music("wiimenu")
+	
+	self.offset_moni = 0
+	self.monitor_back = Assets.getTexture("monitors")
+	self.monitor_sets = 4 -- We'll add calculations to add more pages
 end
 
 function MainMenu:update()
@@ -38,6 +42,11 @@ function MainMenu:draw()
 	self.tvSheet:draw(self.alpha)
 	
 	love.graphics.setColor(1, 1, 1, self.alpha)
+	
+	for i=1, self.monitor_sets do
+		love.graphics.draw(self.monitor_back, 55 + (540 * (i-1)) - self.offset_moni, 20)
+	end
+	
 	local x, y = love.mouse.getPosition( )
 	local cursor_tex = "cursor/cursor_1"
 	if Game.cursor_troll then
