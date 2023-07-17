@@ -45,6 +45,7 @@ end
 function Mod:postInit()
     Game.state = nil
 
+    -- FIXME: its not like other mods cant access mods/wii_kristal
 	if not love.filesystem.getInfo("wii_settings.json") then
 		Game.wii_data = {
 			["american"] = self:localeIs("US"),
