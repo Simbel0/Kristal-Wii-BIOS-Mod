@@ -7,14 +7,14 @@ function MenuTVSheet:init()
 
 	self.wrap_texture_y = true
 
-	self.lines = Sprite("menu/my_TVSheet_b.tpl")
+	self.lines = Sprite("menu/my_TVSheet_b")
 	self.lines:setWrap(true)
 
 	self.monitors = Assets.getTexture("monitors")
 
-	self.lower_background = Assets.getTexture("menu/my_TVSheet_e.tpl")
-	self.lower_border = Assets.getTexture("menu/my_TVSheet_f.tpl")
-	self.lower_shadow = Assets.getTexture("menu/my_TVSheet_g.tpl")
+	self.lower_background = Assets.getTexture("menu/my_TVSheet_e")
+	self.lower_border = Assets.getTexture("menu/my_TVSheet_f")
+	self.lower_shadow = Assets.getTexture("menu/my_TVSheet_g")
 
 	self.clock = MenuClock(232, 337)
 
