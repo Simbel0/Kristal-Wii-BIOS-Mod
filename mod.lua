@@ -104,8 +104,7 @@ end
 
 function Mod:postDraw()
     love.graphics.setColor(1, 1, 1)
-    if (not Kristal.Config["systemCursor"]) and (Kristal.Config["alwaysShowCursor"] or MOUSE_VISIBLE) and love.window
-        and (Input.usingGamepad() or love.window.hasMouseFocus()) then
+    if love.window and MOUSE_VISIBLE then
         local x, y
         if Input.usingGamepad() then
             x = Input.gamepad_cursor_x
