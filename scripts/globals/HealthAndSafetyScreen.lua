@@ -4,6 +4,8 @@ local HealthAndSafetyScreen = {}
 function HealthAndSafetyScreen:init()
 	self.timer = LibTimer.new()
 
+	-- For some reason, USA Wii consoles are the only ones where the warning screen
+	-- was all white instead of colored
 	local america_fuck_yeah = Game.wii_data["american"]
 	self.warning = Assets.getTexture(america_fuck_yeah and "health_and_safety/warning_usa" or "health_and_safety/warning")
 

@@ -47,12 +47,12 @@ function Mod:postInit()
 
 	if not love.filesystem.getInfo("wii_settings.json") then
 		Game.wii_data = {
-			["american"] = self:isAmerican(),
+			["american"] = self:localeIs("US"),
 			["theme"] = "default",
 			["channels"] = {},
-			["military"] = not self:isAmerican(),
+			["military"] = not self:localeIs("US"),
 			["messages"] = {},
-			["am_right"] = not self:isJapanese()
+			["am_right"] = not self:localeIs("JP")
 		}
 		love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
 	else
@@ -100,33 +100,21 @@ function Mod:setState(state, ...)
     end
 end
 
--- Whether to use US-ENG-style HAS screen or not.
--- For some reason, USA Wii consoles are the only ones where the warning screen
--- was all white instead of colored
-function Mod:isAmerican()
+function Mod:localeIs(short_name, long_name)
+    long_name = long_name or ({
+        ["US"] = "United States",
+        ["JP"] = "Japan",
+    })[short_name]
+
     local locale
     if love.system.getOS() == "Windows" then
         -- On MS-Win LOCALE is probably not set normally
         locale = os.setlocale("")
         local start = locale:find("_")
         local end_str = locale:find("%.", start+1)
-        return locale:sub(start+1, end_str-1) == "United States"
+        return locale:sub(start+1, end_str-1) == long_name
     end
 
     locale = os.getenv("LC_ALL") or os.getenv("LANG")
-    return locale:match("%a%a.(%a%a)") == "US"
-end
-
-function Mod:isJapanese()
-    local locale
-    if love.system.getOS() == "Windows" then
-        -- On MS-Win LOCALE is probably not set normally
-        locale = os.setlocale("")
-        local start = locale:find("_")
-        local end_str = locale:find("%.", start+1)
-        return locale:sub(start+1, end_str-1) == "Japan"
-    end
-
-    locale = os.getenv("LC_ALL") or os.getenv("LANG")
-    return locale:match("%a%a.(%a%a)") == "JP"
+    return locale:match("%a%a.(%a%a)") == short_name
 end
