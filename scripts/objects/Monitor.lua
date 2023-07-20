@@ -8,7 +8,7 @@ function Monitor:init(mod_id, index)
 	
 	self.mod_id = mod_id
 	self.path = Kristal.Mods.getMod(self.mod_id).path .. "assets/sprites/wii_channel"
-	if love.filesystem.exists(self.path) then
+	if love.filesystem.getInfo(self.path) then
 		-- Get the sprite at the path
 	else
 		self.icon = Assets.getTexture("channels/wii_disc")
