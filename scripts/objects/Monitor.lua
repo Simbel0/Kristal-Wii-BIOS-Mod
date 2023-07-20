@@ -26,6 +26,9 @@ function Monitor:init(mod_id, index)
 	self.slot_y = math.ceil(self.slot_y/4)
 	
 	self.page = math.ceil(index/12)
+	
+	self.x = 50 + (135 * (self.slot_x - 1)) + (540 * (self.page - 1))
+	self.y = 15+ (101 * (self.slot_y - 1))
 end
 
 function Monitor:draw(alpha)
@@ -34,10 +37,10 @@ function Monitor:draw(alpha)
 	love.graphics.setShader(Mod.Shaders["RemoveColor"])
 
 	love.graphics.setColor(155/255, 155/255, 155/255, alpha)
-	love.graphics.draw(self.edge, 50, 15, 0, 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, 50+self.edge:getWidth()*2.15, 15, math.rad(90), 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, 50+self.edge:getWidth()*2.15, 15+self.edge:getHeight()*1.65, math.rad(180), 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, 50, 15+self.edge:getHeight()*1.65, math.rad(270), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.x, self.y, 0, 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.x+self.edge:getWidth()*2.15, self.y, math.rad(90), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.x+self.edge:getWidth()*2.15, self.y+self.edge:getHeight()*1.65, math.rad(180), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.x, self.y+self.edge:getHeight()*1.65, math.rad(270), 1.15, 1.1, 0.5, 0.5)
 
 	love.graphics.setShader(last_shader)
 end
