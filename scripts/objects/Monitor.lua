@@ -1,8 +1,8 @@
 ---@class Monitor : Object
 local Monitor, super = Class(Object)
 
-function Monitor:init(x, y, mod_id, index)
-	super.init(self, x, y)
+function Monitor:init(mod_id, index)
+	super.init(self, 0,0)
 
 	self.edge = Assets.getTexture("menu/IplTopMaskEgde4x3")
 	
