@@ -30,12 +30,16 @@ end
 
 function Monitor:draw(alpha)
 	super.draw(self)
+	local last_shader = love.graphics.getShader()
+	love.graphics.setShader(Mod.Shaders["RemoveColor"])
 
-	love.graphics.setColor(1, 1, 1, alpha)
+	love.graphics.setColor(155/255, 155/255, 155/255, alpha)
 	love.graphics.draw(self.edge, self.x, self.y, 0, 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, self.x, self.y, math.rad(90), 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, self.x, self.y, math.rad(180), 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, self.x, self.y, math.rad(270), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.x+self.edge:getWidth()*2.15, self.y, math.rad(90), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.x+self.edge:getWidth()*2.15, self.y+self.edge:getHeight()*1.65, math.rad(180), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.x, self.y+self.edge:getHeight()*1.65, math.rad(270), 1.15, 1.1, 0.5, 0.5)
+
+	love.graphics.setShader(last_shader)
 end
 
 return Monitor

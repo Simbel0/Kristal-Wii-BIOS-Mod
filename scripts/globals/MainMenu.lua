@@ -47,12 +47,6 @@ function MainMenu:draw()
 
 	self.tvSheet:draw(self.alpha)
 
-	love.graphics.setColor(1, 1, 1, self.alpha)
-
-	for i=1, self.monitor_sets do
-		love.graphics.draw(self.monitor_back, 55 + (540 * (i-1)) - self.offset_moni, 20)
-	end
-
     love.graphics.pop()
 
     love.graphics.push()

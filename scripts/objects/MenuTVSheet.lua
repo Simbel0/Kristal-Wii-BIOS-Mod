@@ -11,7 +11,9 @@ function MenuTVSheet:init()
 	self.lines = Sprite("menu/my_TVSheet_b")
 	self.lines:setWrap(true)
 
-	self.monitors = Assets.getTexture("monitors")
+	self.monitor_back = Assets.getTexture("monitors")
+	self.monitor_sets = 4
+	self.offset_moni = 0
 
 	self.lower_background = Assets.getTexture("menu/my_TVSheet_e")
 	self.lower_border = Assets.getTexture("menu/my_TVSheet_f")
@@ -19,7 +21,7 @@ function MenuTVSheet:init()
 
 	self.clock = MenuClock(232, 337)
 
-	--self.monitor = Monitor(100, 100)
+	self.monitor = Monitor(50, 15, "testmod", 3)
 end
 
 function MenuTVSheet:draw(alpha)
@@ -43,6 +45,12 @@ function MenuTVSheet:draw(alpha)
 
     self.lines.alpha = alpha-0.9
     self.lines:draw()
+
+    love.graphics.setColor(1, 1, 1, alpha)
+
+	for i=1, self.monitor_sets do
+		love.graphics.draw(self.monitor_back, 55 + (540 * (i-1)) - self.offset_moni, 20)
+	end
 	
 	love.graphics.setShader(self.shader)
 
@@ -64,8 +72,8 @@ function MenuTVSheet:draw(alpha)
 
 	self.clock:draw(alpha)
 
-	--love.graphics.setColor(r, g, b, alpha)
-	--self.monitor:draw(self.alpha)
+	love.graphics.setColor(r, g, b, alpha)
+	self.monitor:draw(self.alpha)
 end
 
 return MenuTVSheet
