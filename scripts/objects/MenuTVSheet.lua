@@ -21,7 +21,7 @@ function MenuTVSheet:init()
 
 	self.clock = MenuClock(232, 337)
 
-	self.monitor = Monitor("testmod", 3)
+	self.monitor = Monitor("testmod", 6, self)
 end
 
 function MenuTVSheet:draw(alpha)

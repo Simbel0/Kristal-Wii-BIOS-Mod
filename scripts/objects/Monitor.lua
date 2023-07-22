@@ -1,8 +1,10 @@
 ---@class Monitor : Object
 local Monitor, super = Class(Object)
 
-function Monitor:init(mod_id, index)
-	super.init(self, 0,0)
+function Monitor:init(mod_id, index, menu)
+	super.init(self, 0,0, 500, 500)
+
+	self.parent = menu
 
 	self.edge = Assets.getTexture("menu/IplTopMaskEgde4x3")
 	
@@ -29,6 +31,16 @@ function Monitor:init(mod_id, index)
 	
 	self.x = 50 + (135 * (self.slot_x - 1)) + (540 * (self.page - 1))
 	self.y = 15+ (101 * (self.slot_y - 1))
+
+	self.sprite_mask = Sprite("channels/channel_mask", 5, 5)
+	self.sprite_mask.visible = false
+	self:addChild(self.sprite_mask)
+
+	self.mask = MonitorMask(self)
+	self:addChild(self.mask)
+
+	self.sprite = Sprite("channels/kristal", 5, 5)
+	self.mask:addChild(self.sprite)
 end
 
 function Monitor:draw(alpha)
