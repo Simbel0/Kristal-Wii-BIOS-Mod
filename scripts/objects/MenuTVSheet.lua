@@ -21,7 +21,11 @@ function MenuTVSheet:init()
 
 	self.clock = MenuClock(232, 337)
 
-	self.monitor = Monitor("testmod", 6, self)
+	self.monitors = {}
+	for index,mod in ipairs(Game.wii_data["channels"]) do
+		table.insert(self.monitors, Monitor(mod, index, self))
+	end
+
 end
 
 function MenuTVSheet:draw(alpha)
@@ -73,7 +77,9 @@ function MenuTVSheet:draw(alpha)
 	self.clock:draw(alpha)
 
 	love.graphics.setColor(r, g, b, alpha)
-	self.monitor:draw(self.alpha)
+	for i,monitor in ipairs(self.monitors) do
+		monitor:draw(self.alpha)
+	end
 end
 
 return MenuTVSheet

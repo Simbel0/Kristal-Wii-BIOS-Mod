@@ -9,6 +9,11 @@ Mod.States = {}
 
 Mod.Shaders = {}
 
+Mod.wiiwares = {
+    ["wii_food"] = "channels/food",
+    ["wii_rtk"] = "channels/kristal"
+}
+
 Mod.Shaders["RemoveColor"] = love.graphics.newShader([[
     vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
     {
@@ -91,9 +96,18 @@ function Mod:postInit()
         --Put the channels in the table
         for i,mod in ipairs(mods) do
             if mod.id ~= "wii_kristal" then
-                table.insert(Game.wii_data["channels"], mod.id)
-                print("[BIOS] Initialize channels, adding "..mod.name)
+                if not Utils.getKey(Mod.wiiwares, mod.id) then
+                    table.insert(Game.wii_data["channels"], mod.id)
+                    print("[BIOS] Initialize channels, adding "..mod.name)
+                else
+                    print("[BIOS] Mod id of "..mod.name.." is equal to a default channel ("..mod.id.."). Ignoring it.")
+                end
             end
+        end
+
+        for i,v in ipairs(Mod.wiiwares) do
+            table.insert(Game.wii_data["channels"], mod.id)
+            print("[BIOS] Adding WiiWare channel with id "..mod.id)
         end
 
 		love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
@@ -102,17 +116,36 @@ function Mod:postInit()
 
         --Check if there's any new mods in the mod list
         local new_mods = Utils.filter(mods, function(mod)
-            return not Utils.containsValue(Game.wii_data["channels"], mod.id)
+            return not Utils.containsValue(Game.wii_data["channels"], mod.id) and mod.id ~= "wii_kristal"
         end)
 
+        print(Utils.dump(new_mods))
+
         local removed_mods = Utils.filter(Game.wii_data["channels"], function(mod_id)
-            return not Utils.containsValue(mods, Kristal.Mods.getMod(mod_id))
+            return not Utils.containsValue(mods, Kristal.Mods.getMod(mod_id)) and not Utils.contains(mod_id, "wii_")
         end)
+
+        -- Same thing but for Wiiwares
+        for id,icon in pairs(Mod.wiiwares) do
+            if not Utils.containsValue(Game.wii_data["channels"], id) then
+                print("Adding "..id)
+                table.insert(new_mods, {id=id, name=id:sub(5, -1)})
+            end
+        end
+
+        print(Utils.dump(new_mods))
+
+        for i,id in ipairs(Game.wii_data["channels"]) do
+            if Utils.contains(id, "wii_") and Utils.getKey(Mod.wiiwares, id)==false then
+                print("Removing "..id)
+                table.insert(removed_mods, id)
+            end
+        end
 
         if #new_mods>0 then
             for _,mod in ipairs(new_mods) do
                 table.insert(Game.wii_data["channels"], mod.id)
-                print("[BIOS] New mod detected, adding "..mod.name)
+                print("[BIOS] New mod/Wiiware detected, adding "..mod.name)
             end
             love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
         else
@@ -122,7 +155,7 @@ function Mod:postInit()
         if #removed_mods>0 then
             for _,mod_id in ipairs(removed_mods) do
                 Utils.removeFromTable(Game.wii_data["channels"], mod_id)
-                print("[BIOS] Mod with id "..mod_id.." not found! Removing it.")
+                print("[BIOS] Mod/Wiiware with id "..mod_id.." not found! Removing it.")
             end
             love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
         end

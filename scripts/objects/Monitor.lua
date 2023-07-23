@@ -9,11 +9,18 @@ function Monitor:init(mod_id, index, menu)
 	self.edge = Assets.getTexture("menu/IplTopMaskEgde4x3")
 	
 	self.mod_id = mod_id
-	self.path = Kristal.Mods.getMod(self.mod_id).path .. "assets/sprites/wii_channel"
-	if love.filesystem.getInfo(self.path) then
+	local mod_data = Kristal.Mods.getMod(self.mod_id)
+	if mod_data then
+		self.path = mod_data.path .. "/assets/sprites/wii_channel"
+	end
+
+	if Utils.containsValue(Utils.getKeys(Mod.wiiwares), self.mod_id) then
+		self.icon = Mod.wiiwares[mod_id]
+	elseif love.filesystem.getInfo(self.path) then
 		-- Get the sprite at the path
 	else
-		self.icon = Assets.getTexture("channels/wii_disc")
+		-- TODO: check for the library
+		self.icon = "channels/gc_disc"
 	end
 	
 	self.slot_x = index%4
@@ -39,7 +46,7 @@ function Monitor:init(mod_id, index, menu)
 	self.mask = MonitorMask(self)
 	self:addChild(self.mask)
 
-	self.sprite = Sprite("channels/kristal", 5, 5)
+	self.sprite = Sprite(self.icon, 5, 5)
 	self.mask:addChild(self.sprite)
 end
 
