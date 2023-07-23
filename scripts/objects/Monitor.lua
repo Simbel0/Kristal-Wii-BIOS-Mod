@@ -11,13 +11,14 @@ function Monitor:init(mod_id, index, menu)
 	self.mod_id = mod_id
 	local mod_data = Kristal.Mods.getMod(self.mod_id)
 	if mod_data then
-		self.path = mod_data.path .. "/assets/sprites/wii_channel"
+		self.path = mod_data.path .. "/assets/sprites/wii_channel.png"
 	end
 
 	if Utils.containsValue(Utils.getKeys(Mod.wiiwares), self.mod_id) then
 		self.icon = Mod.wiiwares[mod_id]
 	elseif love.filesystem.getInfo(self.path) then
 		-- Get the sprite at the path
+		self.icon = love.graphics.newImage(mod_data.path .. "/assets/sprites/wii_channel.png")
 	else
 		-- TODO: check for the library
 		self.icon = "channels/gc_disc"
