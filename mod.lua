@@ -14,6 +14,12 @@ Mod.wiiwares = {
     ["wii_rtk"] = "channels/kristal"
 }
 
+--If we ever have popups working, the goal will be to show a popup upon starting the Menu showing the invalid mods
+Mod.invalid_mods = {
+    prefix = {},
+    json = {}
+}
+
 Mod.Shaders["RemoveColor"] = love.graphics.newShader([[
     vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
     {
@@ -95,12 +101,17 @@ function Mod:postInit()
 
         --Put the channels in the table
         for i,mod in ipairs(mods) do
-            if mod.id ~= "wii_kristal" then
+            if not Utils.startsWith(mod.id, "wii_") then
                 if not Utils.getKey(Mod.wiiwares, mod.id) then
                     table.insert(Game.wii_data["channels"], mod.id)
                     print("[BIOS] Initialize channels, adding "..mod.name)
                 else
                     print("[BIOS] Mod id of "..mod.name.." is equal to a default channel ("..mod.id.."). Ignoring it.")
+                end
+            else
+                if mod.id ~= Mod.info.id then
+                    table.insert(Mod.invalid_mods["prefix"], mod.name or mod.id)
+                    print("[BIOS] Invalid mod: "..mod.name or mod.id)
                 end
             end
         end
@@ -116,28 +127,30 @@ function Mod:postInit()
 
         --Check if there's any new mods in the mod list
         local new_mods = Utils.filter(mods, function(mod)
-            return not Utils.containsValue(Game.wii_data["channels"], mod.id) and mod.id ~= "wii_kristal"
+            return not Utils.containsValue(Game.wii_data["channels"], mod.id) and mod.id ~= Mod.info.id
         end)
-
-        print(Utils.dump(new_mods))
+        for i,mod in ipairs(new_mods) do
+            print(Utils.startsWith(mod.id, "wii_"), mod.id)
+            if Utils.startsWith(mod.id, "wii_") then
+                local mod = Utils.removeFromTable(mod)
+                table.insert(Mod.invalid_mods["prefix"], mod.name or mod.id)
+                print("[BIOS] Invalid mod: "..mod.name or mod.id)
+            end
+        end
 
         local removed_mods = Utils.filter(Game.wii_data["channels"], function(mod_id)
-            return not Utils.containsValue(mods, Kristal.Mods.getMod(mod_id)) and not Utils.contains(mod_id, "wii_")
+            return not Utils.containsValue(mods, Kristal.Mods.getMod(mod_id)) and not Utils.startsWith(mod_id, "wii_")
         end)
 
         -- Same thing but for Wiiwares
         for id,icon in pairs(Mod.wiiwares) do
             if not Utils.containsValue(Game.wii_data["channels"], id) then
-                print("Adding "..id)
                 table.insert(new_mods, {id=id, name=id:sub(5, -1)})
             end
         end
 
-        print(Utils.dump(new_mods))
-
         for i,id in ipairs(Game.wii_data["channels"]) do
-            if Utils.contains(id, "wii_") and Utils.getKey(Mod.wiiwares, id)==false then
-                print("Removing "..id)
+            if Utils.startsWith(id, "wii_") and Utils.getKey(Mod.wiiwares, id)==false then
                 table.insert(removed_mods, id)
             end
         end
