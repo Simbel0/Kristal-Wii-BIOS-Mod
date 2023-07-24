@@ -59,9 +59,16 @@ function Monitor:getDebugInfo()
 	local info = super.getDebugInfo(self)
 	if not Utils.startsWith(self.mod_id, "wii_") then
 		table.insert(info, "Mod: "..Kristal.Mods.getMod(self.mod_id).name.." ("..self.mod_id..")")
+		local icontest = "False"
+		if self.icon == "channels/gc_disc" or self.icon == "channels/wii_disc" then
+			icontest = "True"
+		end
+		table.insert(info, "Default Icon: "..icontest)
 	else
 		table.insert(info, "Wiiware: "..self.mod_id)
 	end
+	table.insert(info, "Index: ("..self.slot_x..", "..self.slot_y..")")
+	table.insert(info, "Page: "..self.page)
 	return info
 end
 
