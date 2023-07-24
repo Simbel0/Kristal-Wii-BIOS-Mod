@@ -1,12 +1,13 @@
 ---@class Monitor : Object
 local Monitor, super = Class(Object)
 
-function Monitor:init(mod_id, index, menu)
-	super.init(self, 0,0, 500, 500)
-
-	self.parent = menu
+function Monitor:init(mod_id, index)
+	super.init(self)
 
 	self.edge = Assets.getTexture("menu/IplTopMaskEgde4x3")
+
+	self.width = 0+self.edge:getWidth()*2.15
+	self.height = 0+self.edge:getHeight()*1.65
 	
 	self.mod_id = mod_id
 	local mod_data = Kristal.Mods.getMod(self.mod_id)
@@ -48,19 +49,32 @@ function Monitor:init(mod_id, index, menu)
 	self:addChild(self.mask)
 
 	self.sprite = Sprite(self.icon, 5, 5)
+	Utils.hook(self.sprite, "canDebugSelect", function()
+		return false
+	end)
 	self.mask:addChild(self.sprite)
 end
 
-function Monitor:draw(alpha)
+function Monitor:getDebugInfo()
+	local info = super.getDebugInfo(self)
+	if not Utils.startsWith(self.mod_id, "wii_") then
+		table.insert(info, "Mod: "..Kristal.Mods.getMod(self.mod_id).name.." ("..self.mod_id..")")
+	else
+		table.insert(info, "Wiiware: "..self.mod_id)
+	end
+	return info
+end
+
+function Monitor:draw()
 	super.draw(self)
 	local last_shader = love.graphics.getShader()
 	love.graphics.setShader(Mod.Shaders["RemoveColor"])
 
-	love.graphics.setColor(155/255, 155/255, 155/255, alpha)
-	love.graphics.draw(self.edge, self.x, self.y, 0, 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, self.x+self.edge:getWidth()*2.15, self.y, math.rad(90), 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, self.x+self.edge:getWidth()*2.15, self.y+self.edge:getHeight()*1.65, math.rad(180), 1.15, 1.1, 0.5, 0.5)
-	love.graphics.draw(self.edge, self.x, self.y+self.edge:getHeight()*1.65, math.rad(270), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.setColor(155/255, 155/255, 155/255, 1)
+	love.graphics.draw(self.edge, 0, 0, 0, 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.edge:getWidth()*2.15, 0, math.rad(90), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, self.edge:getWidth()*2.15, self.edge:getHeight()*1.65, math.rad(180), 1.15, 1.1, 0.5, 0.5)
+	love.graphics.draw(self.edge, 0, self.edge:getHeight()*1.65, math.rad(270), 1.15, 1.1, 0.5, 0.5)
 
 	love.graphics.setShader(last_shader)
 end

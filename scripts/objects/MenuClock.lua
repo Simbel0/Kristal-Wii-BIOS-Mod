@@ -9,6 +9,9 @@ function MenuClock:init(x, y)
 	self.am = Assets.getTexture("menu/my_Clock_b0")
 	self.pm = Assets.getTexture("menu/my_Clock_b1")
 
+	self.width = self.numbers[1]:getWidth()*4
+	self.height = self.numbers[1]:getHeight()
+
 	self.alpha = 1
 
 	self.sep_visible = true
@@ -58,13 +61,13 @@ function MenuClock:update()
 	end
 end
 
-function MenuClock:draw(alpha)
+function MenuClock:draw()
 	super.draw(self)
 
 	if not self.text_faded then
-		love.graphics.setColor(self.wii_text_color[1], self.wii_text_color[2], self.wii_text_color[3], alpha*self.alpha)
+		love.graphics.setColor(self.wii_text_color[1], self.wii_text_color[2], self.wii_text_color[3], self.alpha)
 		love.graphics.setFont(self.font)
-		love.graphics.printf("Wii Menu", self.x+20, self.y+5, 130, "center")
+		love.graphics.printf("Wii Menu", 20, 5, 130, "center")
 	else
 		local last_shader = love.graphics.getShader()
 		love.graphics.setShader(Mod.Shaders["RemoveColor"])
@@ -78,33 +81,33 @@ function MenuClock:draw(alpha)
 		end
 		local min = os.date("%M")
 
-		love.graphics.setColor(self.clock_color[1], self.clock_color[2], self.clock_color[3], alpha*self.alpha)
+		love.graphics.setColor(self.clock_color[1], self.clock_color[2], self.clock_color[3], self.alpha)
 
 		if #hour==2 then
-			love.graphics.draw(self.numbers[tonumber(hour:sub(1, 1))+1], self.x, self.y)
-			love.graphics.draw(self.numbers[tonumber(hour:sub(-1))+1], self.x+(30), self.y)
+			love.graphics.draw(self.numbers[tonumber(hour:sub(1, 1))+1])
+			love.graphics.draw(self.numbers[tonumber(hour:sub(-1))+1], 30)
 		else
 			-- love.graphics.draw(self.numbers[1], self.x, self.y) -- DNE
-			love.graphics.draw(self.numbers[tonumber(hour)+1], self.x+(30), self.y)
+			love.graphics.draw(self.numbers[tonumber(hour)+1], 30)
 		end
 
 		love.graphics.setColor(self.clock_color[1], self.clock_color[2], self.clock_color[3], self.sep_alpha*self.alpha)
-		love.graphics.draw(self.seperator, self.x+(30*2), self.y)
+		love.graphics.draw(self.seperator, 30*2)
 
-		love.graphics.setColor(self.clock_color[1], self.clock_color[2], self.clock_color[3], alpha*self.alpha)
+		love.graphics.setColor(self.clock_color[1], self.clock_color[2], self.clock_color[3], self.alpha)
 		if #min==2 then
-			love.graphics.draw(self.numbers[tonumber(min:sub(1, 1))+1], self.x+(30*3), self.y)
-			love.graphics.draw(self.numbers[tonumber(min:sub(-1))+1], self.x+(30*4), self.y)
+			love.graphics.draw(self.numbers[tonumber(min:sub(1, 1))+1], 30*3)
+			love.graphics.draw(self.numbers[tonumber(min:sub(-1))+1], 30*4)
 		else
-			love.graphics.draw(self.numbers[1], self.x+(30*3), self.y)
-			love.graphics.draw(self.numbers[tonumber(min)+1], self.x+(30*4), self.y)
+			love.graphics.draw(self.numbers[1], 30*3)
+			love.graphics.draw(self.numbers[tonumber(min)+1], 30*4)
 		end
 
 		if not Game.wii_data["military"] then
 			if Game.wii_data["am_right"] then
-				love.graphics.draw(ampm, self.x+(30*6), self.y+18)
+				love.graphics.draw(ampm, 30*6, 18)
 			else
-				love.graphics.draw(ampm, self.x-45, self.y+18)
+				love.graphics.draw(ampm, -45, 18)
 			end
 		end
 

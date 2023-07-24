@@ -2,7 +2,7 @@
 local MenuTVSheet, super = Class(Object)
 
 function MenuTVSheet:init()
-	super.init(self)
+	super.init(self, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 	self.shader = Mod.Shaders["RemoveColor"]
 
@@ -20,10 +20,13 @@ function MenuTVSheet:init()
 	self.lower_shadow = Assets.getTexture("menu/my_TVSheet_g")
 
 	self.clock = MenuClock(232, 337)
+	self:addChild(self.clock)
 
 	self.monitors = {}
 	for index,mod in ipairs(Game.wii_data["channels"]) do
-		table.insert(self.monitors, Monitor(mod, index, self))
+		local monitor = Monitor(mod, index)
+		table.insert(self.monitors, monitor)
+		self:addChild(monitor)
 	end
 
 end
@@ -74,12 +77,8 @@ function MenuTVSheet:draw(alpha)
 
 	love.graphics.setShader(last_shader)
 
-	self.clock:draw(alpha)
-
 	love.graphics.setColor(r, g, b, alpha)
-	for i,monitor in ipairs(self.monitors) do
-		monitor:draw(self.alpha)
-	end
+	super.draw(self)
 end
 
 return MenuTVSheet

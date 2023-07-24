@@ -2,8 +2,11 @@
 local MainMenu = {}
 
 function MainMenu:init()
+	self.stage = Stage()
+
 	self.tvSheet = MenuTVSheet()
 	self.tvSheet_y = 330
+	self.stage:addChild(self.tvSheet)
 
 	self.monitor_back = Assets.getTexture("monitors")
 	-- We'll add calculations to add more pages

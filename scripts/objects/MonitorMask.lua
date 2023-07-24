@@ -2,7 +2,7 @@
 local MonitorMask, super = Class(Object)
 
 function MonitorMask:init(monitor)
-	super.init(self, monitor.x, monitor.y)
+	super.init(self, 0, 0)
 
 	self.layer = 1
 	self.mask = monitor.sprite_mask
