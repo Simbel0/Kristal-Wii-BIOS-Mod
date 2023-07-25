@@ -33,7 +33,7 @@ function MainMenu:update()
 		end
 	end
 
-	self.tvSheet.clock:update()
+	self.stage:update()
 end
 
 function MainMenu:draw()
