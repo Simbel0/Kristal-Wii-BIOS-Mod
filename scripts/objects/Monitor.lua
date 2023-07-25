@@ -53,6 +53,8 @@ function Monitor:init(mod_id, index)
 		return false
 	end)
 	self.mask:addChild(self.sprite)
+	
+	self.hovered = false
 end
 
 function Monitor:getDebugInfo()
@@ -77,7 +79,11 @@ function Monitor:update()
 	local screen_x, screen_y = self:getScreenPos()
 	
 	if (mx > screen_x) and (mx < (screen_x + self.width/Kristal.getGameScale())) and (my > screen_y) and (my < (screen_y + self.height/Kristal.getGameScale())) then
-		print("[BIOS] Mouse on " .. self.mod_id)
+		self.hovered = true
+		self:setLayer(1)
+	else
+		self.hovered = false
+		self:setLayer(0)
 	end
 end
 
@@ -86,7 +92,11 @@ function Monitor:draw()
 	local last_shader = love.graphics.getShader()
 	love.graphics.setShader(Mod.Shaders["RemoveColor"])
 
-	love.graphics.setColor(155/255, 155/255, 155/255, 1)
+	if self.hovered then
+		love.graphics.setColor(144/255, 207/255, 225/255, 1)
+	else
+		love.graphics.setColor(155/255, 155/255, 155/255, 1)
+	end
 	love.graphics.draw(self.edge, 0, 0, 0, 1.15, 1.1, 0.5, 0.5)
 	love.graphics.draw(self.edge, self.edge:getWidth()*2.15, 0, math.rad(90), 1.15, 1.1, 0.5, 0.5)
 	love.graphics.draw(self.edge, self.edge:getWidth()*2.15, self.edge:getHeight()*1.65, math.rad(180), 1.15, 1.1, 0.5, 0.5)
