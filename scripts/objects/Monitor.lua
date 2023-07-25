@@ -59,6 +59,9 @@ function Monitor:init(mod_id, index)
 	self.ui_move = Assets.newSound("ui_move")
 	
 	self.font = Assets.getFont("main")
+	
+	self.bubble_corner = Assets.getTexture("menu/my_Balloon_a")
+	self.bubble_width = Assets.getTexture("menu/my_Beta16x16_a")
 end
 
 function Monitor:getDebugInfo()
@@ -114,11 +117,26 @@ function Monitor:draw()
 	love.graphics.setShader(last_shader)
 	
 	if self.hovered then
+		love.graphics.setColor(1, 1, 1, 1)
+		love.graphics.draw(self.bubble_corner, -18, 103)
+		love.graphics.draw(self.bubble_corner, -18, 151, math.rad(270))
+		local name = ""
+		if not Utils.startsWith(self.mod_id, "wii_") then
+			name = Kristal.Mods.getMod(self.mod_id).name
+		else
+			if self.mod_id == "wii_rtk" then
+				name = "Return to Kristal"
+			elseif self.mod_id == "wii_food" then
+				name = "Demae Channel"
+			end
+		end
+		local bubwidth = self.font:getWidth(name)
+		love.graphics.draw(self.bubble_corner, 18+bubwidth, 103, math.rad(90))
+		love.graphics.draw(self.bubble_corner, 18+bubwidth, 151, math.rad(180))
+		love.graphics.rectangle( "fill", 6, 107, bubwidth-12, 40)
 		love.graphics.setColor(55/255, 55/255, 55/255, 1)
 		love.graphics.setFont(self.font)
-		if not Utils.startsWith(self.mod_id, "wii_") then
-			love.graphics.print(Kristal.Mods.getMod(self.mod_id).name, 0, 111)
-		end
+		love.graphics.print(name, 0, 111)
 	end
 end
 
