@@ -55,6 +55,8 @@ function Monitor:init(mod_id, index)
 	self.mask:addChild(self.sprite)
 	
 	self.hovered = false
+	
+	self.ui_move = Assets.newSound("ui_move")
 end
 
 function Monitor:getDebugInfo()
@@ -79,11 +81,16 @@ function Monitor:update()
 	local screen_x, screen_y = self:getScreenPos()
 	
 	if (mx > screen_x) and (mx < (screen_x + self.width/Kristal.getGameScale())) and (my > screen_y) and (my < (screen_y + self.height/Kristal.getGameScale())) then
-		self.hovered = true
-		self:setLayer(1)
+		if not self.hovered then
+			self.ui_move:play()
+			self.hovered = true
+			self:setLayer(1)
+		end
 	else
-		self.hovered = false
-		self:setLayer(0)
+		if self.hovered then
+			self.hovered = false
+			self:setLayer(0)
+		end
 	end
 end
 
