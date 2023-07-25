@@ -6,8 +6,8 @@ function Monitor:init(mod_id, index)
 
 	self.edge = Assets.getTexture("menu/IplTopMaskEgde4x3")
 
-	self.width = 0+self.edge:getWidth()*2.15
-	self.height = 0+self.edge:getHeight()*1.65
+	self.width = 0+self.edge:getWidth()*2.15 - 4
+	self.height = 0+self.edge:getHeight()*1.65 - 4
 	
 	self.mod_id = mod_id
 	local mod_data = Kristal.Mods.getMod(self.mod_id)
@@ -70,6 +70,15 @@ function Monitor:getDebugInfo()
 	table.insert(info, "Index: ("..self.slot_x..", "..self.slot_y..")")
 	table.insert(info, "Page: "..self.page)
 	return info
+end
+
+function Monitor:update()
+	local mx, my = love.mouse.getPosition()
+	local screen_x, screen_y = self:getScreenPos()
+	
+	if (mx > screen_x) and (mx < (screen_x + self.width/Kristal.getGameScale())) and (my > screen_y) and (my < (screen_y + self.height/Kristal.getGameScale())) then
+		print("[BIOS] Mouse on " .. self.mod_id)
+	end
 end
 
 function Monitor:draw()
