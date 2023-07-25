@@ -57,6 +57,8 @@ function Monitor:init(mod_id, index)
 	self.hovered = false
 	
 	self.ui_move = Assets.newSound("ui_move")
+	
+	self.font = Assets.getFont("main")
 end
 
 function Monitor:getDebugInfo()
@@ -110,6 +112,14 @@ function Monitor:draw()
 	love.graphics.draw(self.edge, 0, self.edge:getHeight()*1.65, math.rad(270), 1.15, 1.1, 0.5, 0.5)
 
 	love.graphics.setShader(last_shader)
+	
+	if self.hovered then
+		love.graphics.setColor(55/255, 55/255, 55/255, 1)
+		love.graphics.setFont(self.font)
+		if not Utils.startsWith(self.mod_id, "wii_") then
+			love.graphics.print(Kristal.Mods.getMod(self.mod_id).name, 0, 111)
+		end
+	end
 end
 
 return Monitor
