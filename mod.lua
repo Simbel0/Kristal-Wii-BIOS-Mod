@@ -96,7 +96,8 @@ function Mod:postInit()
 			["channels"] = {},
 			["military"] = not self:localeIs("US"),
 			["messages"] = {},
-			["am_right"] = not self:localeIs("JP")
+			["am_right"] = not self:localeIs("JP"),
+			["name"] = "Wii"
 		}
 
         --Put the channels in the table
