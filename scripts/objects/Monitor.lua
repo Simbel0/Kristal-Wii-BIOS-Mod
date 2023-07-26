@@ -56,7 +56,7 @@ function Monitor:init(mod_id, index)
 	
 	self.hovered = false
 	
-	self.hover = Assets.newSound("wii/hover")
+	self.ui_move = Assets.newSound("ui_move")
 	
 	self.font = Assets.getFont("main")
 	
@@ -86,9 +86,9 @@ function Monitor:update()
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
 	
-	if (mx > screen_x) and (mx < (screen_x + self.width/Kristal.getGameScale())) and (my > screen_y) and (my < (screen_y + self.height/Kristal.getGameScale())) then
+	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) then
 		if not self.hovered then
-			self.hover:play()
+			self.ui_move:play()
 			self.hovered = true
 			self:setLayer(1)
 		end
