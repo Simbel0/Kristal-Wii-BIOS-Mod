@@ -1,7 +1,7 @@
 ---@class popUp : Object
 local popUp, super = Class(Object)
 
-function popUp:init(text, buttons)
+function popUp:init(text, buttons, callback)
 	super.init(self, 50, 30, SCREEN_WIDTH-100, SCREEN_HEIGHT-60)
 	self.text = text
 	self.layer = 9999
@@ -19,6 +19,16 @@ function popUp:init(text, buttons)
 	else
 		self.buttons = buttons
 	end
+	
+	self.callback = callback
+	
+	self.lines = {}
+	local printmessage = "[BIOS]"
+    for line in self.text:gmatch("[^\r\n]+") do
+        table.insert(self.lines, line)
+		printmessage = printmessage .. " " .. line
+    end
+	print(printmessage)
 end
 
 function popUp:onAdd()
@@ -43,6 +53,10 @@ function popUp:update()
 	end
 
 	if self.state == "TRANSITION" and self.timer > 20 then
+		if self.callback then
+			print("[BIOS] Callback detected")
+			self.callback()
+		end
 		self:remove()
 	end
 
@@ -67,17 +81,13 @@ function popUp:draw()
 
 	love.graphics.setFont(self.font)
 	love.graphics.setColor(0.2, 0.2, 0.2, 1)
-	local lines = {}
-    for line in self.text:gmatch("[^\r\n]+") do
-        table.insert(lines, line)
-    end
 
     local lineHeight = self.font:getHeight()*1.2
-    local totalTextHeight = #lines * lineHeight
+    local totalTextHeight = #self.lines * lineHeight
 
     local textY = ((self.height-130) - totalTextHeight) / 2
 
-    for i, line in ipairs(lines) do
+    for i, line in ipairs(self.lines) do
         local textX = ((self.width) - self.font:getWidth(line)) / 2
         love.graphics.print(line, textX, self.y_dest+textY + (i - 1) * lineHeight)
     end
