@@ -82,6 +82,7 @@ function Monitor:getDebugInfo()
 end
 
 function Monitor:update()
+	if Mod.popup_on then return end
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
 	
