@@ -36,7 +36,8 @@ Mod.Shaders["RemoveColor"] = love.graphics.newShader([[
 function Mod:init()
     Mod.States = {
         ["HealthAndSafety"] = HealthAndSafetyScreen,
-        ["MainMenu"] = MainMenu
+        ["MainMenu"] = MainMenu,
+        ["SettingsMenu"] = SettingsMenu
     }
 
     self._mouse_sprite_bak = MOUSE_SPRITE
