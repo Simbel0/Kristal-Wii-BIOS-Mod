@@ -26,6 +26,9 @@ function MainMenu:enter(_, maintenance)
 
 	self.music = Music("wiimenu")
 	Assets.playSound("wii/start")
+	
+	self.settings_button = SettingsButton(60, 410)
+	self.stage:addChild(self.settings_button)
 end
 
 function MainMenu:update()
@@ -53,6 +56,7 @@ function MainMenu:draw()
 	love.graphics.print(os.date("%d").."/"..os.date("%m"), 320, 400, 0, 1.25, 1.25)
 
 	self.tvSheet:draw(self.alpha)
+	self.settings_button:draw()
 
     love.graphics.pop()
 
