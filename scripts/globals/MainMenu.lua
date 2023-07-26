@@ -4,6 +4,18 @@ local MainMenu = {}
 function MainMenu:init()
 	self.stage = Stage()
 
+	Game.wii_menu = self
+end
+
+function MainMenu:enter(_, maintenance)
+	self.alpha = 0
+
+	self.state = "TRANSITIONIN"
+
+	self.offset_moni = 0
+
+	self.maintenance = maintenance
+
 	self.tvSheet = MenuTVSheet()
 	self.tvSheet_y = 330
 	self.stage:addChild(self.tvSheet)
@@ -14,14 +26,6 @@ function MainMenu:init()
 
 	self.music = Music("wiimenu")
 	Assets.playSound("wii/start")
-end
-
-function MainMenu:enter()
-	self.alpha = 0
-
-	self.state = "TRANSITIONIN"
-
-	self.offset_moni = 0
 end
 
 function MainMenu:update()

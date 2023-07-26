@@ -22,14 +22,19 @@ function MenuTVSheet:init()
 	self.clock = MenuClock(232, 337)
 	self:addChild(self.clock)
 
-	self.popUp = popUp("The system is operating\nin maintenance mode.\nThe Wii Message Board\ncannot be used.", {"Ok"})
-	self:addChild(self.popUp)
-
 	self.monitors = {}
 	for index,mod in ipairs(Game.wii_data["channels"]) do
 		local monitor = Monitor(mod, index)
 		table.insert(self.monitors, monitor)
 		self:addChild(monitor)
+	end
+end
+
+function MenuTVSheet:onAdd()
+	if Game.wii_menu.maintenance then
+		print("a")
+		self.popUp = popUp("The system is operating\nin maintenance mode.\nThe Wii Message Board\ncannot be used.", {"Ok"})
+		self:addChild(self.popUp)
 	end
 end
 
