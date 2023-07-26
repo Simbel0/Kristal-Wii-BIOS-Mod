@@ -56,7 +56,7 @@ function Monitor:init(mod_id, index)
 	
 	self.hovered = false
 	
-	self.ui_move = Assets.newSound("ui_move")
+	self.hover = Assets.newSound("wii/hover")
 	
 	self.font = Assets.getFont("main")
 	
@@ -88,7 +88,7 @@ function Monitor:update()
 	
 	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) then
 		if not self.hovered then
-			self.ui_move:play()
+			self.hover:play()
 			self.hovered = true
 			self:setLayer(1)
 		end
