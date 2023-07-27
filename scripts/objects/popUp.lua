@@ -19,6 +19,10 @@ function popUp:init(text, buttons, callback)
 	else
 		self.buttons = buttons
 	end
+
+	self.button = Button(265, 340, "button/back")
+	self.button.layer = self.layer + 10
+	self:addChild(self.button)
 	
 	self.callback = callback
 	
@@ -33,6 +37,7 @@ end
 
 function popUp:onAdd()
 	Mod.popup_on = true
+	Assets.playSound("wii/warn")
 end
 
 function popUp:onRemove()
@@ -46,9 +51,11 @@ function popUp:update()
 		if self.state ~= "TRANSITION" then
 			self.y_dest = Utils.ease(640, 0, self.timer/20, "out-cubic")
 			self.bg_alpha = Utils.ease(0, 0.5, self.timer/20, "out-cubic")
+			self.button.y = Utils.ease(self.button.init_y+640, self.button.init_y, self.timer/20, "out-cubic")
 		else
 			self.y_dest = Utils.ease(0, -640, self.timer/20, "out-cubic")
 			self.bg_alpha = Utils.ease(0.5, 0, self.timer/20, "out-cubic")
+			self.button.y = Utils.ease(self.button.init_y, self.button.init_y-640, self.timer/20, "out-cubic")
 		end
 	end
 
@@ -61,14 +68,15 @@ function popUp:update()
 	end
 
 	-- Temporary while waiting for the buttons object
-	if love.mouse.isDown(1) and self.state ~= "TRANSITION" then
+	if self.button.buttonPressed and self.state ~= "TRANSITION" then
 		self.state = "TRANSITION"
 		self.timer = 0
 	end
+
+	super.update(self)
 end
 
 function popUp:draw()
-	super.draw(self)
 	love.graphics.setColor(0, 0, 0, self.bg_alpha)
 	love.graphics.rectangle("fill", -50, -30, self.width+100, self.height+60)
 
@@ -91,6 +99,8 @@ function popUp:draw()
         local textX = ((self.width) - self.font:getWidth(line)) / 2
         love.graphics.print(line, textX, self.y_dest+textY + (i - 1) * lineHeight)
     end
+
+    super.draw(self)
 end
 
 return popUp
