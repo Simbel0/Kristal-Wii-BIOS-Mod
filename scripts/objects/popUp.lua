@@ -11,7 +11,7 @@ function popUp:init(text, buttons, callback)
 
 	self.state = "IDLE"
 
-	self.font = Assets.getFont("main_mono")
+	self.font = Assets.getFont("maintenance")
 
 	self.timer = 0
 	if type(buttons) == "number" then
@@ -88,9 +88,9 @@ function popUp:draw()
 	love.graphics.rectangle("fill", 0, self.y_dest+self.height-15, self.width, 15)
 
 	love.graphics.setFont(self.font)
-	love.graphics.setColor(0.2, 0.2, 0.2, 1)
+	love.graphics.setColor(0.4, 0.4, 0.4, 1)
 
-    local lineHeight = self.font:getHeight()*1.2
+    local lineHeight = self.font:getHeight()*0.7
     local totalTextHeight = #self.lines * lineHeight
 
     local textY = ((self.height-130) - totalTextHeight) / 2
