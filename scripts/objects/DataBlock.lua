@@ -1,7 +1,7 @@
 ---@class DataBlock : Object
 local DataBlock, super = Class(Object)
 
-function DataBlock:init(index)
+function DataBlock:init(index, mod_id)
 	super.init(self, 0, 0, 72, 72)
 
 	self.block = Assets.getTexture("settings/block")
@@ -19,13 +19,19 @@ function DataBlock:init(index)
 	
 	self.x = 60 + (113 * (self.slot_x - 1))
 	self.y = 80 + (110 * (self.slot_y - 1))
+	
+	if mod_id then
+		self.mod = Kristal.Mods.getMod(mod_id)
+		self.icon = self.mod.icon and self.mod.icon[1] or Assets.getTexture("settings/default_icon")
+	end
 end
 
 function DataBlock:getDebugInfo()
 	local info = super.getDebugInfo(self)
-	-- table.insert(info, "Mod: "..Kristal.Mods.getMod(self.mod_id).name.." ("..self.mod_id..")")
+	if self.mod then
+		table.insert(info, "Mod: "..self.mod.name)
+	end
 	table.insert(info, "Index: ("..self.slot_x..", "..self.slot_y..")")
-	table.insert(info, "Page: "..self.page)
 	return info
 end
 
@@ -36,8 +42,18 @@ end
 function DataBlock:draw()
 	super:draw(self)
 	
+	if self.icon then
+		love.graphics.setColor(1, 1, 1, 1)
+		love.graphics.draw(self.icon, self.x + 6, self.y + 6, 0, 2, 2)
+	end
+	
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.draw(self.block, self.x, self.y, 0, 2, 2)
+end
+
+function DataBlock:updateMod(mod_id)
+	self.mod = Kristal.Mods.getMod(mod_id)
+	self.icon = self.mod.icon or {Assets.getTexture("settings/default_icon")}
 end
 
 return DataBlock
