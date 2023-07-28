@@ -53,6 +53,9 @@ function MainMenu:draw()
 	love.graphics.print(os.date("%d").."/"..os.date("%m"), 320, 400, 0, 1.25, 1.25)
 
 	self.tvSheet:draw(self.alpha)
+	if self.transition_cover then
+		self.transition_cover:draw()
+	end
 
     love.graphics.pop()
 
