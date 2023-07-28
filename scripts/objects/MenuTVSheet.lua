@@ -28,6 +28,9 @@ function MenuTVSheet:init()
 		table.insert(self.monitors, monitor)
 		self:addChild(monitor)
 	end
+	
+	self.settings_button = SettingsButton(60, 410)
+	self:addChild(self.settings_button)
 end
 
 function MenuTVSheet:onAdd()
@@ -84,6 +87,8 @@ function MenuTVSheet:draw(alpha)
 	love.graphics.setShader(last_shader)
 
 	love.graphics.setColor(r, g, b, alpha)
+	
+	self.settings_button:draw()
 	super.draw(self)
 end
 
