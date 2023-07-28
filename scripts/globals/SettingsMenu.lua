@@ -44,6 +44,15 @@ function SettingsMenu:enter(_, maintenance)
 			end
 		end
 	end
+	
+	self.font = Assets.getFont("main_mono")
+	
+	self.blocks = {}
+	for i=1, 15 do
+		local block = DataBlock(i)
+		table.insert(self.blocks, block)
+		self.stage:addChild(block)
+	end
 end
 
 function SettingsMenu:update()
@@ -65,6 +74,14 @@ function SettingsMenu:draw()
 	
 	if self.substate == "DATA" then
 		love.graphics.draw(self.background_data, 0, 0, 0, 2, 2)
+		
+		self.back_button:draw()
+		for i=1, #self.blocks do
+			self.blocks[i]:draw()
+		end
+		
+		love.graphics.setFont(self.font)
+		love.graphics.printf("Save Files: " .. self.save_count, 300, 420, 300, "center")
 	else
 		love.graphics.draw(self.background, 0, 0, 0, 2, 2)
 		love.graphics.draw(self.logo, 540, 36)
