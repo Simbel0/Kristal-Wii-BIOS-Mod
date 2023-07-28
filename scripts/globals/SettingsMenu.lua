@@ -49,7 +49,12 @@ function SettingsMenu:enter(_, maintenance)
 	
 	self.blocks = {}
 	for i=1, 15 do
-		local block = DataBlock(i)
+		local block
+		if self.mod_files[i] then
+			block = DataBlock(i, self.mod_files[i])
+		else
+			block = DataBlock(i)
+		end
 		table.insert(self.blocks, block)
 		self.stage:addChild(block)
 	end
