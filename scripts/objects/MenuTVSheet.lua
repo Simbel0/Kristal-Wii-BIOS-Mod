@@ -35,7 +35,7 @@ end
 
 function MenuTVSheet:onAdd()
 	if Game.wii_menu.maintenance then
-		self.popUp = popUp("The system is operating\nin maintenance mode.\nThe Wii Message Board\ncannot be used.", {"Ok"}, function() print("Called back") end)
+		self.popUp = popUp("The system is operating\nin maintenance mode.\nThe Wii Message Board\ncannot be used.", {"Ok"}, function(clicked) print("Called back: " .. clicked) end)
 		self:addChild(self.popUp)
 	end
 end

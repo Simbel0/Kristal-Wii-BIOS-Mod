@@ -21,9 +21,14 @@ function popUp:init(text, buttons, callback)
 	end
 
 	if self.buttons then
-		self.button = TextButton(265, 340, self.buttons[1])
-		self.button.layer = self.layer + 10
-		self:addChild(self.button)
+		self.start_x = 265 - ((#self.buttons - 1) * 100)
+		self.clickables = {}
+		for i=1, #self.buttons do
+			local button = TextButton(self.start_x + (200 * (i-1)), 340, self.buttons[i])
+			button.layer = self.layer + 10
+			self:addChild(button)
+			table.insert(self.clickables, button)
+		end
 	end
 	
 	self.callback = callback
@@ -53,28 +58,41 @@ function popUp:update()
 		if self.state ~= "TRANSITION" then
 			self.y_dest = Utils.ease(640, 0, self.timer/20, "out-cubic")
 			self.bg_alpha = Utils.ease(0, 0.5, self.timer/20, "out-cubic")
-			if self.button then
-				self.button.y = Utils.ease(self.button.init_y+640, self.button.init_y, self.timer/20, "out-cubic")
+			for k,v in pairs(self.clickables) do
+				v.y = Utils.ease(v.init_y+640, v.init_y, self.timer/20, "out-cubic")
 			end
+			-- if self.button then
+				-- self.button.y = Utils.ease(self.button.init_y+640, self.button.init_y, self.timer/20, "out-cubic")
+			-- end
 		else
 			self.y_dest = Utils.ease(0, -640, self.timer/20, "out-cubic")
 			self.bg_alpha = Utils.ease(0.5, 0, self.timer/20, "out-cubic")
-			if self.button then
-				self.button.y = Utils.ease(self.button.init_y, self.button.init_y-640, self.timer/20, "out-cubic")
+			for k,v in pairs(self.clickables) do
+				v.y = Utils.ease(v.init_y, v.init_y-640, self.timer/20, "out-cubic")
 			end
+			-- if self.button then
+				-- self.button.y = Utils.ease(self.button.init_y, self.button.init_y-640, self.timer/20, "out-cubic")
+			-- end
 		end
 	end
 
 	if self.state == "TRANSITION" and self.timer > 20 then
 		if self.callback then
 			print("[BIOS] Callback detected")
-			self.callback()
+			self.callback(self.clicked)
 		end
 		self:remove()
 	end
 
 	-- Temporary while waiting for the buttons object
-	if (self.max_timer and self.max_timer <= self.timer + 20) or ((self.button and self.button.buttonPressed) and self.state ~= "TRANSITION") then
+	for k,v in pairs(self.clickables) do
+		if v.buttonPressed then
+			self.clicked = k
+			break
+		end
+	end
+	
+	if (self.max_timer and self.max_timer <= self.timer + 20) or (self.clicked and self.state ~= "TRANSITION") then
 		self.state = "TRANSITION"
 		self.timer = 0
 	end
