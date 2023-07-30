@@ -20,9 +20,11 @@ function popUp:init(text, buttons, callback)
 		self.buttons = buttons
 	end
 
-	self.button = Button(265, 340, "button/back")
-	self.button.layer = self.layer + 10
-	self:addChild(self.button)
+	if self.buttons then
+		self.button = TextButton(265, 340, self.buttons[1])
+		self.button.layer = self.layer + 10
+		self:addChild(self.button)
+	end
 	
 	self.callback = callback
 	
@@ -51,11 +53,15 @@ function popUp:update()
 		if self.state ~= "TRANSITION" then
 			self.y_dest = Utils.ease(640, 0, self.timer/20, "out-cubic")
 			self.bg_alpha = Utils.ease(0, 0.5, self.timer/20, "out-cubic")
-			self.button.y = Utils.ease(self.button.init_y+640, self.button.init_y, self.timer/20, "out-cubic")
+			if self.button then
+				self.button.y = Utils.ease(self.button.init_y+640, self.button.init_y, self.timer/20, "out-cubic")
+			end
 		else
 			self.y_dest = Utils.ease(0, -640, self.timer/20, "out-cubic")
 			self.bg_alpha = Utils.ease(0.5, 0, self.timer/20, "out-cubic")
-			self.button.y = Utils.ease(self.button.init_y, self.button.init_y-640, self.timer/20, "out-cubic")
+			if self.button then
+				self.button.y = Utils.ease(self.button.init_y, self.button.init_y-640, self.timer/20, "out-cubic")
+			end
 		end
 	end
 
@@ -68,7 +74,7 @@ function popUp:update()
 	end
 
 	-- Temporary while waiting for the buttons object
-	if self.button.buttonPressed and self.state ~= "TRANSITION" then
+	if (self.max_timer and self.max_timer <= self.timer + 20) or ((self.button and self.button.buttonPressed) and self.state ~= "TRANSITION") then
 		self.state = "TRANSITION"
 		self.timer = 0
 	end
