@@ -14,6 +14,9 @@ function MenuTVSheet:init()
 	self.monitor_back = Assets.getTexture("monitors")
 	self.monitor_sets = 4
 	self.offset_moni = 0
+	self.page = 1
+	
+	self.page_debounce = false
 
 	self.lower_background = Assets.getTexture("menu/my_TVSheet_e")
 	self.lower_border = Assets.getTexture("menu/my_TVSheet_f")
@@ -90,6 +93,34 @@ function MenuTVSheet:draw(alpha)
 	
 	self.settings_button:draw()
 	super.draw(self)
+end
+
+function MenuTVSheet:update()
+	super:update(self)
+
+	if Input.pressed("right", false) and self.page < self.monitor_sets and not self.page_debounce then
+        Assets.playSound("wii/wsd_select")
+        self.page = self.page + 1
+		self.page_debounce = true
+		Game.wii_menu.stage.timer:tween(0.4, self, {offset_moni = self.offset_moni + 540}, "out-cubic", function()
+			self.page_debounce = false
+		end)
+		for k,v in pairs(self.monitors) do
+			Game.wii_menu.stage.timer:tween(0.4, v, {x = v.x - 540}, "out-cubic")
+		end
+    end
+
+    if Input.pressed("left", false) and self.page > 1 and not self.page_debounce then
+        Assets.playSound("wii/wsd_select")
+        self.page = self.page - 1
+		self.page_debounce = true
+		Game.wii_menu.stage.timer:tween(0.4, self, {offset_moni = self.offset_moni - 540}, "out-cubic", function()
+			self.page_debounce = false
+		end)
+		for k,v in pairs(self.monitors) do
+			Game.wii_menu.stage.timer:tween(0.4, v, {x = v.x + 540}, "out-cubic")
+		end
+    end
 end
 
 return MenuTVSheet

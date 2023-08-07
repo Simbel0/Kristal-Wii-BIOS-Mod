@@ -86,7 +86,7 @@ function Monitor:update()
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
 	
-	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) then
+	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and self.page == Game.wii_menu.tvSheet.page then
 		if not self.hovered then
 			self.hover:play()
 			self.hovered = true
