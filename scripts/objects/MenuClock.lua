@@ -17,8 +17,8 @@ function MenuClock:init(x, y)
 	self.sep_visible = true
 	self.sep_alpha = 1
 
-	self.clock_color = {155/255, 155/255, 155/255}
-	self.wii_text_color = {52/255, 192/255, 237/255}
+	self.clock_color = Mod.Themes[Game.wii_data["theme"]]["CLOCK"]
+	self.wii_text_color = Mod.Themes[Game.wii_data["theme"]]["CLOCK_TEXT"]
 	self.font = Assets.getFont("main_mono")
 
 	self.text = true

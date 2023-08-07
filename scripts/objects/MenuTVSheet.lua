@@ -44,7 +44,7 @@ function MenuTVSheet:onAdd()
 end
 
 function MenuTVSheet:draw(alpha)
-	local r, g, b = Utils.unpack(Utils.hexToRgb("#F2F2F2"))
+	local r, g, b = Utils.unpack(Mod.Themes[Game.wii_data["theme"]]["BG"])
 	love.graphics.setColor(r, g, b, alpha)
 	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, 331)
 
@@ -77,14 +77,14 @@ function MenuTVSheet:draw(alpha)
 	love.graphics.draw(self.lower_background, 0, 330, 0, 1.25, 1.1)
 	love.graphics.setColor(0.3, 0.3, 0.3, alpha)
 	love.graphics.draw(self.lower_shadow, 0, 330, 0, 1.25, 1.1)
-	love.graphics.setColor(52/255, 192/255, 237/255)
+	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["BORDER"])
 	love.graphics.draw(self.lower_border, 0, (330)+2, 0, 1.25, 1.1)
 
 	love.graphics.setColor(r, g, b, alpha)
 	love.graphics.draw(self.lower_background, SCREEN_WIDTH, 330, 0, -1.25, 1.1)
 	love.graphics.setColor(0.3, 0.3, 0.3, alpha)
 	love.graphics.draw(self.lower_shadow, SCREEN_WIDTH, 330, 0, -1.25, 1.1)
-	love.graphics.setColor(52/255, 192/255, 237/255)
+	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["BORDER"])
 	love.graphics.draw(self.lower_border, SCREEN_WIDTH, (330)+2, 0, -1.25, 1.1)
 
 	love.graphics.setShader(last_shader)

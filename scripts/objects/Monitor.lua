@@ -106,7 +106,7 @@ function Monitor:draw()
 	love.graphics.setShader(Mod.Shaders["RemoveColor"])
 
 	if self.hovered then
-		love.graphics.setColor(144/255, 207/255, 225/255, 1)
+		love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["BORDER"], 1)
 	else
 		love.graphics.setColor(155/255, 155/255, 155/255, 1)
 	end
