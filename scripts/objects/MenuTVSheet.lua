@@ -68,24 +68,24 @@ function MenuTVSheet:draw(alpha)
     love.graphics.setColor(1, 1, 1, alpha)
 
 	for i=1, self.monitor_sets do
-		love.graphics.draw(self.monitor_back, 55 + (540 * (i-1)) - self.offset_moni, 20)
+		love.graphics.draw(self.monitor_back, 55 + (540 * (i-1)) - self.offset_moni, self.y + 20)
 	end
 	
 	love.graphics.setShader(self.shader)
 
 	love.graphics.setColor(r, g, b, alpha)
-	love.graphics.draw(self.lower_background, 0, 330, 0, 1.25, 1.1)
+	love.graphics.draw(self.lower_background, 0, self.y + 330, 0, 1.25, 1.1)
 	love.graphics.setColor(0.3, 0.3, 0.3, alpha)
-	love.graphics.draw(self.lower_shadow, 0, 330, 0, 1.25, 1.1)
+	love.graphics.draw(self.lower_shadow, 0, self.y + 330, 0, 1.25, 1.1)
 	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["BORDER"])
-	love.graphics.draw(self.lower_border, 0, (330)+2, 0, 1.25, 1.1)
+	love.graphics.draw(self.lower_border, 0, self.y + (330)+2, 0, 1.25, 1.1)
 
 	love.graphics.setColor(r, g, b, alpha)
-	love.graphics.draw(self.lower_background, SCREEN_WIDTH, 330, 0, -1.25, 1.1)
+	love.graphics.draw(self.lower_background, SCREEN_WIDTH, self.y + 330, 0, -1.25, 1.1)
 	love.graphics.setColor(0.3, 0.3, 0.3, alpha)
-	love.graphics.draw(self.lower_shadow, SCREEN_WIDTH, 330, 0, -1.25, 1.1)
+	love.graphics.draw(self.lower_shadow, SCREEN_WIDTH, self.y + 330, 0, -1.25, 1.1)
 	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["BORDER"])
-	love.graphics.draw(self.lower_border, SCREEN_WIDTH, (330)+2, 0, -1.25, 1.1)
+	love.graphics.draw(self.lower_border, SCREEN_WIDTH, self.y + (330)+2, 0, -1.25, 1.1)
 
 	love.graphics.setShader(last_shader)
 
@@ -121,6 +121,28 @@ function MenuTVSheet:update()
 			Game.wii_menu.stage.timer:tween(0.4, v, {x = v.x + 540}, "out-cubic")
 		end
     end
+	
+	if Input.pressed("up", false) and Game.wii_menu.substate == "MAIN" and not self.page_debounce then
+		self.page_debounce = true
+		Game.wii_menu.substate = "MESSAGE"
+		Game.wii_menu.stage.timer:tween(0.4, self, {y = self.y - 430}, "out-cubic", function()
+			self.page_debounce = false
+		end)
+		for k,v in pairs(self.monitors) do
+			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y - 430}, "out-cubic")
+		end
+	end
+	
+	if Input.pressed("down", false) and Game.wii_menu.substate == "MESSAGE" and not self.page_debounce then
+		self.page_debounce = true
+		Game.wii_menu.substate = "MAIN"
+		Game.wii_menu.stage.timer:tween(0.4, self, {y = self.y + 430}, "out-cubic", function()
+			self.page_debounce = false
+		end)
+		for k,v in pairs(self.monitors) do
+			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y + 430}, "out-cubic")
+		end
+	end
 end
 
 return MenuTVSheet
