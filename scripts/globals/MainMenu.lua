@@ -44,7 +44,7 @@ function MainMenu:draw()
     love.graphics.clear(0, 0, 0, 1)
     love.graphics.push()
 
-	local r, g, b = Utils.unpack(Utils.hexToRgb("#CDCFD7"))
+	local r, g, b = Utils.unpack(Mod.Themes[Game.wii_data["theme"]]["BG_LOWER"])
 	love.graphics.setColor(r, g, b, self.alpha)
 	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -53,15 +53,15 @@ function MainMenu:draw()
 	love.graphics.print(os.date("%d").."/"..os.date("%m"), 320, 400, 0, 1.25, 1.25)
 
 	self.tvSheet:draw(self.alpha)
-	if self.transition_cover then
-		self.transition_cover:draw()
-	end
 
     love.graphics.pop()
 
     love.graphics.push()
     Kristal.callEvent("postDraw")
     love.graphics.pop()
+	if self.transition_cover then
+		self.transition_cover:draw()
+	end
 end
 
 return MainMenu
