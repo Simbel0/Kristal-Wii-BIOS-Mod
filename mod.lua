@@ -14,6 +14,23 @@ Mod.wiiwares = {
     ["wii_rtk"] = "channels/kristal"
 }
 
+Mod.Themes = {
+	["DEFAULT"] = {
+		["CLOCK"] = {155/255, 155/255, 155/255},
+		["CLOCK_TEXT"] = {52/255, 192/255, 237/255},
+		["BG_LOWER"] = Utils.hexToRgb("#CDCFD7"),
+		["BG"] = Utils.hexToRgb("#F2F2F2"),
+		["BORDER"] = {52/255, 192/255, 237/255},
+	},
+	["DETERMINATION"] = {
+		["CLOCK"] = {155/255, 155/255, 155/255},
+		["CLOCK_TEXT"] = {255/255, 62/255, 48/255},
+		["BG_LOWER"] = Utils.hexToRgb("#CDCFD7"),
+		["BG"] = Utils.hexToRgb("#F2F2F2"),
+		["BORDER"] = {255/255, 33/255, 18/255},
+	},
+}
+
 --If we ever have popups working, the goal will be to show a popup upon starting the Menu showing the invalid mods
 Mod.invalid_mods = {
     prefix = {},
