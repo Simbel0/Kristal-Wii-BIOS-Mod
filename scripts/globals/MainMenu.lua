@@ -5,6 +5,8 @@ function MainMenu:init()
 	self.stage = Stage()
 
 	Game.wii_menu = self
+	
+	self.substate = "MAIN" -- MAIN, MESSAGE
 end
 
 function MainMenu:enter(_, maintenance)
