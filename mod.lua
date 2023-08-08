@@ -55,6 +55,14 @@ Mod.Themes = {
 		["BORDER"] = {253/255, 190/255, 219/255},
 		["DATE"] = {235/255, 235/255, 235/255},
 	},
+	["LEGEND"] = {
+		["CLOCK"] = {255/255, 255/255, 255/255},
+		["CLOCK_TEXT"] = {255/255, 255/255, 255/255},
+		["BG_LOWER"] = Utils.hexToRgb("#4A290B"),
+		["BG"] = Utils.hexToRgb("#643214"),
+		["BORDER"] = {192/255, 130/255, 38/255},
+		["DATE"] = {255/255, 255/255, 255/255},
+	},
 }
 
 --If we ever have popups working, the goal will be to show a popup upon starting the Menu showing the invalid mods
@@ -136,7 +144,7 @@ function Mod:postInit()
 	if not love.filesystem.getInfo("wii_settings.json") then
 		Game.wii_data = {
 			["american"] = self:localeIs("US"),
-			["theme"] = "default",
+			["theme"] = "DEFAUKT",
 			["channels"] = {},
 			["military"] = not self:localeIs("US"),
 			["messages"] = {},
