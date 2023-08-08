@@ -21,6 +21,7 @@ Mod.Themes = {
 		["BG_LOWER"] = Utils.hexToRgb("#CDCFD7"),
 		["BG"] = Utils.hexToRgb("#F2F2F2"),
 		["BORDER"] = {52/255, 192/255, 237/255},
+		["DATE"] = {130/255, 130/255, 130/255},
 	},
 	["DETERMINATION"] = {
 		["CLOCK"] = {155/255, 155/255, 155/255},
@@ -28,6 +29,7 @@ Mod.Themes = {
 		["BG_LOWER"] = Utils.hexToRgb("#CDCFD7"),
 		["BG"] = Utils.hexToRgb("#F2F2F2"),
 		["BORDER"] = {255/255, 33/255, 18/255},
+		["DATE"] = {130/255, 130/255, 130/255},
 	},
 	["SD_CARD"] = {
 		["CLOCK"] = {252/255, 248/255, 249/255},
@@ -35,6 +37,23 @@ Mod.Themes = {
 		["BG_LOWER"] = Utils.hexToRgb("#D0D3DA"),
 		["BG"] = Utils.hexToRgb("#242424"),
 		["BORDER"] = {52/255, 192/255, 237/255},
+		["DATE"] = {130/255, 130/255, 130/255},
+	},
+	-- ["KRISTAL"] = {
+		-- ["CLOCK"] = {255/255, 229/255, 0/255},
+		-- ["CLOCK_TEXT"] = {255/255, 229/255, 0/255},
+		-- ["BG_LOWER"] = Utils.hexToRgb("#007EA3"),
+		-- ["BG"] = Utils.hexToRgb("#059AA3"),
+		-- ["BORDER"] = {255/255, 229/255, 0/255},
+		-- ["DATE"] = {130/255, 130/255, 130/255},
+	-- }, -- Don't uncomment this. It was a lot better in my head. - AcousticJamm
+	["DEOXYNN"] = {
+		["CLOCK"] = {253/255, 190/255, 219/255},
+		["CLOCK_TEXT"] = {253/255, 190/255, 219/255},
+		["BG_LOWER"] = Utils.hexToRgb("#7C7C7C"),
+		["BG"] = Utils.hexToRgb("#FFFFFF"),
+		["BORDER"] = {253/255, 190/255, 219/255},
+		["DATE"] = {235/255, 235/255, 235/255},
 	},
 }
 
