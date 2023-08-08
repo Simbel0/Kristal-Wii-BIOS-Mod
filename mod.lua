@@ -144,7 +144,7 @@ function Mod:postInit()
 	if not love.filesystem.getInfo("wii_settings.json") then
 		Game.wii_data = {
 			["american"] = self:localeIs("US"),
-			["theme"] = "DEFAUKT",
+			["theme"] = "DEFAULT",
 			["channels"] = {},
 			["military"] = not self:localeIs("US"),
 			["messages"] = {},
