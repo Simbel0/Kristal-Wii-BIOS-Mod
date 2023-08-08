@@ -29,6 +29,13 @@ Mod.Themes = {
 		["BG"] = Utils.hexToRgb("#F2F2F2"),
 		["BORDER"] = {255/255, 33/255, 18/255},
 	},
+	["SD_CARD"] = {
+		["CLOCK"] = {252/255, 248/255, 249/255},
+		["CLOCK_TEXT"] = {52/255, 192/255, 237/255},
+		["BG_LOWER"] = Utils.hexToRgb("#D0D3DA"),
+		["BG"] = Utils.hexToRgb("#242424"),
+		["BORDER"] = {52/255, 192/255, 237/255},
+	},
 }
 
 --If we ever have popups working, the goal will be to show a popup upon starting the Menu showing the invalid mods
