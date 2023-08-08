@@ -63,6 +63,22 @@ Mod.Themes = {
 		["BORDER"] = {192/255, 130/255, 38/255},
 		["DATE"] = {255/255, 255/255, 255/255},
 	},
+	["SNEO"] = {
+		["CLOCK"] = {225/255, 242/255, 0/255},
+		["CLOCK_TEXT"] = {225/255, 242/255, 0/255},
+		["BG_LOWER"] = Utils.hexToRgb("#6711A1"),
+		["BG"] = Utils.hexToRgb("#C04385"),
+		["BORDER"] = {1/255, 128/255, 1/255},
+		["DATE"] = {255/255, 174/255, 201/255},
+	},
+	["UT_BATTLE"] = {
+		["CLOCK"] = {255/255, 255/255, 255/255},
+		["CLOCK_TEXT"] = {255/255, 255/255, 255/255},
+		["BG_LOWER"] = Utils.hexToRgb("#141414"),
+		["BG"] = Utils.hexToRgb("#141414"),
+		["BORDER"] = {60/255, 178/255, 78/255},
+		["DATE"] = {251/255, 255/255, 41/255},
+	},
 }
 
 --If we ever have popups working, the goal will be to show a popup upon starting the Menu showing the invalid mods
