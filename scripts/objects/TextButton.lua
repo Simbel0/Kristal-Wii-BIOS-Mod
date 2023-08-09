@@ -1,7 +1,7 @@
 local TextButton, super = Class("Button")
 
 function TextButton:init(x, y, text)
-	super:init(self, x, y, "button/blank_button")
+	super:init(self, x, y, "blank_button")
 	
 	self.text = text
 	self.font = Assets.getFont("main_mono")

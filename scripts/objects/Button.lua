@@ -3,7 +3,7 @@ local Button, super = Class(Object)
 function Button:init(x, y, image)
 	super:init(self, x, y, 0, 0)
 	
-	self.sprite = Sprite(image)
+	self.sprite = Sprite("button/" .. Game.wii_data["theme"] .. "/" ..image)
 	self:addChild(self.sprite)
 	
 	self:setOrigin(0.5,0.5)
