@@ -45,7 +45,7 @@ function DataBlock:update()
 	local screen_x, screen_y = self:getScreenPos()
 	screen_x, screen_y = screen_x-self.width/2, screen_y-self.height/2
 	if not self.pressed then
-		if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) then
+		if (mx / Kristal.getGameScale() > self.x) and (mx / Kristal.getGameScale() < (self.x + self.width)) and (my / Kristal.getGameScale() > self.y) and (my / Kristal.getGameScale() < (self.y + self.height)) then
 			if self:canClick() then
 				if love.mouse.isDown(1) then
 					if self.name then
