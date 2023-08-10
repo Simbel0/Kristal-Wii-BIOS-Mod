@@ -6,7 +6,9 @@ function MainMenu:init()
 
 	Game.wii_menu = self
 	
-	self.substate = "MAIN" -- MAIN, MESSAGE
+	self.substate = "MAIN" -- MAIN, MESSAGE, CHANNEL
+	
+	self.did_messages = false
 end
 
 function MainMenu:enter(_, maintenance)
@@ -28,6 +30,9 @@ function MainMenu:enter(_, maintenance)
 
 	self.music = Music("wiimenu")
 	Assets.playSound("wii/start")
+	
+	self.screen_helper = ScreenHelper()
+	self.stage:addChild(self.screen_helper)
 end
 
 function MainMenu:update()
@@ -38,6 +43,8 @@ function MainMenu:update()
 			self.state = "IDLE"
 		end
 	end
+	
+	self.screen_helper:update()
 
 	self.stage:update()
 end
@@ -53,6 +60,8 @@ function MainMenu:draw()
 	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["DATE"], self.alpha)
 	love.graphics.print(Utils.titleCase(Utils.sub(os.date("%a"), 1, 3)), 230, 400, 0, 1.25, 1.25)
 	love.graphics.print(os.date("%d").."/"..os.date("%m"), 320, 400, 0, 1.25, 1.25)
+	
+	self.screen_helper:draw()
 
 	self.tvSheet:draw(self.alpha)
 
