@@ -33,6 +33,9 @@ function SettingsMenu:enter(_, maintenance)
 	self.back_button = BackButton(100, 440, true)
 	self.stage:addChild(self.back_button)
 	
+	self.screen_helper = ScreenHelper()
+	self.stage:addChild(self.screen_helper)
+	
 	self.mod_files = {}
 	self.save_count = 0
 	for index,mod in ipairs(Game.wii_data["channels"]) do
@@ -68,6 +71,8 @@ function SettingsMenu:update()
 			self.state = "IDLE"
 		end
 	end
+	
+	self.screen_helper:update()
 
 	self.stage:update()
 end
@@ -97,6 +102,8 @@ function SettingsMenu:draw()
 			self.back_button:draw()
 		end
 	end
+	
+	self.screen_helper:draw()
 
     love.graphics.pop()
 
