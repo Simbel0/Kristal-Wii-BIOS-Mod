@@ -20,16 +20,19 @@ function DataBlock:init(index, mod_id)
 	self.x = 60 + (113 * (self.slot_x - 1))
 	self.y = 80 + (110 * (self.slot_y - 1))
 	
-	if mod_id then
-		self.mod = Kristal.Mods.getMod(mod_id)
+	self.mod_id = mod_id
+	
+	if self.mod_id then
+		self.mod = Kristal.Mods.getMod(self.mod_id)
 		self.icon = self.mod.icon and self.mod.icon[1] or Assets.getTexture("settings/default_icon")
+		self.name = self.mod.name
 	end
 end
 
 function DataBlock:getDebugInfo()
 	local info = super.getDebugInfo(self)
 	if self.mod then
-		table.insert(info, "Mod: "..self.mod.name)
+		table.insert(info, "Mod: " .. self.name)
 	end
 	table.insert(info, "Index: ("..self.slot_x..", "..self.slot_y..")")
 	return info
@@ -37,6 +40,55 @@ end
 
 function DataBlock:update()
 	super:update(self)
+	
+	local mx, my = love.mouse.getPosition()
+	local screen_x, screen_y = self:getScreenPos()
+	screen_x, screen_y = screen_x-self.width/2, screen_y-self.height/2
+	if not self.pressed then
+		if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) then
+			if self:canClick() then
+				if love.mouse.isDown(1) then
+					if self.name then
+						Game.wii_menu.popUp = popUp("Are you sure you would\nlike to delete the\nsave file for\n" .. self.name .. "?", {"Yes", "No"}, function(clicked)
+							print("Called back: " .. clicked)
+							Game.wii_menu.popUp = nil
+							
+							local function tablefind(tab,el)
+								for index, value in pairs(tab) do
+									if value == el then
+										return index
+									end
+								end
+							end
+							
+							if clicked == 1 then
+								love.filesystem.remove("saves/"..self.mod_id.."/file_wii.json")
+								local index = tablefind(Game.wii_menu.mod_files,self.mod_id)
+								table.remove(Game.wii_menu.mod_files, index)
+								
+								for k,v in pairs(Game.wii_menu.mod_files) do
+									print(k .. ": " .. v)
+								end
+								
+								Game.wii_menu.save_count = #Game.wii_menu.mod_files
+								
+								Game.wii_menu.page = 1
+								
+								for i=1, 15 do
+									if Game.wii_menu.mod_files[i] then
+										Game.wii_menu.blocks[i]:updateMod(Game.wii_menu.mod_files[i])
+									else
+										Game.wii_menu.blocks[i]:updateMod()
+									end
+								end
+							end
+						end)
+						Game.wii_menu.screen_helper:addChild(Game.wii_menu.popUp)
+					end
+				end
+			end
+		end
+	end
 end
 
 function DataBlock:draw()
@@ -52,8 +104,19 @@ function DataBlock:draw()
 end
 
 function DataBlock:updateMod(mod_id)
-	self.mod = Kristal.Mods.getMod(mod_id)
-	self.icon = self.mod.icon or {Assets.getTexture("settings/default_icon")}
+	self.mod_id = mod_id
+	
+	if mod_id then
+		self.mod = Kristal.Mods.getMod(mod_id)
+		self.icon = self.mod.icon and self.mod.icon[1] or Assets.getTexture("settings/default_icon")
+		self.name = self.mod.name
+	else
+		self.mod = nil
+		self.icon = nil
+		self.name = nil
+	end
 end
+
+function DataBlock:canClick() return not Game.wii_menu.popUp end
 
 return DataBlock

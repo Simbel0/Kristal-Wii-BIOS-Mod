@@ -36,7 +36,6 @@ function Button:update()
 					self.played_sound = true
 					Assets.playSound("wii/hover")
 				end
-				print("oh yeeeees")
 				if not self.pressed and love.mouse.isDown(1) then
 					self.pressed = true
 					self:onClick()
