@@ -46,7 +46,7 @@ end
 function MenuTVSheet:draw(alpha)
 	local r, g, b = Utils.unpack(Mod.Themes[Game.wii_data["theme"]]["BG"])
 	love.graphics.setColor(r, g, b, alpha)
-	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, 331)
+	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, 331 + self.y)
 
     local screen_l, screen_u = love.graphics.inverseTransformPoint(0, 0)
     local screen_r, screen_d = love.graphics.inverseTransformPoint(SCREEN_WIDTH, SCREEN_HEIGHT)
