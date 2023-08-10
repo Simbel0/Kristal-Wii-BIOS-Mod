@@ -98,7 +98,7 @@ end
 function MenuTVSheet:update()
 	super:update(self)
 
-	if Input.pressed("right", false) and self.page < self.monitor_sets and not self.page_debounce then
+	if Input.pressed("right", false) and Game.wii_menu.substate == "MAIN" and self.page < self.monitor_sets and not self.page_debounce then
         Assets.playSound("wii/wsd_select")
         self.page = self.page + 1
 		self.page_debounce = true
@@ -110,7 +110,7 @@ function MenuTVSheet:update()
 		end
     end
 
-    if Input.pressed("left", false) and self.page > 1 and not self.page_debounce then
+    if Input.pressed("left", false) and Game.wii_menu.substate == "MAIN" and self.page > 1 and not self.page_debounce then
         Assets.playSound("wii/wsd_select")
         self.page = self.page - 1
 		self.page_debounce = true
