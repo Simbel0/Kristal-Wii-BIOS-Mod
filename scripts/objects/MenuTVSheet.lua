@@ -98,27 +98,37 @@ end
 function MenuTVSheet:update()
 	super:update(self)
 
-	if Input.pressed("right", false) and Game.wii_menu.substate == "MAIN" and self.page < self.monitor_sets and not self.page_debounce then
-        Assets.playSound("wii/wsd_select")
-        self.page = self.page + 1
-		self.page_debounce = true
-		Game.wii_menu.stage.timer:tween(0.4, self, {offset_moni = self.offset_moni + 540}, "out-cubic", function()
-			self.page_debounce = false
-		end)
-		for k,v in pairs(self.monitors) do
-			Game.wii_menu.stage.timer:tween(0.4, v, {x = v.x - 540}, "out-cubic")
+	if Input.pressed("right", false) then
+		if Game.wii_menu.substate == "MAIN" and self.page < self.monitor_sets and not self.page_debounce then
+			Assets.playSound("wii/wsd_select")
+			self.page = self.page + 1
+			self.page_debounce = true
+			Game.wii_menu.stage.timer:tween(0.4, self, {offset_moni = self.offset_moni + 540}, "out-cubic", function()
+				self.page_debounce = false
+			end)
+			for k,v in pairs(self.monitors) do
+				Game.wii_menu.stage.timer:tween(0.4, v, {x = v.x - 540}, "out-cubic")
+			end
+		elseif Game.wii_menu.substate == "MESSAGE" then
+			Assets.playSound("wii/wsd_select")
+			Game.wii_menu.message_date = Game.wii_menu.message_date + 86400
 		end
     end
 
-    if Input.pressed("left", false) and Game.wii_menu.substate == "MAIN" and self.page > 1 and not self.page_debounce then
-        Assets.playSound("wii/wsd_select")
-        self.page = self.page - 1
-		self.page_debounce = true
-		Game.wii_menu.stage.timer:tween(0.4, self, {offset_moni = self.offset_moni - 540}, "out-cubic", function()
-			self.page_debounce = false
-		end)
-		for k,v in pairs(self.monitors) do
-			Game.wii_menu.stage.timer:tween(0.4, v, {x = v.x + 540}, "out-cubic")
+    if Input.pressed("left", false) then
+		if Game.wii_menu.substate == "MAIN" and self.page > 1 and not self.page_debounce then
+			Assets.playSound("wii/wsd_select")
+			self.page = self.page - 1
+			self.page_debounce = true
+			Game.wii_menu.stage.timer:tween(0.4, self, {offset_moni = self.offset_moni - 540}, "out-cubic", function()
+				self.page_debounce = false
+			end)
+			for k,v in pairs(self.monitors) do
+				Game.wii_menu.stage.timer:tween(0.4, v, {x = v.x + 540}, "out-cubic")
+			end
+		elseif Game.wii_menu.substate == "MESSAGE" then
+			Assets.playSound("wii/wsd_select")
+			Game.wii_menu.message_date = Game.wii_menu.message_date - 86400
 		end
     end
 	
@@ -142,6 +152,7 @@ function MenuTVSheet:update()
 		for k,v in pairs(self.monitors) do
 			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y + 430}, "out-cubic")
 		end
+		Game.wii_menu.message_date = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
 	end
 end
 
