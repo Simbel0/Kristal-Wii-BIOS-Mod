@@ -33,6 +33,8 @@ function MainMenu:enter(_, maintenance)
 	
 	self.screen_helper = ScreenHelper()
 	self.stage:addChild(self.screen_helper)
+	
+	self.message_date = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
 end
 
 function MainMenu:update()
@@ -58,8 +60,20 @@ function MainMenu:draw()
 	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["DATE"], self.alpha)
-	love.graphics.print(Utils.titleCase(Utils.sub(os.date("%a"), 1, 3)), 230, 400, 0, 1.25, 1.25)
-	love.graphics.print(os.date("%d").."/"..os.date("%m"), 320, 400, 0, 1.25, 1.25)
+	if self.substate == "MAIN" then
+		love.graphics.print(Utils.titleCase(Utils.sub(os.date("%a"), 1, 3)), 230, 400, 0, 1.25, 1.25)
+		love.graphics.print(os.date("%d").."/"..os.date("%m"), 320, 400, 0, 1.25, 1.25)
+	elseif self.substate == "MESSAGE" then
+		local day = os.date("*t", self.message_date)
+		if day.day < 10 then
+			day.day = "0" .. day.day
+		end
+		if day.month < 10 then
+			day.month = "0" .. day.month
+		end
+		love.graphics.print(Utils.titleCase(Utils.sub(os.date("%a", self.message_date), 1, 3)), 230, 400, 0, 1.25, 1.25)
+		love.graphics.print(day.day.."/"..day.month, 320, 400, 0, 1.25, 1.25)
+	end
 	
 	self.screen_helper:draw()
 
