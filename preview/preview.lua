@@ -12,12 +12,12 @@ preview.Themes = {
 		["bg_fade"] = {176/255,208/255,228/255}
 	},
 	["DETERMINATION"] = {
-		["from"] = Utils.hexToRgb("#E0F4FF", 1),
-		["to"] = Utils.hexToRgb("#66CBFF", 1),
-		["button"] = Utils.hexToRgb("#99DCFF", 1),
-		["favorite"] = Utils.hexToRgb("#66CBFF", 1),
+		["from"] = Utils.hexToRgb("#FFE0E0", 1),
+		["to"] = Utils.hexToRgb("#FF6666", 1),
+		["button"] = Utils.hexToRgb("#FF9999", 1),
+		["favorite"] = Utils.hexToRgb("#FF6666", 1),
 		["bg"] = {1,1,1},
-		["bg_fade"] = {176/255,208/255,228/255}
+		["bg_fade"] = {228/255,176/255,176/255}
 	},
 	["SD_CARD"] = {
 		["from"] = Utils.hexToRgb("#E0F4FF", 1),
