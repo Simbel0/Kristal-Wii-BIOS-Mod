@@ -92,6 +92,11 @@ function Monitor:update()
 			self.hovered = true
 			self:setLayer(1)
 		end
+		if self:canClick() and not self.pressed and love.mouse.isDown(1) then
+			print("Clicking on " .. self.mod_id)
+		elseif self:canClick() and not self.pressed and love.mouse.isDown(2) then
+			print("Dragging " .. self.mod_id)
+		end
 	else
 		if self.hovered then
 			self.hovered = false
@@ -139,6 +144,10 @@ function Monitor:draw()
 		love.graphics.setFont(self.font)
 		love.graphics.print(name, 0, 111)
 	end
+end
+
+function Monitor:canClick()
+	return true
 end
 
 return Monitor
