@@ -10,6 +10,8 @@ function HealthAndSafetyScreen:init()
 	self.warning = Assets.getTexture(america_fuck_yeah and "health_and_safety/warning_usa" or "health_and_safety/warning")
 
 	self.font_continue = Assets.getFont("main_mono")
+	
+	Kristal.load_wii = true
 end
 
 function HealthAndSafetyScreen:enter()
