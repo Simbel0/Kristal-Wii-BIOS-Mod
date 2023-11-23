@@ -97,6 +97,14 @@ function Monitor:update()
 		end
 		if self:canClick() and not self.pressed and love.mouse.isDown(1) then
 			print("Clicking on " .. self.mod_id)
+			if self.mod_id == "wii_rtk" then -- All of this is temporary
+				Kristal.load_wii = false
+				Kristal.returnToMenu()
+			elseif self.mod_id == "wii_food" then
+				love.system.openURL("https://www.dominos.com/en/")
+			else
+				Mod:loadMod(self.mod_id)
+			end
 		elseif self:canClick() and not self.pressed and love.mouse.isDown(2) then
 			print("Dragging " .. self.mod_id)
 		end
