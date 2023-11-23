@@ -63,9 +63,16 @@ preview.Themes = {
 
 function preview:init(mod, button, _)
 	local theme = "DEFAULT"
+	local load_early = false
 	if love.filesystem.getInfo("wii_settings.json") then
 		local wii_data = JSON.decode(love.filesystem.read("wii_settings.json"))
 		theme = wii_data["theme"]
+		load_early = wii_data["load_early"]
+	end
+	
+	if load_early then
+		Kristal.loadMod(mod.id)
+		return
 	end
 
     button:setColor(preview.Themes[theme]["button"])

@@ -100,6 +100,8 @@ Mod.Shaders["RemoveColor"] = love.graphics.newShader([[
     }
 ]])
 
+
+
 function Mod:init()
     Mod.States = {
         ["HealthAndSafety"] = HealthAndSafetyScreen,
@@ -165,7 +167,8 @@ function Mod:postInit()
 			["military"] = not self:localeIs("US"),
 			["messages"] = {},
 			["am_right"] = not self:localeIs("JP"),
-			["name"] = "Wii"
+			["name"] = "Wii",
+			["load_early"] = false
 		}
 
         --Put the channels in the table
@@ -282,6 +285,23 @@ function Mod:setState(state, ...)
     else
         Gamestate.switch(state, ...)
     end
+end
+
+--- Swaps into a mod
+--- If an `after` callback is not provided, enters the mod, including dark transition if enabled.
+---@param mod_id     string   The id of the mod to load.
+---@param save_id?   number   The id of the save to load the mod from. (1-3)
+---@param save_name? string   The name to use for the save file.
+---@param after?     function The function to call after assets have been loaded.
+function Mod:loadMod(mod_id, after)
+    assert(Kristal.Mods.data[mod_id], "No mod \""..tostring(mod_id).."\"")
+	local name = Game.wii_data["name"]
+    Gamestate.switch({})
+    Kristal.clearModState()
+    Kristal.loadAssets("","mods","", function()
+        Kristal.loadMod(mod_id, "wii", name, after)
+    end)
+    Gamestate.switch(Kristal.States["Game"])
 end
 
 function Mod:localeIs(short_name, long_name)
