@@ -106,7 +106,8 @@ function Mod:init()
     Mod.States = {
         ["HealthAndSafety"] = HealthAndSafetyScreen,
         ["MainMenu"] = MainMenu,
-        ["SettingsMenu"] = SettingsMenu
+        ["SettingsMenu"] = SettingsMenu,
+        ["Pregame"] = Pregame
     }
 
     self._mouse_sprite_bak = MOUSE_SPRITE
@@ -250,7 +251,11 @@ function Mod:postInit()
 		self.cursor_troll = true
 	end
 
-    self:setState("HealthAndSafety")
+	if Kristal.load_wii_mod then
+		self:setState("MainMenu")
+	else
+		self:setState("HealthAndSafety")
+	end
 end
 
 function Mod:postDraw()
@@ -298,8 +303,9 @@ function Mod:loadMod(mod_id, after)
 	local name = Game.wii_data["name"]
     Gamestate.switch({})
     Kristal.clearModState()
+	Kristal.load_wii_mod = true
     Kristal.loadAssets("","mods","", function()
-        Kristal.loadMod(mod_id, "wii", name, after)
+        Kristal.loadMod(mod_id, 0, name, after)
     end)
     Gamestate.switch(Kristal.States["Game"])
 end

@@ -98,15 +98,14 @@ function Monitor:update()
 			self:setLayer(1)
 		end
 		if self:canClick() and not self.pressed and love.mouse.isDown(1) then
-			print("Clicking on " .. self.mod_id)
-			if self.mod_id == "wii_rtk" then -- All of this is temporary
-				Kristal.load_wii = false
-				Kristal.returnToMenu()
-			elseif self.mod_id == "wii_food" then
+			Game:setFlag("selected_mod", self.mod_id)
+			Assets.playSound("wii/button_pressed")
+			if Game:getFlag("selected_mod") == "wii_food" then
 				love.system.openURL("https://www.dominos.com/en/")
 				self.cd = 1
 			else
-				Mod:loadMod(self.mod_id)
+				Game.wii_menu.music:stop()
+				Mod:setState("Pregame", false)
 			end
 		elseif self:canClick() and not self.pressed and love.mouse.isDown(2) then
 			print("Dragging " .. self.mod_id)
