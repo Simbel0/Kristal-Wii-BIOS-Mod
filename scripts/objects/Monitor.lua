@@ -65,6 +65,7 @@ function Monitor:init(mod_id, index)
 	
 	self.bubble_corner = Assets.getTexture("menu/my_Balloon_a")
 	self.bubble_width = Assets.getTexture("menu/my_Beta16x16_a")
+	self.cd = 0
 end
 
 function Monitor:getDebugInfo()
@@ -85,6 +86,7 @@ function Monitor:getDebugInfo()
 end
 
 function Monitor:update()
+	self.cd = self.cd - DT
 	if Mod.popup_on then return end
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
@@ -102,6 +104,7 @@ function Monitor:update()
 				Kristal.returnToMenu()
 			elseif self.mod_id == "wii_food" then
 				love.system.openURL("https://www.dominos.com/en/")
+				self.cd = 1
 			else
 				Mod:loadMod(self.mod_id)
 			end
@@ -158,7 +161,7 @@ function Monitor:draw()
 end
 
 function Monitor:canClick()
-	return true
+	return self.cd <= 0
 end
 
 return Monitor
