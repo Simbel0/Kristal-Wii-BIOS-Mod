@@ -132,7 +132,7 @@ function MenuTVSheet:update()
 		end
     end
 	
-	if Input.pressed("up", false) and Game.wii_menu.substate == "MAIN" and not self.page_debounce then
+	if Input.pressed("up", false) and Game.wii_menu.substate == "MAIN" and not self.page_debounce and not Game.wii_menu.maintenance then
 		self.page_debounce = true
 		Game.wii_menu.substate = "MESSAGE"
 		Game.wii_menu.stage.timer:tween(0.4, self, {y = self.y - 430}, "out-cubic", function()
@@ -141,6 +141,9 @@ function MenuTVSheet:update()
 		for k,v in pairs(self.monitors) do
 			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y - 430}, "out-cubic")
 		end
+	elseif Input.pressed("up", false) and Game.wii_menu.maintenance and ((not self.popUp) or self.popUp:isRemoved()) then
+		self.popUp = popUp("The system is operating\nin maintenance mode.\nThe Wii Message Board\ncannot be used.", {"Ok"}, function(clicked) print("Called back: " .. clicked) end)
+		self:addChild(self.popUp)
 	end
 	
 	if Input.pressed("down", false) and Game.wii_menu.substate == "MESSAGE" and not self.page_debounce then
