@@ -139,7 +139,7 @@ function preview:draw()
         )
         love.graphics.setShader(prev_shader)
 
-        love.graphics.setColor(self.bg_col[1]/4, self.bg_col[2]/4, self.bg_col[3]/4, self.fade * 0.2)
+        love.graphics.setColor(self.bg_col[1]/4, self.bg_col[2]/4, self.bg_col[3]/4, self.fade * 0.1)
         love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
     end
 end
