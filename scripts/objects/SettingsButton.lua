@@ -11,6 +11,8 @@ function SettingsButton:onClick()
 	
 	Game.wii_menu.state = "TRANSITIONOUT"
 	Game.wii_menu.reason = "SettingsMenu"
+
+	self.pressed = false
 end
 
 function SettingsButton:update()

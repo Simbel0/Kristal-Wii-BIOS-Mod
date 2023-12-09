@@ -9,9 +9,22 @@ function MainMenu:init()
 	self.substate = "MAIN" -- MAIN, MESSAGE, CHANNEL
 	
 	self.did_messages = false
+
+	self.monitor_back = Assets.getTexture("monitors")
+	-- We'll add calculations to add more pages
+	self.monitor_sets = 4
+
+	self.tvSheet = MenuTVSheet()
+	self.tvSheet_y = 330
+	self.stage:addChild(self.tvSheet)
+
+	self.screen_helper = ScreenHelper()
+	self.stage:addChild(self.screen_helper)
 end
 
 function MainMenu:enter(_, maintenance)
+	Game.wii_menu = self
+
 	self.alpha = 0
 
 	self.state = "TRANSITIONIN"
@@ -20,24 +33,13 @@ function MainMenu:enter(_, maintenance)
 
 	self.maintenance = maintenance
 
-	self.tvSheet = MenuTVSheet()
-	self.tvSheet_y = 330
-	self.stage:addChild(self.tvSheet)
-
-	self.monitor_back = Assets.getTexture("monitors")
-	-- We'll add calculations to add more pages
-	self.monitor_sets = 4
+	self.message_date = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
 
 	if not Game.first then
 		self.music = Music("wiimenu")
 		Game.first = true
 	end
 	Assets.playSound("wii/start")
-	
-	self.screen_helper = ScreenHelper()
-	self.stage:addChild(self.screen_helper)
-	
-	self.message_date = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
 end
 
 function MainMenu:update()
@@ -57,7 +59,6 @@ function MainMenu:update()
 			self.alpha = self.alpha - 0.05
 		else
 			Mod:setState(self.reason, self.maintenance)
-			self = nil
 		end
 	end
 end
