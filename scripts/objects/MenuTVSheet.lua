@@ -97,6 +97,8 @@ end
 
 function MenuTVSheet:update()
 	super:update(self)
+	
+	self.clock:update()
 
 	if Input.pressed("right", false) then
 		if Game.wii_menu.substate == "MAIN" and self.page < self.monitor_sets and not self.page_debounce then

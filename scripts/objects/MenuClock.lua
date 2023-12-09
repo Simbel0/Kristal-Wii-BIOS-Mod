@@ -59,8 +59,6 @@ function MenuClock:update()
 			end
 		end
 	end
-	
-	self.alpha = Game.wii_menu.alpha
 end
 
 function MenuClock:draw()
