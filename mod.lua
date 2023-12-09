@@ -308,12 +308,12 @@ function Mod:loadMod(mod_id)
     Kristal.loadAssets("","mods","", function()
         Kristal.loadMod(mod_id, 0, name, function ()
             if Kristal.preInitMod(mod.id) then
-                if SaveMenu ~= savemenu_vanilla then
-                    print("WARNING: SaveMenu is not vanilla")
-                end
                 if WiiSaveMenu then
                     Registry.registerGlobal("SaveMenu", WiiSaveMenu, true)
                 else
+                    if SaveMenu ~= savemenu_vanilla then
+                        print("WARNING: SaveMenu is not vanilla")
+                    end
                     Registry.registerGlobal("SaveMenu", SimpleSaveMenu, true)
                 end
                 -- TODO: save_id, save_name
