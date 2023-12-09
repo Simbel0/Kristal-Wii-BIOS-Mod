@@ -70,7 +70,7 @@ function preview:init(mod, button, _)
 			Kristal.load_wii = wii_data["load_early"]
 		end
 	end
-	
+
 	if Kristal.load_wii then
 		Kristal.loadMod(mod.id)
 		return
@@ -79,7 +79,7 @@ function preview:init(mod, button, _)
     button:setColor(preview.Themes[theme]["button"])
     button:setFavoritedColor(preview.Themes[theme]["favorite"])
 
-    self.bg = love.graphics.newImage(mod.path .. "/preview/bg.png")
+    self.bg = love.graphics.newImage(mod.path .. "/preview/sky_gradient.png")
 	self.bg_col = preview.Themes[theme]["bg"]
 	self.bg_fade = preview.Themes[theme]["bg_fade"]
 
@@ -112,7 +112,7 @@ function preview:draw()
 
         Draw.pushCanvas(self.canvas)
         love.graphics.clear(COLORS.white)
-        love.graphics.setColor(self.bg_col[1], self.bg_col[2], self.bg_col[3], 0.1)
+        love.graphics.setColor(self.bg_col[1], self.bg_col[2], self.bg_col[3], self.fade * 0.1)
         local stripes_num_v_anim = self.stripes_num_v_base
             + ((self.stripes_num_v - self.stripes_num_v_base) * math.sin((Kristal.getTime() - self.init_time)*0.8))
         for i = 0, math.ceil(stripes_num_v_anim) do
