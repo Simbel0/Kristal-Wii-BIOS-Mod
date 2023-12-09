@@ -17,6 +17,8 @@ function BackButton:onClick()
 		Game.wii_menu.state = "TRANSITIONOUT"
 		Game.wii_menu.reason = "MainMenu"
 	end
+
+	self.pressed = false
 end
 
 return BackButton

@@ -4,25 +4,11 @@ local SettingsMenu = {}
 function SettingsMenu:init()
 	self.stage = Stage()
 
-	Game.wii_menu = self
-end
-
-function SettingsMenu:enter(_, maintenance)
-	self.alpha = 0
-
-	self.state = "TRANSITIONIN"
-	
-	self.substate = "MAIN" -- MAIN, DATA, SETTINGS, SETTING
-	self.setting = ""
-	self.page = 1
-
-	self.offset_moni = 0
-
-	self.maintenance = maintenance
-	
 	self.background = Assets.getTexture("settings/settings")
 	self.background_data = Assets.getTexture("settings/data")
 	self.logo = Assets.getTexture("kristal")
+
+	self.font = Assets.getFont("main_mono")
 	
 	self.settings_button = WiiSettingsButton(SCREEN_WIDTH - 160, 220)
 	self.stage:addChild(self.settings_button)
@@ -35,6 +21,22 @@ function SettingsMenu:enter(_, maintenance)
 	
 	self.screen_helper = ScreenHelper()
 	self.stage:addChild(self.screen_helper)
+end
+
+function SettingsMenu:enter(_, maintenance)
+	Game.wii_menu = self
+
+	self.alpha = 0
+
+	self.state = "TRANSITIONIN"
+	
+	self.substate = "MAIN" -- MAIN, DATA, SETTINGS, SETTING
+	self.setting = ""
+	self.page = 1
+
+	self.offset_moni = 0
+
+	self.maintenance = maintenance
 	
 	self.mod_files = {}
 	self.save_count = 0
@@ -47,8 +49,6 @@ function SettingsMenu:enter(_, maintenance)
 			end
 		end
 	end
-	
-	self.font = Assets.getFont("main_mono")
 	
 	self.blocks = {}
 	for i=1, 15 do
@@ -80,7 +80,6 @@ function SettingsMenu:update()
 			self.alpha = self.alpha - 0.05
 		else
 			Mod:setState(self.reason, self.maintenance)
-			self = nil
 		end
 	end
 end
