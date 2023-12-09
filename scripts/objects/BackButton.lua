@@ -8,6 +8,7 @@ function BackButton:init(x, y, gray)
 	end
 	self.sprite:setOrigin(0.5,0.5)
 	self.sprite:setPosition(x, y)
+	self.cd = 0
 end
 
 function BackButton:onClick()
@@ -16,9 +17,21 @@ function BackButton:onClick()
 	if Game.wii_menu.substate == "MAIN" then
 		Game.wii_menu.state = "TRANSITIONOUT"
 		Game.wii_menu.reason = "MainMenu"
+	elseif Game.wii_menu.substate == "DATA" or Game.wii_menu.substate == "SETTINGS" then
+		Game.wii_menu.substate = "MAIN"
+		self.cd = 1
 	end
 
 	self.pressed = false
+end
+
+function BackButton:update()
+	super:update(self)
+	self.cd = self.cd - DT
+end
+
+function BackButton:canClick()
+	return self.cd <= 0
 end
 
 return BackButton

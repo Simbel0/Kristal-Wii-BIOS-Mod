@@ -59,6 +59,9 @@ function Pregame:update()
 				Kristal.load_wii_mod = false
 				Kristal.load_wii = false
 				Kristal.returnToMenu()
+			elseif Game:getFlag("selected_mod") == "wii_food" then
+				love.system.openURL("https://www.dominos.com/en/")
+				Mod:setState("MainMenu", false)
 			else
 				Mod:loadMod(Game:getFlag("selected_mod"))
 			end

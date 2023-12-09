@@ -35,10 +35,7 @@ function MainMenu:enter(_, maintenance)
 
 	self.message_date = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
 
-	if not Game.first then
-		self.music = Music("wiimenu")
-		Game.first = true
-	end
+	self.music = Music("wiimenu")
 	Assets.playSound("wii/start")
 end
 
