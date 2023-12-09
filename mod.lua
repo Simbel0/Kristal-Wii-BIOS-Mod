@@ -307,7 +307,6 @@ function Mod:loadMod(mod_id, after)
     Kristal.loadAssets("","mods","", function()
         Kristal.loadMod(mod_id, 0, name, after)
     end)
-    Gamestate.switch(Kristal.States["Game"])
 end
 
 function Mod:localeIs(short_name, long_name)
