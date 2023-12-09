@@ -316,7 +316,6 @@ function Mod:loadMod(mod_id)
                     end
                     Registry.registerGlobal("SaveMenu", SimpleSaveMenu, true)
                 end
-                -- TODO: save_id, save_name
                 Gamestate.switch(Kristal.States["Game"], 0, name)
             end
         end)
