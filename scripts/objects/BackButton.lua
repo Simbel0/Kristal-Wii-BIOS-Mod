@@ -12,6 +12,11 @@ end
 
 function BackButton:onClick()
 	super:onClick(self)
+	
+	if Game.wii_menu.substate == "MAIN" then
+		Game.wii_menu.state = "TRANSITIONOUT"
+		Game.wii_menu.reason = "MainMenu"
+	end
 end
 
 return BackButton

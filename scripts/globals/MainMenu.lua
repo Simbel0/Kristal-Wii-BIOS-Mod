@@ -28,7 +28,10 @@ function MainMenu:enter(_, maintenance)
 	-- We'll add calculations to add more pages
 	self.monitor_sets = 4
 
-	self.music = Music("wiimenu")
+	if not Game.first then
+		self.music = Music("wiimenu")
+		Game.first = true
+	end
 	Assets.playSound("wii/start")
 	
 	self.screen_helper = ScreenHelper()
@@ -49,6 +52,14 @@ function MainMenu:update()
 	self.screen_helper:update()
 
 	self.stage:update()
+	if self.state == "TRANSITIONOUT" then
+		if self.alpha > 0 then
+			self.alpha = self.alpha - 0.05
+		else
+			Mod:setState(self.reason, self.maintenance)
+			self = nil
+		end
+	end
 end
 
 function MainMenu:draw()

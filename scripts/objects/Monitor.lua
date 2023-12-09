@@ -91,7 +91,7 @@ function Monitor:update()
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
 	
-	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and self.page == Game.wii_menu.tvSheet.page and self:canHover() then
+	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and Game.wii_menu.tvSheet and self.page == Game.wii_menu.tvSheet.page and self:canHover() then
 		if not self.hovered then
 			self.hover:play()
 			self.hovered = true
@@ -164,7 +164,7 @@ function Monitor:canClick()
 end
 
 function Monitor:canHover()
-	return (not Game.wii_menu.tvSheet.popUp) or Game.wii_menu.tvSheet.popUp:isRemoved()
+	return ((not Game.wii_menu.tvSheet.popUp) or Game.wii_menu.tvSheet.popUp:isRemoved()) and Game.wii_menu.state == "IDLE"
 end
 
 return Monitor

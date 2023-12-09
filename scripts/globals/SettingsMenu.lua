@@ -40,7 +40,7 @@ function SettingsMenu:enter(_, maintenance)
 	self.save_count = 0
 	for index,mod in ipairs(Game.wii_data["channels"]) do
 		if not Utils.containsValue(Utils.getKeys(Mod.wiiwares), mod) then
-			local full_path = "saves/"..mod.."/file_wii.json"
+			local full_path = "saves/"..mod.."/file_0.json"
 			if love.filesystem.getInfo(full_path) then
 				table.insert(self.mod_files, mod)
 				self.save_count = self.save_count + 1
@@ -75,6 +75,14 @@ function SettingsMenu:update()
 	self.screen_helper:update()
 
 	self.stage:update()
+	if self.state == "TRANSITIONOUT" then
+		if self.alpha > 0 then
+			self.alpha = self.alpha - 0.05
+		else
+			Mod:setState(self.reason, self.maintenance)
+			self = nil
+		end
+	end
 end
 
 function SettingsMenu:draw()
@@ -99,6 +107,8 @@ function SettingsMenu:draw()
 		if self.substate == "MAIN" then
 			self.settings_button:draw()
 			self.data_button:draw()
+			self.back_button:draw()
+		elseif self.substate == "SETTINGS" then
 			self.back_button:draw()
 		end
 	end

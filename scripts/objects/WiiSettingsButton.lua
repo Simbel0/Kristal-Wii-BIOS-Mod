@@ -8,6 +8,10 @@ end
 
 function WiiSettingsButton:onClick()
 	super:onClick(self)
+	Game.wii_menu.substate = "SETTINGS"
+	self.pressed = false
 end
+
+function WiiSettingsButton:canHover() return Game.wii_menu.substate == "MAIN" end
 
 return WiiSettingsButton

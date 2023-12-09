@@ -44,7 +44,7 @@ function DataBlock:update()
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
 	screen_x, screen_y = screen_x-self.width/2, screen_y-self.height/2
-	if not self.pressed then
+	if not self.pressed and self:canHover() then
 		if (mx / Kristal.getGameScale() > self.x) and (mx / Kristal.getGameScale() < (self.x + self.width)) and (my / Kristal.getGameScale() > self.y) and (my / Kristal.getGameScale() < (self.y + self.height)) then
 			if self:canClick() then
 				if love.mouse.isDown(1) then
@@ -62,7 +62,7 @@ function DataBlock:update()
 							end
 							
 							if clicked == 1 then
-								love.filesystem.remove("saves/"..self.mod_id.."/file_wii.json")
+								love.filesystem.remove("saves/"..self.mod_id.."/file_0.json")
 								local index = tablefind(Game.wii_menu.mod_files,self.mod_id)
 								table.remove(Game.wii_menu.mod_files, index)
 								
@@ -118,5 +118,6 @@ function DataBlock:updateMod(mod_id)
 end
 
 function DataBlock:canClick() return not Game.wii_menu.popUp end
+function DataBlock:canHover() return not Game.wii_menu.popUp end
 
 return DataBlock

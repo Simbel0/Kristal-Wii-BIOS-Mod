@@ -8,6 +8,10 @@ end
 
 function DataButton:onClick()
 	super:onClick(self)
+	Game.wii_menu.substate = "DATA"
+	self.pressed = false
 end
+
+function DataButton:canHover() return Game.wii_menu.substate == "MAIN" end
 
 return DataButton

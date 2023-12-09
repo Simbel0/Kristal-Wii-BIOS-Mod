@@ -55,9 +55,9 @@ function Pregame:update()
 			self.second_sprite.alpha = 1 - (self.time - 10)
 		else
 			self.second_sprite.alpha = 0
-			Kristal.load_wii = false
 			if Game:getFlag("selected_mod") == "wii_rtk" then -- All of this is temporary
 				Kristal.load_wii_mod = false
+				Kristal.load_wii = false
 				Kristal.returnToMenu()
 			else
 				Mod:loadMod(Game:getFlag("selected_mod"))

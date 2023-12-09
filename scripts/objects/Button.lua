@@ -26,7 +26,7 @@ function Button:update()
 	local screen_x, screen_y = self:getScreenPos()
 	screen_x, screen_y = screen_x-self.width/2, screen_y-self.height/2
 	if not self.pressed then
-		if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) then
+		if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and self:canHover() then
 			if self:canClick() then
 				if self.scale_x < 1.15 then
 					self.scale_x = self.scale_x + 0.1*DTMULT
@@ -65,5 +65,6 @@ function Button:onClick()
 end
 
 function Button:canClick() return true end
+function Button:canHover() return true end
 
 return Button
