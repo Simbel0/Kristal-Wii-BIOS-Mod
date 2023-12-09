@@ -297,15 +297,29 @@ end
 ---@param mod_id     string   The id of the mod to load.
 ---@param save_id?   number   The id of the save to load the mod from. (1-3)
 ---@param save_name? string   The name to use for the save file.
----@param after?     function The function to call after assets have been loaded.
-function Mod:loadMod(mod_id, after)
+function Mod:loadMod(mod_id)
     assert(Kristal.Mods.data[mod_id], "No mod \""..tostring(mod_id).."\"")
+    local mod = Kristal.Mods.getAndLoadMod(mod_id)
 	local name = Game.wii_data["name"]
+    local savemenu_vanilla = SaveMenu
     Gamestate.switch({})
     Kristal.clearModState()
 	Kristal.load_wii_mod = true
     Kristal.loadAssets("","mods","", function()
-        Kristal.loadMod(mod_id, 0, name, after)
+        Kristal.loadMod(mod_id, 0, name, function ()
+            if Kristal.preInitMod(mod.id) then
+                if SaveMenu ~= savemenu_vanilla then
+                    print("WARNING: SaveMenu is not vanilla")
+                end
+                if WiiSaveMenu then
+                    Registry.registerGlobal("SaveMenu", WiiSaveMenu, true)
+                else
+                    Registry.registerGlobal("SaveMenu", SimpleSaveMenu, true)
+                end
+                -- TODO: save_id, save_name
+                Gamestate.switch(Kristal.States["Game"], save_id, save_name)
+            end
+        end)
     end)
 end
 
