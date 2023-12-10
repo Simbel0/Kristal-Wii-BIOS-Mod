@@ -10,7 +10,7 @@ function EnableButton:init(x, y, enable)
 end
 
 function EnableButton:draw()
-	if Game.wii_menu.substate == "SETTING" and Utils.containsValue({"autoload", "american", "military"}, Game.wii_menu.reason) then
+	if Game.wii_menu.substate == "SETTING" and Utils.containsValue({"autoload", "american", "military", "timestamp"}, Game.wii_menu.reason) then
 		super:draw(self)
 		
 		love.graphics.setColor(0, 0, 0, 1)
@@ -49,6 +49,12 @@ function EnableButton:update()
 			self.buttonPressed = true
 		end
 	end
+	
+	if Game.wii_menu.reason == "timestamp" then
+		self.text = self.enable and "Left" or "Right"
+	else
+		self.text = self.enable and "Enable" or "Disable"
+	end
 end
 
 function EnableButton:onClick()
@@ -58,6 +64,8 @@ function EnableButton:onClick()
 		Game.wii_data["load_early"] = self.enable
 	elseif Game.wii_menu.reason == "american" then
 		Game.wii_data["american"] = not self.enable
+	elseif Game.wii_menu.reason == "timestamp" then
+		Game.wii_data["am_right"] = not self.enable
 	else
 		Game.wii_data["military"] = not self.enable
 	end
@@ -74,7 +82,7 @@ function EnableButton:canClick()
 end
 
 function EnableButton:canHover()
-	return Game.wii_menu.substate == "SETTING" and Utils.containsValue({"autoload", "american", "military"}, Game.wii_menu.reason)
+	return Game.wii_menu.substate == "SETTING" and Utils.containsValue({"autoload", "american", "military", "timestamp"}, Game.wii_menu.reason)
 end
 
 return EnableButton

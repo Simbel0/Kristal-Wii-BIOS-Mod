@@ -14,7 +14,7 @@ function SettingsMenu:init()
 	
 	self.settings_names = {
 		["name"] = "Save Name",
-		["theme"] = "Wii BIOS Theme",
+		["theme"] = "Wii BIOS Theme (Reload required)",
 		["autoload"] = "Autoload Wii Menu",
 		["american"] = "Colored H&S",
 		["military"] = "12-Hour Time",
@@ -56,6 +56,27 @@ function SettingsMenu:init()
 	
 	self.disable_button = EnableButton(320, 265, false)
 	self.screen_helper:addChild(self.disable_button)
+	
+	self.default_theme = ThemeButton(70, 116, "DEFAULT")
+	self.screen_helper:addChild(self.default_theme)
+	
+	self.dt_theme = ThemeButton(150, 116, "DETERMINATION")
+	self.screen_helper:addChild(self.dt_theme)
+	
+	self.sd_theme = ThemeButton(230, 116, "SD_CARD")
+	self.screen_helper:addChild(self.sd_theme)
+	
+	self.deoxynn_theme = ThemeButton(310, 116, "DEOXYNN")
+	self.screen_helper:addChild(self.deoxynn_theme)
+	
+	self.legend_theme = ThemeButton(390, 116, "LEGEND")
+	self.screen_helper:addChild(self.legend_theme)
+	
+	self.sneo_theme = ThemeButton(470, 116, "SNEO")
+	self.screen_helper:addChild(self.sneo_theme)
+	
+	self.ut_theme = ThemeButton(550, 116, "UT_BATTLE")
+	self.screen_helper:addChild(self.ut_theme)
 end
 
 function SettingsMenu:enter(_, maintenance)
