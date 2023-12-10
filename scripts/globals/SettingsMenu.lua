@@ -3,12 +3,23 @@ local SettingsMenu = {}
 
 function SettingsMenu:init()
 	self.stage = Stage()
+	
+	self.cooldown = 0
 
 	self.background = Assets.getTexture("settings/settings")
 	self.background_data = Assets.getTexture("settings/data")
 	self.logo = Assets.getTexture("kristal")
 
 	self.font = Assets.getFont("main_mono")
+	
+	self.settings_names = {
+		["name"] = "Save Name",
+		["theme"] = "Wii BIOS Theme",
+		["autoload"] = "Autoload Wii Menu",
+		["american"] = "Colored H&S",
+		["military"] = "12-Hour Time",
+		["timestamp"] = "AM/PM Position"
+	}
 	
 	self.settings_button = WiiSettingsButton(SCREEN_WIDTH - 160, 220)
 	self.stage:addChild(self.settings_button)
@@ -21,6 +32,24 @@ function SettingsMenu:init()
 	
 	self.screen_helper = ScreenHelper()
 	self.stage:addChild(self.screen_helper)
+	
+	self.name_button = ISettingButton(320, 105, "Save Name", "name", 1)
+	self.screen_helper:addChild(self.name_button)
+	
+	self.theme_button = ISettingButton(320, 185, "Wii BIOS Theme", "theme", 1)
+	self.screen_helper:addChild(self.theme_button)
+	
+	self.load_button = ISettingButton(320, 265, "Autoload Wii Menu", "autoload", 1)
+	self.screen_helper:addChild(self.load_button)
+	
+	self.has_button = ISettingButton(320, 345, "Colored H&S", "american", 1)
+	self.screen_helper:addChild(self.has_button)
+	
+	self.time_button = ISettingButton(320, 105, "12-Hour Time", "military", 2)
+	self.screen_helper:addChild(self.time_button)
+	
+	self.stamp_button = ISettingButton(320, 185, "AM/PM Position", "timestamp", 2)
+	self.screen_helper:addChild(self.stamp_button)
 end
 
 function SettingsMenu:enter(_, maintenance)
@@ -73,6 +102,30 @@ function SettingsMenu:update()
 	end
 	
 	self.screen_helper:update()
+	
+	if Input.pressed("right", false) then
+		if self.substate == "SETTINGS" then
+			if self.cooldown <= 0 then
+				if self.page < 2 then -- our current page number is 2
+					self.page = self.page + 1
+					Assets.playSound("wii/wsd_select")
+					self.cooldown = 0.25
+				end
+			end
+		end
+	end
+	
+	if Input.pressed("left", false) then
+		if self.substate == "SETTINGS" then
+			if self.cooldown <= 0 then
+				if self.page > 1 then
+					self.page = self.page - 1
+					Assets.playSound("wii/wsd_select")
+					self.cooldown = 0.25
+				end
+			end
+		end
+	end
 
 	self.stage:update()
 	if self.state == "TRANSITIONOUT" then
@@ -82,6 +135,8 @@ function SettingsMenu:update()
 			Mod:setState(self.reason, self.maintenance)
 		end
 	end
+	
+	self.cooldown = self.cooldown - DT
 end
 
 function SettingsMenu:draw()
@@ -99,17 +154,26 @@ function SettingsMenu:draw()
 		
 		love.graphics.setFont(self.font)
 		love.graphics.printf("Save Files: " .. self.save_count, 300, 420, 300, "center")
-	else
+	elseif self.substate == "MAIN" then
 		love.graphics.draw(self.background, 0, 0, 0, 2, 2)
 		love.graphics.draw(self.logo, 540, 36)
 		
-		if self.substate == "MAIN" then
-			self.settings_button:draw()
-			self.data_button:draw()
-			self.back_button:draw()
-		elseif self.substate == "SETTINGS" then
-			self.back_button:draw()
-		end
+		self.settings_button:draw()
+		self.data_button:draw()
+		self.back_button:draw()
+	elseif self.substate == "SETTINGS" then
+		love.graphics.draw(self.background, 0, 0, 0, 2, 2)
+		love.graphics.print("Ver. " .. Mod.info.version, 500, 26)
+		love.graphics.print(self.page .. "/2", 580, 440)
+		love.graphics.print("Wii Settings", 30, 26)
+		
+		self.back_button:draw()
+	elseif self.substate == "SETTING" then
+		love.graphics.draw(self.background, 0, 0, 0, 2, 2)
+		love.graphics.print("Ver. " .. Mod.info.version, 500, 26)
+		love.graphics.print(self.settings_names[self.reason], 30, 26)
+		
+		self.back_button:draw()
 	end
 	
 	self.screen_helper:draw()

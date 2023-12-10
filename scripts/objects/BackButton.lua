@@ -19,8 +19,10 @@ function BackButton:onClick()
 		Game.wii_menu.reason = "MainMenu"
 	elseif Game.wii_menu.substate == "DATA" or Game.wii_menu.substate == "SETTINGS" then
 		Game.wii_menu.substate = "MAIN"
-		self.cd = 1
+	elseif Game.wii_menu.substate == "SETTING" then
+		Game.wii_menu.substate = "SETTINGS"
 	end
+	self.cd = 0.5
 
 	self.pressed = false
 end
