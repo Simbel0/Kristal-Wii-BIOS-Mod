@@ -74,8 +74,8 @@ function DataBlock:update()
 								Game.wii_menu.page = 1
 								
 								for i=1, 15 do
-									if Game.wii_menu.mod_files[i] then
-										Game.wii_menu.blocks[i]:updateMod(Game.wii_menu.mod_files[i])
+									if Game.wii_menu.mod_files[i + 15*(Game.wii_menu.page-1)] then
+										Game.wii_menu.blocks[i]:updateMod(Game.wii_menu.mod_files[i + 15*(Game.wii_menu.page-1)])
 									else
 										Game.wii_menu.blocks[i]:updateMod()
 									end

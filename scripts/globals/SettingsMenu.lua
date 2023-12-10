@@ -140,15 +140,40 @@ function SettingsMenu:update()
 				end
 			end
 		end
+		if self.substate == "DATA" then
+			if self.cooldown <= 0 then
+				if self.page < math.ceil(#self.mod_files/15) then
+					self.page = self.page + 1
+					Assets.playSound("wii/wsd_select")
+					self.cooldown = 0.25
+					for i=1, 15 do
+						if self.mod_files[i + 15*(self.page-1)] then
+							Game.wii_menu.blocks[i]:updateMod(Game.wii_menu.mod_files[i + 15*(self.page-1)])
+						else
+							Game.wii_menu.blocks[i]:updateMod()
+						end
+					end
+				end
+			end
+		end
 	end
 	
 	if Input.pressed("left", false) then
-		if self.substate == "SETTINGS" then
+		if self.substate == "SETTINGS" or self.substate == "DATA" then
 			if self.cooldown <= 0 then
 				if self.page > 1 then
 					self.page = self.page - 1
 					Assets.playSound("wii/wsd_select")
 					self.cooldown = 0.25
+					if self.substate == "DATA" then
+						for i=1, 15 do
+							if self.mod_files[i + 15*(self.page-1)] then
+								Game.wii_menu.blocks[i]:updateMod(Game.wii_menu.mod_files[i + 15*(self.page-1)])
+							else
+								Game.wii_menu.blocks[i]:updateMod()
+							end
+						end
+					end
 				end
 			end
 		end
@@ -181,6 +206,7 @@ function SettingsMenu:draw()
 		
 		love.graphics.setFont(self.font)
 		love.graphics.printf("Save Files: " .. self.save_count, 300, 420, 300, "center")
+		love.graphics.print("Page " .. self.page .. "/" .. math.ceil(#self.mod_files/15), 440, 26)
 	elseif self.substate == "MAIN" then
 		love.graphics.draw(self.background, 0, 0, 0, 2, 2)
 		love.graphics.draw(self.logo, 540, 36)
