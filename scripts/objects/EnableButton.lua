@@ -1,19 +1,16 @@
-local ISettingButton, super = Class("Button")
+local EnableButton, super = Class("Button")
 
-function ISettingButton:init(x, y, text, setting, page)
+function EnableButton:init(x, y, enable)
 	super:init(self, x, y, "bar")
 	
-	self.text = text
+	self.text = enable and "Enable" or "Disable"
 	self.font = Assets.getFont("main_mono")
 	
-	self.setting = setting
-	self.page = page
-	
-	
+	self.enable = enable
 end
 
-function ISettingButton:draw()
-	if Game.wii_menu.page == self.page and Game.wii_menu.substate == "SETTINGS" then
+function EnableButton:draw()
+	if Game.wii_menu.substate == "SETTING" and Utils.containsValue({"autoload", "american", "military"}, Game.wii_menu.reason) then
 		super:draw(self)
 		
 		love.graphics.setColor(0, 0, 0, 1)
@@ -26,7 +23,7 @@ function ISettingButton:draw()
 	end
 end
 
-function ISettingButton:update() 
+function EnableButton:update() 
 	super.super.update(self)
 
 	local mx, my = love.mouse.getPosition()
@@ -54,24 +51,30 @@ function ISettingButton:update()
 	end
 end
 
-function ISettingButton:onClick()
+function EnableButton:onClick()
 	super:onClick(self)
 	
-	Game.wii_menu.substate = "SETTING"
-	Game.wii_menu.reason = self.setting
-	Game.wii_menu.savepage = self.page
+	if Game.wii_menu.reason == "autoload" then
+		Game.wii_data["load_early"] = self.enable
+	elseif Game.wii_menu.reason == "american" then
+		Game.wii_data["american"] = not self.enable
+	else
+		Game.wii_data["military"] = not self.enable
+	end
+	
+	love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
 	
 	Game.wii_menu.cooldown = 0.25
 
 	self.pressed = false
 end
 
-function ISettingButton:canClick()
+function EnableButton:canClick()
 	return Game.wii_menu.cooldown <= 0
 end
 
-function ISettingButton:canHover()
-	return Game.wii_menu.page == self.page and Game.wii_menu.substate == "SETTINGS"
+function EnableButton:canHover()
+	return Game.wii_menu.substate == "SETTING" and Utils.containsValue({"autoload", "american", "military"}, Game.wii_menu.reason)
 end
 
-return ISettingButton
+return EnableButton

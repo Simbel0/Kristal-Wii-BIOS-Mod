@@ -50,6 +50,12 @@ function SettingsMenu:init()
 	
 	self.stamp_button = ISettingButton(320, 185, "AM/PM Position", "timestamp", 2)
 	self.screen_helper:addChild(self.stamp_button)
+	
+	self.enable_button = EnableButton(320, 185, true)
+	self.screen_helper:addChild(self.enable_button)
+	
+	self.disable_button = EnableButton(320, 265, false)
+	self.screen_helper:addChild(self.disable_button)
 end
 
 function SettingsMenu:enter(_, maintenance)
