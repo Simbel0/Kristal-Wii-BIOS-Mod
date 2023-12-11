@@ -16,7 +16,7 @@ function ISettingButton:draw()
 	if Game.wii_menu.page == self.page and Game.wii_menu.substate == "SETTINGS" then
 		super:draw(self)
 		
-		love.graphics.setColor(0, 0, 0, 1)
+		love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["TEXT"], 1)
 		
 		love.graphics.setFont(self.font)
 		

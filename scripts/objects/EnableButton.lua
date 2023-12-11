@@ -13,7 +13,7 @@ function EnableButton:draw()
 	if Game.wii_menu.substate == "SETTING" and Utils.containsValue({"autoload", "american", "military", "timestamp"}, Game.wii_menu.reason) then
 		super:draw(self)
 		
-		love.graphics.setColor(0, 0, 0, 1)
+		love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["TEXT"], 1)
 		
 		love.graphics.setFont(self.font)
 		

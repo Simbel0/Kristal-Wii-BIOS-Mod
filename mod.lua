@@ -22,6 +22,7 @@ Mod.Themes = {
 		["BG"] = Utils.hexToRgb("#F2F2F2"),
 		["BORDER"] = {52/255, 192/255, 237/255},
 		["DATE"] = {130/255, 130/255, 130/255},
+		["TEXT"] = {0/255, 0/255, 0/255},
 	},
 	["DETERMINATION"] = {
 		["CLOCK"] = {155/255, 155/255, 155/255},
@@ -30,6 +31,7 @@ Mod.Themes = {
 		["BG"] = Utils.hexToRgb("#F2F2F2"),
 		["BORDER"] = {255/255, 33/255, 18/255},
 		["DATE"] = {130/255, 130/255, 130/255},
+		["TEXT"] = {0/255, 0/255, 0/255},
 	},
 	["SD_CARD"] = {
 		["CLOCK"] = {252/255, 248/255, 249/255},
@@ -38,6 +40,7 @@ Mod.Themes = {
 		["BG"] = Utils.hexToRgb("#242424"),
 		["BORDER"] = {52/255, 192/255, 237/255},
 		["DATE"] = {130/255, 130/255, 130/255},
+		["TEXT"] = {0/255, 0/255, 0/255},
 	},
 	-- ["KRISTAL"] = {
 		-- ["CLOCK"] = {255/255, 229/255, 0/255},
@@ -46,6 +49,7 @@ Mod.Themes = {
 		-- ["BG"] = Utils.hexToRgb("#059AA3"),
 		-- ["BORDER"] = {255/255, 229/255, 0/255},
 		-- ["DATE"] = {130/255, 130/255, 130/255},
+		-- ["TEXT"] = {0/255, 0/255, 0/255},
 	-- }, -- Don't uncomment this. It was a lot better in my head. - AcousticJamm
 	["DEOXYNN"] = {
 		["CLOCK"] = {253/255, 190/255, 219/255},
@@ -54,6 +58,7 @@ Mod.Themes = {
 		["BG"] = Utils.hexToRgb("#FFFFFF"),
 		["BORDER"] = {253/255, 190/255, 219/255},
 		["DATE"] = {235/255, 235/255, 235/255},
+		["TEXT"] = {0/255, 0/255, 0/255},
 	},
 	["LEGEND"] = {
 		["CLOCK"] = {255/255, 255/255, 255/255},
@@ -62,6 +67,7 @@ Mod.Themes = {
 		["BG"] = Utils.hexToRgb("#643214"),
 		["BORDER"] = {192/255, 130/255, 38/255},
 		["DATE"] = {255/255, 255/255, 255/255},
+		["TEXT"] = {0/255, 0/255, 0/255},
 	},
 	["SNEO"] = {
 		["CLOCK"] = {225/255, 242/255, 0/255},
@@ -70,6 +76,7 @@ Mod.Themes = {
 		["BG"] = Utils.hexToRgb("#C04385"),
 		["BORDER"] = {1/255, 128/255, 1/255},
 		["DATE"] = {255/255, 174/255, 201/255},
+		["TEXT"] = {0/255, 0/255, 0/255},
 	},
 	["UT_BATTLE"] = {
 		["CLOCK"] = {255/255, 255/255, 255/255},
@@ -78,6 +85,7 @@ Mod.Themes = {
 		["BG"] = Utils.hexToRgb("#141414"),
 		["BORDER"] = {60/255, 178/255, 78/255},
 		["DATE"] = {251/255, 255/255, 41/255},
+		["TEXT"] = {255/255, 127/255, 39/255},
 	},
 }
 
@@ -308,14 +316,15 @@ function Mod:loadMod(mod_id)
     Kristal.loadAssets("","mods","", function()
         Kristal.loadMod(mod_id, 0, name, function ()
             if Kristal.preInitMod(mod.id) then
+                if SaveMenu ~= savemenu_vanilla then
+                    print("WARNING: SaveMenu is not vanilla")
+                end
                 if WiiSaveMenu then
                     Registry.registerGlobal("SaveMenu", WiiSaveMenu, true)
                 else
-                    if SaveMenu ~= savemenu_vanilla then
-                        print("WARNING: SaveMenu is not vanilla")
-                    end
                     Registry.registerGlobal("SaveMenu", SimpleSaveMenu, true)
                 end
+                -- TODO: save_id, save_name
                 Gamestate.switch(Kristal.States["Game"], 0, name)
             end
         end)
