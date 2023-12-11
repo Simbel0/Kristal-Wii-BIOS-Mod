@@ -116,7 +116,7 @@ function DataBlock:updateMod(mod_id)
 	end
 end
 
-function DataBlock:canClick() return not Game.wii_menu.popUp end
+function DataBlock:canClick() return Game.wii_menu.substate == "DATA" end
 function DataBlock:canHover() return not Game.wii_menu.popUp end
 
 return DataBlock

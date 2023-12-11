@@ -36,4 +36,8 @@ function BackButton:canClick()
 	return self.cd <= 0
 end
 
+function BackButton:canHover()
+	return Game.wii_menu.clickable
+end
+
 return BackButton

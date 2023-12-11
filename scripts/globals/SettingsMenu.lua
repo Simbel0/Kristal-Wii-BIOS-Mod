@@ -9,6 +9,8 @@ function SettingsMenu:init()
 	self.background = Assets.getTexture("settings/settings")
 	self.background_data = Assets.getTexture("settings/data")
 	self.logo = Assets.getTexture("kristal")
+	
+	self.clickable = true
 
 	self.font = Assets.getFont("main_mono")
 	
@@ -77,6 +79,9 @@ function SettingsMenu:init()
 	
 	self.ut_theme = ThemeButton(550, 116, "UT_BATTLE")
 	self.screen_helper:addChild(self.ut_theme)
+	
+	self.name_text = NameText(130, 100)
+	self.screen_helper:addChild(self.name_text)
 end
 
 function SettingsMenu:enter(_, maintenance)
