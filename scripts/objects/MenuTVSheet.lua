@@ -114,6 +114,22 @@ function MenuTVSheet:update()
 		elseif Game.wii_menu.substate == "MESSAGE" then
 			Assets.playSound("wii/wsd_select")
 			Game.wii_menu.message_date = Game.wii_menu.message_date + 86400
+			local day = os.date("*t", Game.wii_menu.message_date)
+			if day.day < 10 then
+				day.day = "0" .. day.day
+			end
+			if day.month < 10 then
+				day.month = "0" .. day.month
+			end
+			local dater = day.month .. "/" .. day.day .. "/" .. day.year
+			
+			local found = 0
+			for k,v in pairs(Game.wii_data["messages"]) do
+				if v["date"] == dater then
+					found = found + 1
+				end
+			end
+			print("[BIOS] Found " .. found .. " message(s) for " .. dater)
 		end
     end
 
@@ -131,6 +147,22 @@ function MenuTVSheet:update()
 		elseif Game.wii_menu.substate == "MESSAGE" then
 			Assets.playSound("wii/wsd_select")
 			Game.wii_menu.message_date = Game.wii_menu.message_date - 86400
+			local day = os.date("*t", Game.wii_menu.message_date)
+			if day.day < 10 then
+				day.day = "0" .. day.day
+			end
+			if day.month < 10 then
+				day.month = "0" .. day.month
+			end
+			local dater = day.month .. "/" .. day.day .. "/" .. day.year
+			
+			local found = 0
+			for k,v in pairs(Game.wii_data["messages"]) do
+				if v["date"] == dater then
+					found = found + 1
+				end
+			end
+			print("[BIOS] Found " .. found .. " message(s) for " .. dater)
 		end
     end
 	

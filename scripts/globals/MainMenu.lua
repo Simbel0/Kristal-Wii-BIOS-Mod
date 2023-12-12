@@ -41,6 +41,8 @@ function MainMenu:enter(_, maintenance)
 		Game.musicplay = Music("wiimenu")
 		Assets.playSound("wii/start")
 	end
+	
+	self.messages = {}
 end
 
 function MainMenu:update()
@@ -89,6 +91,10 @@ function MainMenu:draw()
 	end
 	
 	self.screen_helper:draw()
+	
+	for k,v in pairs(self.messages) do
+		v:draw()
+	end
 
 	self.tvSheet:draw(self.alpha)
 
