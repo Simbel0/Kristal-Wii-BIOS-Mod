@@ -31,9 +31,6 @@ function MenuTVSheet:init()
 		table.insert(self.monitors, monitor)
 		self:addChild(monitor)
 	end
-	
-	self.settings_button = SettingsButton(60, 410)
-	self:addChild(self.settings_button)
 end
 
 function MenuTVSheet:handleMaintenance()
@@ -91,7 +88,6 @@ function MenuTVSheet:draw(alpha)
 
 	love.graphics.setColor(r, g, b, alpha)
 	
-	self.settings_button:draw()
 	super.draw(self)
 end
 
@@ -172,6 +168,14 @@ function MenuTVSheet:update()
 		Game.wii_menu.stage.timer:tween(0.4, self, {y = self.y - 430}, "out-cubic", function()
 			self.page_debounce = false
 		end)
+		Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.settings_button, {y = Game.wii_menu.settings_button.y - 60}, "out-sine", function()
+			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.settings_button, {y = Game.wii_menu.settings_button.y + 60}, "in-sine")
+		end)
+		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.settings_button, {x = Game.wii_menu.settings_button.x - 120, rotation = Game.wii_menu.settings_button.rotation - math.pi}, "out-sine")
+		Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_button, {y = Game.wii_menu.message_button.y - 60}, "out-sine", function()
+			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_button, {y = Game.wii_menu.message_button.y + 60}, "in-sine")
+		end)
+		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.message_button, {x = Game.wii_menu.message_button.x + 120, rotation = Game.wii_menu.message_button.rotation + math.pi}, "out-sine")
 		for k,v in pairs(self.monitors) do
 			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y - 430}, "out-cubic")
 		end
@@ -186,6 +190,14 @@ function MenuTVSheet:update()
 		Game.wii_menu.stage.timer:tween(0.4, self, {y = self.y + 430}, "out-cubic", function()
 			self.page_debounce = false
 		end)
+		Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.settings_button, {y = Game.wii_menu.settings_button.y - 60}, "out-sine", function()
+			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.settings_button, {y = Game.wii_menu.settings_button.y + 60}, "in-sine")
+		end)
+		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.settings_button, {x = Game.wii_menu.settings_button.x + 120, rotation = Game.wii_menu.settings_button.rotation + math.pi}, "out-sine")
+		Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_button, {y = Game.wii_menu.message_button.y - 60}, "out-sine", function()
+			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_button, {y = Game.wii_menu.message_button.y + 60}, "in-sine")
+		end)
+		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.message_button, {x = Game.wii_menu.message_button.x - 120, rotation = Game.wii_menu.message_button.rotation - math.pi}, "out-sine")
 		for k,v in pairs(self.monitors) do
 			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y + 430}, "out-cubic")
 		end

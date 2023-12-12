@@ -20,6 +20,15 @@ function MainMenu:init()
 
 	self.screen_helper = ScreenHelper()
 	self.stage:addChild(self.screen_helper)
+
+	self.screen_helper_low = ScreenHelper()
+	self.stage:addChild(self.screen_helper_low)
+	
+	self.settings_button = SettingsButton(60, 410)
+	self.screen_helper_low:addChild(self.settings_button)
+	
+	self.message_button = MessageBoardButton(580, 410)
+	self.screen_helper_low:addChild(self.message_button)
 end
 
 function MainMenu:enter(_, maintenance)
@@ -90,13 +99,14 @@ function MainMenu:draw()
 		love.graphics.print(day.day.."/"..day.month, 320, 400, 0, 1.25, 1.25)
 	end
 	
-	self.screen_helper:draw()
+	local r, g, b = Utils.unpack(Mod.Themes[Game.wii_data["theme"]]["BG"])
+	love.graphics.setColor(r, g, b, 1)
 	
-	for k,v in pairs(self.messages) do
-		v:draw()
-	end
+	self.screen_helper_low:draw()
 
 	self.tvSheet:draw(self.alpha)
+	
+	self.screen_helper:draw()
 
     love.graphics.pop()
 
