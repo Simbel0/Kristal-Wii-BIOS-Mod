@@ -27,6 +27,15 @@ function Monitor:init(mod_id, index)
 			self.icon = "channels/wii_disc"
 		end
 	end
+	if mod_data and love.filesystem.getInfo(mod_data.path .. "/assets/sprites/wii_channel_1.png") then
+		self.anim = {}
+		local i = 1
+		while love.filesystem.getInfo(mod_data.path .. "/assets/sprites/wii_channel_" .. i .. ".png") do
+			table.insert(self.anim, love.graphics.newImage(mod_data.path .. "/assets/sprites/wii_channel_" .. i .. ".png"))
+			print(self.mod_id .. " .. " .. i)
+			i = i + 1
+		end
+	end
 	
 	self.slot_x = index%4
 	if self.slot_x == 0 then
@@ -66,6 +75,9 @@ function Monitor:init(mod_id, index)
 	self.bubble_corner = Assets.getTexture("menu/my_Balloon_a")
 	self.bubble_width = Assets.getTexture("menu/my_Beta16x16_a")
 	self.cd = 0
+	
+	self.tick = 0
+	self.speed = 1/5
 end
 
 function Monitor:getDebugInfo()
@@ -87,9 +99,16 @@ end
 
 function Monitor:update()
 	self.cd = self.cd - DT
+	self.tick = self.tick + DT
 	if Mod.popup_on then return end
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
+	
+	if self.anim then
+		local index = ((math.floor(self.tick/self.speed))%#self.anim)+1
+		self.sprite:setSprite(self.anim[index])
+		print(index)
+	end
 	
 	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and Game.wii_menu.tvSheet and self.page == Game.wii_menu.tvSheet.page and self:canHover() then
 		if not self.hovered then

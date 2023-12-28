@@ -19,10 +19,11 @@ function popUp:init(text, buttons, callback)
 	else
 		self.buttons = buttons
 	end
+	
+	self.clickables = {}
 
 	if self.buttons then
 		self.start_x = 265 - ((#self.buttons - 1) * 100)
-		self.clickables = {}
 		for i=1, #self.buttons do
 			local button = TextButton(self.start_x + (200 * (i-1)), 340, self.buttons[i])
 			button.layer = self.layer + 10
