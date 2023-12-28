@@ -52,6 +52,26 @@ function MainMenu:enter(_, maintenance)
 	end
 	
 	self.messages = {}
+	local day = os.date("*t", self.message_date)
+	if day.day < 10 then
+		day.day = "0" .. day.day
+	end
+	if day.month < 10 then
+		day.month = "0" .. day.month
+	end
+	local dater = day.month .. "/" .. day.day .. "/" .. day.year
+	
+	local found = 0
+	for k,v in pairs(Game.wii_data["messages"]) do
+		if v["date"] == dater then
+			local message = Message(found, v)
+			table.insert(self.messages, message)
+			message.layer = self.settings_button.layer - 0.001
+			self.screen_helper_low:addChild(message)
+			found = found + 1
+		end
+	end
+	print("[BIOS] Found " .. found .. " message(s) for " .. dater)
 end
 
 function MainMenu:update()

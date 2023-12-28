@@ -16,11 +16,14 @@ function Message:init(index, message)
 		self.path = "memo/" .. Game.wii_data["theme"] .. "/envelope"
 	end
 	
-	self.slot_x = index%2
-	self.slot_y = math.floor(index/2)
+	self.sprite = Sprite(self.path)
+	self:addChild(self.sprite)
 	
-	self.x = 60 + (150 * (self.slot_x - 1))
-	self.y = 80 + (104 * (self.slot_y - 1))
+	self.slot_x = index%4
+	self.slot_y = math.floor(index/4)
+	
+	self.x = 170 + (150 * (self.slot_x - 1))
+	self.y = 106 + (104	* (self.slot_y - 1))
 end
 
 function Message:update()
@@ -44,5 +47,12 @@ function Message:draw() super:draw(self) end
 
 function Message:canClick() return not Game.wii_menu.message_loaded end
 function Message:canHover() return Game.wii_menu.substate == "MESSAGE" end
+
+function Message:getDebugInfo()
+    local info = super.getDebugInfo(self)
+    table.insert(info, "X: " .. self.slot_x)
+    table.insert(info, "Y: " .. self.slot_y)
+	return info
+end
 
 return Message
