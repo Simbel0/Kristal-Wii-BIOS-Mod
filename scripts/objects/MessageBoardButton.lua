@@ -14,6 +14,7 @@ function MessageBoardButton:onClick()
 		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.tvSheet, {y = Game.wii_menu.tvSheet.y - 430}, "out-cubic", function()
 			Game.wii_menu.tvSheet.page_debounce = false
 		end)
+		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.tvSheet.clock, {y = Game.wii_menu.tvSheet.clock.y - 430}, "out-cubic")
 		Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.settings_button, {y = Game.wii_menu.settings_button.y - 60}, "out-sine", function()
 			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.settings_button, {y = Game.wii_menu.settings_button.y + 60}, "in-sine")
 		end)
