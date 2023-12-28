@@ -109,6 +109,10 @@ function MenuTVSheet:update()
 			end
 		elseif Game.wii_menu.substate == "MESSAGE" then
 			Assets.playSound("wii/wsd_select")
+			for i, message in ipairs(Game.wii_menu.messages) do
+				message:remove()
+			end
+			self.messages = {}
 			Game.wii_menu.message_date = Game.wii_menu.message_date + 86400
 			local day = os.date("*t", Game.wii_menu.message_date)
 			if day.day < 10 then
@@ -122,6 +126,10 @@ function MenuTVSheet:update()
 			local found = 0
 			for k,v in pairs(Game.wii_data["messages"]) do
 				if v["date"] == dater then
+					local message = Message(found, v)
+					table.insert(Game.wii_menu.messages, message)
+					message.layer = Game.wii_menu.settings_button.layer - 0.001
+					Game.wii_menu.screen_helper_low:addChild(message)
 					found = found + 1
 				end
 			end
@@ -142,6 +150,10 @@ function MenuTVSheet:update()
 			end
 		elseif Game.wii_menu.substate == "MESSAGE" then
 			Assets.playSound("wii/wsd_select")
+			for i, message in ipairs(Game.wii_menu.messages) do
+				message:remove()
+			end
+			self.messages = {}
 			Game.wii_menu.message_date = Game.wii_menu.message_date - 86400
 			local day = os.date("*t", Game.wii_menu.message_date)
 			if day.day < 10 then
@@ -155,6 +167,10 @@ function MenuTVSheet:update()
 			local found = 0
 			for k,v in pairs(Game.wii_data["messages"]) do
 				if v["date"] == dater then
+					local message = Message(found, v)
+					table.insert(Game.wii_menu.messages, message)
+					message.layer = Game.wii_menu.settings_button.layer - 0.001
+					Game.wii_menu.screen_helper_low:addChild(message)
 					found = found + 1
 				end
 			end
@@ -204,6 +220,30 @@ function MenuTVSheet:update()
 			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y + 430}, "out-cubic")
 		end
 		Game.wii_menu.message_date = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
+		for i, message in ipairs(Game.wii_menu.messages) do
+			message:remove()
+		end
+		self.messages = {}
+		local day = os.date("*t", Game.wii_menu.message_date)
+		if day.day < 10 then
+			day.day = "0" .. day.day
+		end
+		if day.month < 10 then
+			day.month = "0" .. day.month
+		end
+		local dater = day.month .. "/" .. day.day .. "/" .. day.year
+		
+		local found = 0
+		for k,v in pairs(Game.wii_data["messages"]) do
+			if v["date"] == dater then
+				local message = Message(found, v)
+				table.insert(Game.wii_menu.messages, message)
+				message.layer = Game.wii_menu.settings_button.layer - 0.001
+				Game.wii_menu.screen_helper_low:addChild(message)
+				found = found + 1
+			end
+		end
+		print("[BIOS] Found " .. found .. " message(s) for " .. dater)
 	end
 end
 

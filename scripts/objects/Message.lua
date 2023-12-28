@@ -43,7 +43,11 @@ function Message:update()
 	end
 end
 
-function Message:draw() super:draw(self) end
+function Message:draw()
+	if Game.wii_menu.state ~= "TRANSITIONIN" and Game.wii_menu.state ~= "TRANSITIONOUT" then
+		super:draw(self)
+	end
+end
 
 function Message:canClick() return not Game.wii_menu.message_loaded end
 function Message:canHover() return Game.wii_menu.substate == "MESSAGE" end
