@@ -2,7 +2,7 @@
 local NameText, super = Class(Object)
 
 function NameText:init(x, y)
-	super.init(self, x, y, 376, 72)
+	super.init(self, x, y, 476, 72)
 end
 
 function NameText:update()
@@ -18,21 +18,15 @@ function NameText:update()
 					Game.wii_menu.stage.timer:script(function(wait)
 						Game.wii_menu.clickable = false
 						
-						local keyboard = GonerKeyboard(12, "default", function(text)
-							Game.wii_data["name"] = text
+						local keyboard = InputMenu(12)
+						keyboard.finish_cb = function(input)
 							Game.wii_menu.clickable = true
-							love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
-						end, function(key, x, y, namer)
-							if namer.text .. key == "GASTER" then
-								love.audio.stop()
-								self.stage.timescale = 0
-								for _,child in ipairs(self.stage.children) do
-									child.active = false
-								end
-								love.event.quit("restart")
+							if string.len(input) > 0 then
+								Game.wii_data["name"] = input
+								love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
 							end
-						end)
-						keyboard.y = keyboard.y + 120
+						end
+						keyboard.y = keyboard.y - 8
 						Game.wii_menu.screen_helper:addChild(keyboard)
 					end)
 				end
@@ -46,11 +40,11 @@ function NameText:draw()
 		super:draw(self)
 		
 		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.rectangle("fill", 0, 0, 376, 72)
+		love.graphics.rectangle("fill", 0, 0, 476, 72)
 		
 		love.graphics.setFont(Assets.getFont("maintenance", 56))
 		love.graphics.setColor(0, 0, 0, 1)
-		love.graphics.printf(Game.wii_data["name"], 0, 0, 376, "center")
+		love.graphics.printf(Game.wii_data["name"], 0, 0, 476, "center")
 	end
 end
 

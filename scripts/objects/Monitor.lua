@@ -86,7 +86,7 @@ function Monitor:init(mod_id, index)
 				self.speed = result.icon_speed
 			end
 		else
-			Kristal.Console:warn("[BIOS] wii_preview.lua error: " .. result)
+			Kristal.Console:warn(result)
 		end
 	elseif self.anim and love.filesystem.getInfo(mod_data.path .. "/wii_preview.lua") then
 		local chunk = love.filesystem.load(mod_data.path .. "/wii_preview.lua")
@@ -97,7 +97,7 @@ function Monitor:init(mod_id, index)
 				self.speed = result.icon_speed
 			end
 		else
-			Kristal.Console:warn("[BIOS] wii_preview.lua error: " .. result)
+			Kristal.Console:warn(result)
 		end
 	end
 end

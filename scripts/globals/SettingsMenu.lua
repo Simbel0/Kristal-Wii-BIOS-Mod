@@ -80,7 +80,7 @@ function SettingsMenu:init()
 	self.ut_theme = ThemeButton(550, 116, "UT_BATTLE")
 	self.screen_helper:addChild(self.ut_theme)
 	
-	self.name_text = NameText(130, 100)
+	self.name_text = NameText(80, 100)
 	self.screen_helper:addChild(self.name_text)
 end
 
