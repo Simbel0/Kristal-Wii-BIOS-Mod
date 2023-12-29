@@ -50,7 +50,7 @@ function Monitor:init(mod_id, index)
 	self.page = math.ceil(index/12)
 	
 	self.x = 50 + (135 * (self.slot_x - 1)) + (540 * (self.page - 1))
-	self.y = 15+ (101 * (self.slot_y - 1))
+	self.y = 15 + (101 * (self.slot_y - 1))
 
 	self.sprite_mask = Sprite("channels/channel_mask", 5, 5)
 	self.sprite_mask.visible = false
@@ -77,27 +77,34 @@ function Monitor:init(mod_id, index)
 	
 	self.tick = 0
 	self.speed = 1/5
-	if self.anim and love.filesystem.getInfo(mod_data.path .. "/preview/wii_preview.lua") then
+	if mod_data and love.filesystem.getInfo(mod_data.path .. "/preview/wii_preview.lua") then
 		local chunk = love.filesystem.load(mod_data.path .. "/preview/wii_preview.lua")
-		local success, result = pcall(chunk, mod_data.path)
+		success, result = pcall(chunk, mod_data.path)
 		if success then
 			if result.icon_speed then
-				print(result.icon_speed)
 				self.speed = result.icon_speed
 			end
+			self.result = result
 		else
 			Kristal.Console:warn(result)
 		end
-	elseif self.anim and love.filesystem.getInfo(mod_data.path .. "/wii_preview.lua") then
+	elseif mod_data and love.filesystem.getInfo(mod_data.path .. "/wii_preview.lua") then
 		local chunk = love.filesystem.load(mod_data.path .. "/wii_preview.lua")
-		local success, result = pcall(chunk, mod_data.path)
+		success, result = pcall(chunk, mod_data.path)
 		if success then
 			if result.icon_speed then
-				print(result.icon_speed)
 				self.speed = result.icon_speed
 			end
+			self.result = result
 		else
 			Kristal.Console:warn(result)
+		end
+	end
+	
+	if self.result then
+		if self.result.iconInit then
+			self.previewdata = self.result:iconInit(mod_id)
+			print(self.previewdata)
 		end
 	end
 end
@@ -129,6 +136,10 @@ function Monitor:update()
 	if self.anim then
 		local index = ((math.floor(self.tick/self.speed))%#self.anim)+1
 		self.sprite:setSprite(self.anim[index])
+	end
+	
+	if self.previewdata then
+		self.previewdata = self.result:iconUpdate(self.previewdata, self.tick)
 	end
 	
 	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and Game.wii_menu.tvSheet and self.page == Game.wii_menu.tvSheet.page and self:canHover() then
@@ -170,6 +181,10 @@ function Monitor:draw()
 	love.graphics.draw(self.edge, 0, self.edge:getHeight()*1.65, math.rad(270), 1.15, 1.1, 0.5, 0.5)
 
 	love.graphics.setShader(last_shader)
+	
+	if self.previewdata then
+		self.result:iconDraw(self.previewdata, self.tick)
+	end
 	
 	if self.hovered then
 		love.graphics.setColor(1, 1, 1, 1)

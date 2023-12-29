@@ -14,7 +14,6 @@ function InputMenu:init(length)
     self.box.debug_select = false
     self:addChild(self.box)
 
-    ---@type love.Font
     self.font = Assets.getFont("maintenance", 32)
     self.char_w = 32
     self.char_h = self.char_w

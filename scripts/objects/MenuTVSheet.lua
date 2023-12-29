@@ -31,6 +31,10 @@ function MenuTVSheet:init()
 		table.insert(self.monitors, monitor)
 		self:addChild(monitor)
 	end
+	
+	if #self.monitors/12 > 4 then
+		self.monitor_sets = math.ceil(#self.monitors/12)
+	end
 end
 
 function MenuTVSheet:handleMaintenance()
