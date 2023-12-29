@@ -32,7 +32,6 @@ function Monitor:init(mod_id, index)
 		local i = 1
 		while love.filesystem.getInfo(mod_data.path .. "/assets/sprites/wii_channel_" .. i .. ".png") do
 			table.insert(self.anim, love.graphics.newImage(mod_data.path .. "/assets/sprites/wii_channel_" .. i .. ".png"))
-			print(self.mod_id .. " .. " .. i)
 			i = i + 1
 		end
 	end
@@ -78,6 +77,29 @@ function Monitor:init(mod_id, index)
 	
 	self.tick = 0
 	self.speed = 1/5
+	if self.anim and love.filesystem.getInfo(mod_data.path .. "/preview/wii_preview.lua") then
+		local chunk = love.filesystem.load(mod_data.path .. "/preview/wii_preview.lua")
+		local success, result = pcall(chunk, mod_data.path)
+		if success then
+			if result.icon_speed then
+				print(result.icon_speed)
+				self.speed = result.icon_speed
+			end
+		else
+			Kristal.Console:warn("[BIOS] wii_preview.lua error: " .. result)
+		end
+	elseif self.anim and love.filesystem.getInfo(mod_data.path .. "/wii_preview.lua") then
+		local chunk = love.filesystem.load(mod_data.path .. "/wii_preview.lua")
+		local success, result = pcall(chunk, mod_data.path)
+		if success then
+			if result.icon_speed then
+				print(result.icon_speed)
+				self.speed = result.icon_speed
+			end
+		else
+			Kristal.Console:warn("[BIOS] wii_preview.lua error: " .. result)
+		end
+	end
 end
 
 function Monitor:getDebugInfo()
@@ -107,7 +129,6 @@ function Monitor:update()
 	if self.anim then
 		local index = ((math.floor(self.tick/self.speed))%#self.anim)+1
 		self.sprite:setSprite(self.anim[index])
-		print(index)
 	end
 	
 	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and Game.wii_menu.tvSheet and self.page == Game.wii_menu.tvSheet.page and self:canHover() then
