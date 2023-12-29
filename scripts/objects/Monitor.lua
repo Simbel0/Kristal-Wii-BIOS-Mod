@@ -55,6 +55,7 @@ function Monitor:init(mod_id, index)
 	self.sprite_mask = Sprite("channels/channel_mask", 5, 5)
 	self.sprite_mask.visible = false
 	self:addChild(self.sprite_mask)
+	self.sm_img = Assets.getTexture("channels/channel_mask")
 
 	self.mask = MonitorMask(self)
 	self:addChild(self.mask)
@@ -183,7 +184,10 @@ function Monitor:draw()
 	love.graphics.setShader(last_shader)
 	
 	if self.previewdata then
+		Draw.pushScissor()
+		Draw.scissor(6, 5, 123, 95)
 		self.result:iconDraw(self.previewdata, self.tick)
+		Draw.popScissor()
 	end
 	
 	if self.hovered then
