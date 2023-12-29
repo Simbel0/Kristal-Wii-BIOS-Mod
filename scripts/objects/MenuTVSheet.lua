@@ -193,6 +193,10 @@ function MenuTVSheet:update()
 			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_button, {y = Game.wii_menu.message_button.y + 60}, "in-sine")
 		end)
 		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.message_button, {x = Game.wii_menu.message_button.x + 120, rotation = Game.wii_menu.message_button.rotation + math.pi}, "out-sine")
+		Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_back_button, {y = Game.wii_menu.message_back_button.y + 60}, "out-sine", function()
+			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_back_button, {y = Game.wii_menu.message_back_button.y - 60}, "in-sine")
+		end)
+		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.message_back_button, {x = Game.wii_menu.message_back_button.x - 120, rotation = Game.wii_menu.message_back_button.rotation + math.pi}, "out-sine")
 		for k,v in pairs(self.monitors) do
 			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y - 430}, "out-cubic")
 		end
@@ -216,6 +220,10 @@ function MenuTVSheet:update()
 			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_button, {y = Game.wii_menu.message_button.y + 60}, "in-sine")
 		end)
 		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.message_button, {x = Game.wii_menu.message_button.x - 120, rotation = Game.wii_menu.message_button.rotation - math.pi}, "out-sine")
+		Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_back_button, {y = Game.wii_menu.message_back_button.y + 60}, "out-sine", function()
+			Game.wii_menu.stage.timer:tween(0.2, Game.wii_menu.message_back_button, {y = Game.wii_menu.message_back_button.y - 60}, "in-sine")
+		end)
+		Game.wii_menu.stage.timer:tween(0.4, Game.wii_menu.message_back_button, {x = Game.wii_menu.message_back_button.x + 120, rotation = Game.wii_menu.message_back_button.rotation - math.pi}, "out-sine")
 		for k,v in pairs(self.monitors) do
 			Game.wii_menu.stage.timer:tween(0.4, v, {y = v.y + 430}, "out-cubic")
 		end
