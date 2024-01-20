@@ -20,10 +20,10 @@ preview.Themes = {
 		["bg_fade"] = {228/255,176/255,176/255}
 	},
 	["SD_CARD"] = {
-		["from"] = Utils.hexToRgb("#E0F4FF", 1),
-		["to"] = Utils.hexToRgb("#66CBFF", 1),
-		["button"] = Utils.hexToRgb("#99DCFF", 1),
-		["favorite"] = Utils.hexToRgb("#66CBFF", 1),
+		["from"] = Utils.hexToRgb("#E0E0E0"),
+		["to"] = Utils.hexToRgb("#242424", 1),
+		["button"] = Utils.hexToRgb("#606060", 1),
+		["favorite"] = Utils.hexToRgb("#D0D0D0", 1),
 		["bg"] = {1,1,1},
 		["bg_fade"] = {176/255,208/255,228/255}
 	},
@@ -36,28 +36,28 @@ preview.Themes = {
 		["bg_fade"] = {228/255,176/255,218/255}
 	},
 	["LEGEND"] = {
-		["from"] = Utils.hexToRgb("#E0F4FF", 1),
-		["to"] = Utils.hexToRgb("#66CBFF", 1),
-		["button"] = Utils.hexToRgb("#99DCFF", 1),
-		["favorite"] = Utils.hexToRgb("#66CBFF", 1),
+		["from"] = Utils.hexToRgb("#D6CEC7", 1),
+		["to"] = Utils.hexToRgb("#D86500", 1),
+		["button"] = Utils.hexToRgb("#874914", 1),
+		["favorite"] = Utils.hexToRgb("#BC671C", 1),
 		["bg"] = {1,1,1},
-		["bg_fade"] = {176/255,208/255,228/255}
+		["bg_fade"] = {226/255,195/255,177/255}
 	},
 	["SNEO"] = {
-		["from"] = Utils.hexToRgb("#E0F4FF", 1),
-		["to"] = Utils.hexToRgb("#66CBFF", 1),
-		["button"] = Utils.hexToRgb("#99DCFF", 1),
-		["favorite"] = Utils.hexToRgb("#66CBFF", 1),
+		["from"] = Utils.hexToRgb("#FFF9E0", 1),
+		["to"] = Utils.hexToRgb("#FFF266", 1),
+		["button"] = Utils.hexToRgb("#B600FF", 1),
+		["favorite"] = Utils.hexToRgb("#FFFF00", 1),
 		["bg"] = {1,1,1},
-		["bg_fade"] = {176/255,208/255,228/255}
+		["bg_fade"] = {195/255,177/255,226/255}
 	},
 	["UT_BATTLE"] = {
-		["from"] = Utils.hexToRgb("#E0F4FF", 1),
-		["to"] = Utils.hexToRgb("#66CBFF", 1),
-		["button"] = Utils.hexToRgb("#99DCFF", 1),
-		["favorite"] = Utils.hexToRgb("#66CBFF", 1),
+		["from"] = Utils.hexToRgb("#E5FFE0", 1),
+		["to"] = Utils.hexToRgb("#8EFF66", 1),
+		["button"] = Utils.hexToRgb("#874914", 1),
+		["favorite"] = Utils.hexToRgb("#BC671C", 1),
 		["bg"] = {1,1,1},
-		["bg_fade"] = {176/255,208/255,228/255}
+		["bg_fade"] = {184/255,255/255,178/255}
 	},
 }
 
@@ -70,7 +70,7 @@ function preview:init(mod, button, _)
 			Kristal.load_wii = wii_data["load_early"]
 		end
 	end
-
+	
 	if Kristal.load_wii then
 		Kristal.loadMod(mod.id)
 		return
@@ -79,7 +79,7 @@ function preview:init(mod, button, _)
     button:setColor(preview.Themes[theme]["button"])
     button:setFavoritedColor(preview.Themes[theme]["favorite"])
 
-    self.bg = love.graphics.newImage(mod.path .. "/preview/sky_gradient.png")
+    self.bg = love.graphics.newImage(mod.path .. "/preview/bg.png")
 	self.bg_col = preview.Themes[theme]["bg"]
 	self.bg_fade = preview.Themes[theme]["bg_fade"]
 
@@ -112,7 +112,7 @@ function preview:draw()
 
         Draw.pushCanvas(self.canvas)
         love.graphics.clear(COLORS.white)
-        love.graphics.setColor(self.bg_col[1], self.bg_col[2], self.bg_col[3], self.fade * 0.1)
+        love.graphics.setColor(self.bg_col[1], self.bg_col[2], self.bg_col[3], 0.1)
         local stripes_num_v_anim = self.stripes_num_v_base
             + ((self.stripes_num_v - self.stripes_num_v_base) * math.sin((Kristal.getTime() - self.init_time)*0.8))
         for i = 0, math.ceil(stripes_num_v_anim) do
@@ -139,7 +139,7 @@ function preview:draw()
         )
         love.graphics.setShader(prev_shader)
 
-        love.graphics.setColor(self.bg_col[1]/4, self.bg_col[2]/4, self.bg_col[3]/4, self.fade * 0.1)
+        love.graphics.setColor(self.bg_col[1]/4, self.bg_col[2]/4, self.bg_col[3]/4, self.fade * 0.2)
         love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
     end
 end
