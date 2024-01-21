@@ -162,7 +162,7 @@ function MessagePopUp:draw()
 		love.graphics.draw(self.icon, 25, 80, 0, 2, 2)
 	end
 
-    local lineHeight = self.font:getHeight()*0.7
+    local lineHeight = self.font:getHeight()
     local totalTextHeight = #self.lines * lineHeight
 
     local textY = 130+self.y_offset

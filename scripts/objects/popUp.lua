@@ -115,7 +115,7 @@ function popUp:draw()
 	love.graphics.setFont(self.font)
 	love.graphics.setColor(0.4, 0.4, 0.4, 1)
 
-    local lineHeight = self.font:getHeight()*0.7
+    local lineHeight = self.font:getHeight()
     local totalTextHeight = #self.lines * lineHeight
 
     local textY = ((self.height-130) - totalTextHeight) / 2

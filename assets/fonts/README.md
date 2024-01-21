@@ -1,1 +1,0 @@
-Hack maintenance manually to have lineHeight set to 48 after export
