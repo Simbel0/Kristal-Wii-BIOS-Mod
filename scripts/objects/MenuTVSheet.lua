@@ -61,8 +61,6 @@ function MenuTVSheet:draw(alpha)
     local wrap_width = math.ceil((x2 - x_offset) / 608)
     local wrap_height = math.ceil((y2 - y_offset) / 8)
 
-    local last_shader = love.graphics.getShader()
-
     self.lines.alpha = alpha-0.9
     self.lines:draw()
 
@@ -71,8 +69,6 @@ function MenuTVSheet:draw(alpha)
 	for i=1, self.monitor_sets do
 		love.graphics.draw(self.monitor_back, 55 + (540 * (i-1)) - self.offset_moni, self.y + 20)
 	end
-	
-	love.graphics.setShader(self.shader)
 
 	love.graphics.setColor(r, g, b, alpha)
 	love.graphics.draw(self.lower_background, 0, self.y + 330, 0, 1.25, 1.1)
@@ -87,8 +83,6 @@ function MenuTVSheet:draw(alpha)
 	love.graphics.draw(self.lower_shadow, SCREEN_WIDTH, self.y + 330, 0, -1.25, 1.1)
 	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["BORDER"], alpha)
 	love.graphics.draw(self.lower_border, SCREEN_WIDTH, self.y + (330)+2, 0, -1.25, 1.1)
-
-	love.graphics.setShader(last_shader)
 
 	love.graphics.setColor(r, g, b, alpha)
 	
