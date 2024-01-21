@@ -23,6 +23,8 @@ Mod.Themes = {
 		["BORDER"] = {52/255, 192/255, 237/255},
 		["DATE"] = {130/255, 130/255, 130/255},
 		["TEXT"] = {0/255, 0/255, 0/255},
+		["MESSAGE_TITLE"] = {1, 1, 1},
+		["MESSAGE_TEXT"] = {0.4, 0.4, 0.4},
 	},
 	["DETERMINATION"] = {
 		["CLOCK"] = {155/255, 155/255, 155/255},
@@ -32,6 +34,8 @@ Mod.Themes = {
 		["BORDER"] = {255/255, 33/255, 18/255},
 		["DATE"] = {130/255, 130/255, 130/255},
 		["TEXT"] = {0/255, 0/255, 0/255},
+		["MESSAGE_TITLE"] = {1, 1, 1},
+		["MESSAGE_TEXT"] = {0.4, 0.4, 0.4},
 	},
 	["SD_CARD"] = {
 		["CLOCK"] = {252/255, 248/255, 249/255},
@@ -41,6 +45,8 @@ Mod.Themes = {
 		["BORDER"] = {52/255, 192/255, 237/255},
 		["DATE"] = {130/255, 130/255, 130/255},
 		["TEXT"] = {0/255, 0/255, 0/255},
+		["MESSAGE_TITLE"] = {1, 1, 1},
+		["MESSAGE_TEXT"] = {0.4, 0.4, 0.4},
 	},
 	-- ["KRISTAL"] = {
 		-- ["CLOCK"] = {255/255, 229/255, 0/255},
@@ -50,6 +56,8 @@ Mod.Themes = {
 		-- ["BORDER"] = {255/255, 229/255, 0/255},
 		-- ["DATE"] = {130/255, 130/255, 130/255},
 		-- ["TEXT"] = {0/255, 0/255, 0/255},
+		-- ["MESSAGE_TITLE"] = {1, 1, 1},
+		-- ["MESSAGE_TEXT"] = {0.4, 0.4, 0.4},
 	-- }, -- Don't uncomment this. It was a lot better in my head. - AcousticJamm
 	["DEOXYNN"] = {
 		["CLOCK"] = {253/255, 190/255, 219/255},
@@ -59,6 +67,8 @@ Mod.Themes = {
 		["BORDER"] = {253/255, 190/255, 219/255},
 		["DATE"] = {235/255, 235/255, 235/255},
 		["TEXT"] = {0/255, 0/255, 0/255},
+		["MESSAGE_TITLE"] = {0.4, 0.4, 0.4},
+		["MESSAGE_TEXT"] = {0.4, 0.4, 0.4},
 	},
 	["LEGEND"] = {
 		["CLOCK"] = {255/255, 255/255, 255/255},
@@ -68,6 +78,8 @@ Mod.Themes = {
 		["BORDER"] = {192/255, 130/255, 38/255},
 		["DATE"] = {255/255, 255/255, 255/255},
 		["TEXT"] = {0/255, 0/255, 0/255},
+		["MESSAGE_TITLE"] = {1, 1, 1},
+		["MESSAGE_TEXT"] = {0.4, 0.4, 0.4},
 	},
 	["SNEO"] = {
 		["CLOCK"] = {225/255, 242/255, 0/255},
@@ -77,6 +89,8 @@ Mod.Themes = {
 		["BORDER"] = {1/255, 128/255, 1/255},
 		["DATE"] = {255/255, 174/255, 201/255},
 		["TEXT"] = {0/255, 0/255, 0/255},
+		["MESSAGE_TITLE"] = {1, 1, 1},
+		["MESSAGE_TEXT"] = {0.4, 0.4, 0.4},
 	},
 	["UT_BATTLE"] = {
 		["CLOCK"] = {255/255, 255/255, 255/255},
@@ -86,10 +100,11 @@ Mod.Themes = {
 		["BORDER"] = {60/255, 178/255, 78/255},
 		["DATE"] = {251/255, 255/255, 41/255},
 		["TEXT"] = {255/255, 127/255, 39/255},
+		["MESSAGE_TITLE"] = {1, 1, 1},
+		["MESSAGE_TEXT"] = {0.4, 0.4, 0.4},
 	},
 }
 
---If we ever have popups working, the goal will be to show a popup upon starting the Menu showing the invalid mods
 Mod.invalid_mods = {
     prefix = {},
     json = {}
