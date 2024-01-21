@@ -41,6 +41,18 @@ function MessagePopUp:init(data, buttons, callback, game_message)
 	self.top = Assets.getTexture("memo/top"..suffix)
 	self.middle = Assets.getTexture("memo/middle"..suffix)
 	self.bottom = Assets.getTexture("memo/bottom"..suffix)
+	
+	if love.filesystem.getInfo(Kristal.Mods.getMod("wii_kristal").path .. "/assets/sprites/memo/" .. Game.wii_data["theme"] .. "/top" .. suffix .. ".png") then
+		self.top = Assets.getTexture("memo/" .. Game.wii_data["theme"] .. "/top"..suffix)
+	end
+	
+	if love.filesystem.getInfo(Kristal.Mods.getMod("wii_kristal").path .. "/assets/sprites/memo/" .. Game.wii_data["theme"] .. "/middle" .. suffix .. ".png") then
+		self.middle = Assets.getTexture("memo/" .. Game.wii_data["theme"] .. "/middle"..suffix)
+	end
+	
+	if love.filesystem.getInfo(Kristal.Mods.getMod("wii_kristal").path .. "/assets/sprites/memo/" .. Game.wii_data["theme"] .. "/bottom" .. suffix .. ".png") then
+		self.bottom = Assets.getTexture("memo/" .. Game.wii_data["theme"] .. "/bottom"..suffix)
+	end
 
 	self:setScale(0)
 
