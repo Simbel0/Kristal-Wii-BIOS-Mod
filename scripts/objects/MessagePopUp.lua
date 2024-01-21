@@ -176,7 +176,7 @@ function MessagePopUp:draw()
 	
 	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["MESSAGE_TEXT"], 1)
 
-    local lineHeight = self.font:getHeight()*0.7
+    local lineHeight = self.font:getHeight()
     local totalTextHeight = #self.lines * lineHeight
 
     local textY = 130+self.y_offset

@@ -14,7 +14,7 @@ function TextButton:draw()
 	
 	love.graphics.setFont(self.font)
 	
-	love.graphics.printf(self.text, 0, self.height/4, self.width, "center", 0, self.scale_x, self.scale_y)
+	love.graphics.printf(self.text, 0, self.height / self.scale_y / 4, self.width / self.scale_x, "center", 0, self.scale_x, self.scale_y)
 	
 	love.graphics.setColor(1, 1, 1, 1)
 end
