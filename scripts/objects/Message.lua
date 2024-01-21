@@ -35,7 +35,7 @@ function Message:update()
 	if not self.pressed and self:canHover() then
 		if (mx / Kristal.getGameScale() > self.x) and (mx / Kristal.getGameScale() < (self.x + self.width)) and (my / Kristal.getGameScale() > self.y) and (my / Kristal.getGameScale() < (self.y + self.height)) then
 			if self:canClick() then
-				if love.mouse.isDown(1) and not self.popUp then
+				if love.mouse.isDown(1) and not Game.wii_menu.popUp then
 					print(self.message["message"], self.parent)
 					Game.wii_menu.popUp = MessagePopUp(self.message, nil, nil, true)
 					Game.wii_menu.screen_helper_low:addChild(Game.wii_menu.popUp)
