@@ -3,17 +3,17 @@ An attempt at making a mod launcher based on the Wii menu for Kristal
 
 ## Channel Icons
 
-![https://i.imgur.com/MS8eNNu.png](Wii BIOS)
+![Wii BIOS](https://i.imgur.com/MS8eNNu.png)
 
 The channel icon is the first thing the player will see in your mod. This is the first impression the player will have with your mod if they haven’t seen it on the default Kristal mod select. By default, your channel icon will look like this:
-![https://i.imgur.com/odiBeYG.png](Default channel)
+![Default channel](https://i.imgur.com/odiBeYG.png))
 However, if your mod has the Wii BIOS library installed, it will look like this:
-![https://i.imgur.com/hADOo8w.png](Library channel)
+![Library channel](https://i.imgur.com/hADOo8w.png))
 Both of these are only used if your mod does not have its own pre-defined image or frames. To make your own channel icon, you simply need to put wii_channel.png (126x95) in the root of your sprites directory, like so:
-![https://i.imgur.com/jbdRVQz.png](Directory)
+![Directory](https://i.imgur.com/jbdRVQz.png))
 Doing so will make your mod use the image for its channel. However, it is possible to set your channel to use an animation made of frames instead of a static image. You simply need to do the same thing, except instead of putting a wii_channel.png in your sprites directory, you would put wii_channel_1.png, wii_channel_2.png, etc., until you have all the frames of your animated channel icon in the mod. (In case you’re wondering, frame animation takes priority over a static image.)
 So now that you have your frame animation, you might want to change the speed that your channel changes images. To do that, you simply need to make a new file called wii_preview.lua. This file can either be placed in your mod root or your mod’s preview folder. From there, set up your file like so:
-![https://i.imgur.com/aSFCmYj.png](Animation)
+![Animation](https://i.imgur.com/aSFCmYj.png)
 For this example, the images will change every 1/15 seconds.
 There is one more thing you can do with the channel icon. You can code a preview for it. Previews are coded in a similar way to the default mod preview, but it does have a few differences.
 ![https://i.imgur.com/khpYxr3.png](iconInit)
