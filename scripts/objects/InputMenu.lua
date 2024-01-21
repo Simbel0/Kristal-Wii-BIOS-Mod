@@ -14,10 +14,10 @@ function InputMenu:init(length)
     self.box.debug_select = false
     self:addChild(self.box)
 
-    self.font = Assets.getFont("maintenance", 32)
+    self.font = Assets.getFont("maintenance")
     self.char_w = 32
     self.char_h = self.char_w
-    self.char_spacing = 5
+    self.char_spacing = 2
 
     self.input = {Game.wii_data["name"]}
 	
