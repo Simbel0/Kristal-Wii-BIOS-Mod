@@ -78,13 +78,8 @@ function MessagePopUp:init(data, buttons, callback, game_message)
 	self.callback = callback
 	
 	self.y_offset = game_message and 23 or 0
-	self.lines = {}
-	local printmessage = "[BIOS]"
-    for line in self.text:gmatch("[^\r\n]+") do
-        table.insert(self.lines, line)
-		printmessage = printmessage .. " " .. line
-    end
-	print(printmessage)
+	
+	_, self.lines = self.font:getWrap(self.text, 448)
 end
 
 function MessagePopUp:onAdd()
@@ -183,7 +178,7 @@ function MessagePopUp:draw()
 
     for i, line in ipairs(self.lines) do
         local textX = ((self.width) - self.font:getWidth(line)) / 2
-        love.graphics.print(line, 45, textY+40*(i-1))
+        love.graphics.print(line, 45, textY+42*(i-1))
     end
 
     super.draw(self)
