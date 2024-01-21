@@ -205,7 +205,7 @@ function Monitor:draw()
 		local bubwidth = self.font:getWidth(name)
 
 		local offset = 0
-		if self.slot_x == 4 then
+		if self.slot_x >= 3 then
 			offset = bubwidth+self.bubble_corner:getWidth()-self.width
 		end
 
