@@ -192,8 +192,6 @@ function Monitor:draw()
 	
 	if self.hovered then
 		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.draw(self.bubble_corner, -18, 103)
-		love.graphics.draw(self.bubble_corner, -18, 151, math.rad(270))
 		local name = ""
 		if not Utils.startsWith(self.mod_id, "wii_") then
 			name = Kristal.Mods.getMod(self.mod_id).name
@@ -205,12 +203,20 @@ function Monitor:draw()
 			end
 		end
 		local bubwidth = self.font:getWidth(name)
-		love.graphics.draw(self.bubble_corner, 18+bubwidth, 103, math.rad(90))
-		love.graphics.draw(self.bubble_corner, 18+bubwidth, 151, math.rad(180))
-		love.graphics.rectangle( "fill", 6, 107, bubwidth-12, 40)
+
+		local offset = 0
+		if self.slot_x == 4 then
+			offset = bubwidth+self.bubble_corner:getWidth()-self.width
+		end
+
+		love.graphics.draw(self.bubble_corner, -18-offset, 103)
+		love.graphics.draw(self.bubble_corner, -18-offset, 151, math.rad(270))
+		love.graphics.draw(self.bubble_corner, 18+bubwidth-offset, 103, math.rad(90))
+		love.graphics.draw(self.bubble_corner, 18+bubwidth-offset, 151, math.rad(180))
+		love.graphics.rectangle( "fill", 6-offset, 107, bubwidth-12, 40)
 		love.graphics.setColor(55/255, 55/255, 55/255, 1)
 		love.graphics.setFont(self.font)
-		love.graphics.print(name, 0, 111)
+		love.graphics.print(name, 0-offset, 111)
 	end
 end
 
