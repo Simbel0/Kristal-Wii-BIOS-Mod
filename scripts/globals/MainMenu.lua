@@ -32,6 +32,9 @@ function MainMenu:init()
 	
 	self.message_back_button = MessageBoardBackButton(700, 410)
 	self.screen_helper_low:addChild(self.message_back_button)
+	
+	self.message_out_button = MessageExitButton(-100, 410)
+	self.screen_helper:addChild(self.message_out_button)
 end
 
 function MainMenu:enter(_, maintenance)
