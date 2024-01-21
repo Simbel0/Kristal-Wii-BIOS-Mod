@@ -70,11 +70,6 @@ function preview:init(mod, button, _)
 			Kristal.load_wii = wii_data["load_early"]
 		end
 	end
-	
-	if Kristal.load_wii then
-		Kristal.loadMod(mod.id)
-		return
-	end
 
     button:setColor(preview.Themes[theme]["button"])
     button:setFavoritedColor(preview.Themes[theme]["favorite"])
@@ -101,6 +96,10 @@ function preview:init(mod, button, _)
     self.canvas = love.graphics.newCanvas(self.stripes_w, self.stripes_h)
 
     self.init_time = Kristal.getTime()
+
+	if Kristal.load_wii then
+		Kristal.loadMod(mod.id)
+	end
 end
 
 function preview:draw()
