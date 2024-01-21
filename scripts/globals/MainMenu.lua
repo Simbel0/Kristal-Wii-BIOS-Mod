@@ -141,4 +141,21 @@ function MainMenu:draw()
 	end
 end
 
+function MainMenu:onWheelMoved(x, y)
+	local function callOnWheelMoved(children, x, y)
+        for i,child in ipairs(children) do
+            if isClass(child) then
+                if child.onWheelMoved then
+                    child:onWheelMoved(x, y)
+                end
+                if child.children then
+                    callOnWheelMoved(child.children, x, y)
+                end
+            end
+        end
+    end
+
+    callOnWheelMoved(self.stage.children, x, y)
+end
+
 return MainMenu

@@ -80,6 +80,9 @@ function MessagePopUp:init(data, buttons, callback, game_message)
 	self.y_offset = game_message and 23 or 0
 	
 	_, self.lines = self.font:getWrap(self.text, 448)
+
+	self.height_limit = self.y_dest+self.top:getHeight()+(self.middle:getHeight()*#self.lines)+self.bottom:getHeight()
+	self.debug_rect = {0, 0, self.top:getWidth()*1.06, self.height_limit}
 end
 
 function MessagePopUp:onAdd()
@@ -185,6 +188,7 @@ function MessagePopUp:draw()
 end
 
 function MessagePopUp:onWheelMoved(x, y)
+	self.y = Utils.clamp(self.y + y*10, -self.height_limit+(SCREEN_HEIGHT*3/4), self.init_y)
 end
 
 return MessagePopUp
