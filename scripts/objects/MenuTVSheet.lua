@@ -35,6 +35,8 @@ function MenuTVSheet:init()
 	if #self.monitors/12 > 4 then
 		self.monitor_sets = math.ceil(#self.monitors/12)
 	end
+
+	love.audio.setEffect("echo", {type="reverb"})
 end
 
 function MenuTVSheet:handleMaintenance()
@@ -133,6 +135,9 @@ function MenuTVSheet:update()
 					found = found + 1
 				end
 			end
+			if found > 0 then
+				Assets.playSound("wii/got_mail", 0.5):setEffect("echo")
+			end
 			print("[BIOS] Found " .. found .. " message(s) for " .. dater)
 		end
     end
@@ -173,6 +178,9 @@ function MenuTVSheet:update()
 					Game.wii_menu.screen_helper_low:addChild(message)
 					found = found + 1
 				end
+			end
+			if found > 0 then
+				Assets.playSound("wii/got_mail", 0.5):setEffect("echo")
 			end
 			print("[BIOS] Found " .. found .. " message(s) for " .. dater)
 		end

@@ -157,6 +157,16 @@ function Mod:init()
     ---@diagnostic disable-next-line: redundant-return-value
     Utils.hook(Game, "save", function() return {} end)
 
+    -- Don't uncomment, it's not working nicely
+    --[[love.audio.setEffect("base_reverb", {type="reverb"})
+
+    Utils.hook(Assets, "playSound", function(orig, self, sound, vol, pitch)
+        local source = orig(self, sound, vol, pitch)
+
+        --source:setEffect("base_reverb")
+        return source
+    end)]]
+
     self.cursor_1_tex = Assets.getTexture("cursor/cursor_1")
     self.cursor_1t_tex = Assets.getTexture("cursor/cursor_t")
     self.cursor_2_tex = Assets.getTexture("cursor/cursor_2")
