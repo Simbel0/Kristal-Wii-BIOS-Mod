@@ -178,7 +178,7 @@ function MessagePopUp:draw()
 
     for i, line in ipairs(self.lines) do
         local textX = ((self.width) - self.font:getWidth(line)) / 2
-        love.graphics.print(line, 45, textY+40*(i-1))
+        love.graphics.print(line, 45, textY+42*(i-1))
     end
 
     super.draw(self)
