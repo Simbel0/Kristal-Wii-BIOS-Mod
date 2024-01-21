@@ -61,9 +61,6 @@ function MenuTVSheet:draw(alpha)
     local wrap_width = math.ceil((x2 - x_offset) / 608)
     local wrap_height = math.ceil((y2 - y_offset) / 8)
 
-    self.lines.alpha = alpha-0.9
-    self.lines:draw()
-
     love.graphics.setColor(1, 1, 1, alpha)
 
 	for i=1, self.monitor_sets do
@@ -85,6 +82,9 @@ function MenuTVSheet:draw(alpha)
 	love.graphics.draw(self.lower_border, SCREEN_WIDTH, self.y + (330)+2, 0, -1.25, 1.1)
 
 	love.graphics.setColor(r, g, b, alpha)
+
+    	self.lines.alpha = alpha-0.9
+    	self.lines:draw()
 	
 	super.draw(self)
 end
