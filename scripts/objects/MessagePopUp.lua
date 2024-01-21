@@ -165,7 +165,7 @@ function MessagePopUp:draw()
 
 	love.graphics.setFont(self.font)
 
-	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["MESSAGE_TITLE"], 1)
 	love.graphics.print(self.message["title"], ((self.width) - self.font:getWidth(self.message["title"])) / 2, 30-self.font:getHeight()/4)
 
 	love.graphics.setColor(0.4, 0.4, 0.4, 1)
@@ -173,6 +173,8 @@ function MessagePopUp:draw()
 	if self.icon then
 		love.graphics.draw(self.icon, 25, 80, 0, 2, 2)
 	end
+	
+	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["MESSAGE_TEXT"], 1)
 
     local lineHeight = self.font:getHeight()*0.7
     local totalTextHeight = #self.lines * lineHeight
