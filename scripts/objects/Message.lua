@@ -37,8 +37,8 @@ function Message:update()
 			if self:canClick() then
 				if love.mouse.isDown(1) and not self.popUp then
 					print(self.message["message"], self.parent)
-					self.popUp = MessagePopUp(self.message, nil, nil, true)
-					Game.wii_menu.screen_helper_low:addChild(self.popUp)
+					Game.wii_menu.popUp = MessagePopUp(self.message, nil, nil, true)
+					Game.wii_menu.screen_helper_low:addChild(Game.wii_menu.popUp)
 				end
 			end
 		end

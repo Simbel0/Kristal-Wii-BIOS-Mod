@@ -19,4 +19,8 @@ function TextButton:draw()
 	love.graphics.setColor(1, 1, 1, 1)
 end
 
+function TextButton:canClick()
+	return true
+end
+
 return TextButton

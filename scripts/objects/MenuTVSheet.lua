@@ -100,6 +100,8 @@ function MenuTVSheet:update()
 	
 	self.clock:update()
 
+	if Mod.popup_on then return end
+
 	if Input.pressed("right", false) then
 		if Game.wii_menu.substate == "MAIN" and self.page < self.monitor_sets and not self.page_debounce then
 			Assets.playSound("wii/wsd_select")

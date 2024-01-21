@@ -64,7 +64,7 @@ function Button:onClick()
     self.sprite:addChild(self.flash)
 end
 
-function Button:canClick() return true end
+function Button:canClick() return not Mod.popup_on end
 function Button:canHover() return true end
 
 return Button
