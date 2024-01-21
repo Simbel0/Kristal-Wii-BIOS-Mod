@@ -41,6 +41,8 @@ function Message:update()
 					print(self.message["message"], self.parent)
 					Game.wii_menu.popUp = MessagePopUp(self.message, nil, nil, true)
 					Game.wii_menu.screen_helper_low:addChild(Game.wii_menu.popUp)
+					Game.wii_menu.stage.timer:tween(0.5, Game.wii_menu.message_out_button, {x = Game.wii_menu.message_out_button.x + 210}, "out-sine")
+					Game.wii_menu.message_out_button.cd = 0.5
 				end
 			end
 		end

@@ -109,7 +109,7 @@ function MessagePopUp:update()
 				-- self.button.y = Utils.ease(self.button.init_y+640, self.button.init_y, self.timer/20, "out-cubic")
 			-- end
 		else
-			self:setScale(Utils.ease(1, 0, self.timer/10, "linear"), Utils.ease(0, 1, self.timer/10, "linear"))
+			self:setScale(Utils.ease(1, 0, self.timer/10, "linear"), Utils.ease(1, 0, self.timer/10, "linear"))
 			--self.bg_alpha = Utils.ease(0.5, 0, self.timer/20, "out-cubic")
 			for k,v in pairs(self.clickables) do
 				v.y = Utils.ease(v.init_y, v.init_y-640, self.timer/20, "out-cubic")
@@ -121,10 +121,7 @@ function MessagePopUp:update()
 	end
 
 	if self.state == "TRANSITION" and self.timer > 20 then
-		if self.callback then
-			print("[BIOS] Callback detected")
-			self.callback(self.clicked)
-		end
+		Game.wii_menu.popUp = nil
 		self:remove()
 	end
 
