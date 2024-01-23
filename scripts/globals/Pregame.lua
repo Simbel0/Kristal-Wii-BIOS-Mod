@@ -8,16 +8,16 @@ function Pregame:init()
 
 	Game.wii_menu = self
 	
-	self.substate = "MAIN" -- MAIN, MESSAGE, CHANNEL
-	
+	self.substate = "MAIN"
+end
+
+function Pregame:enter(_, maintenance)
 	self.time = 0
 	
 	self.first = false
 	
 	self.second = false
-end
-
-function Pregame:enter(_, maintenance)
+	
 	self.alpha = 0
 
 	self.screen_helper = ScreenHelper()
@@ -62,6 +62,8 @@ function Pregame:update()
 			elseif Game:getFlag("selected_mod") == "wii_food" then
 				love.system.openURL("https://www.dominos.com/en/")
 				Mod:setState("MainMenu", false)
+			elseif Game:getFlag("selected_mod") == "wii_mii" then
+				Mod:setState("MiiChannel", false)
 			else
 				Mod:loadMod(Game:getFlag("selected_mod"))
 			end

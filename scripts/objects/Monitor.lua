@@ -200,6 +200,8 @@ function Monitor:draw()
 				name = "Return to Kristal"
 			elseif self.mod_id == "wii_food" then
 				name = "Demae Channel"
+			elseif self.mod_id == "wii_mii" then
+				name = "Vii Channel"
 			end
 		end
 		local bubwidth = self.font:getWidth(name)

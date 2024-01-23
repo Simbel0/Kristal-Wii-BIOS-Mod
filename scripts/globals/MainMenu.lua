@@ -49,6 +49,7 @@ function MainMenu:enter(_, maintenance)
 	self.maintenance = maintenance
 	
 	self.tvSheet:handleMaintenance()
+	self.tvSheet.page = 1
 
 	self.message_date = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
 	
