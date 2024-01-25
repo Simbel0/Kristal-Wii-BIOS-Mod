@@ -10,6 +10,8 @@ function MiiChannel:init()
 
 	self.screen_helper = ScreenHelper()
 	self.stage:addChild(self.screen_helper)
+	
+	self.bg = Assets.getTexture("vii_channel/bg")
 end
 
 function MiiChannel:enter(_, maintenance)
@@ -22,22 +24,27 @@ function MiiChannel:enter(_, maintenance)
 	if not Game.musicplay then
 		Game.musicplay = Music("mii")
 	end
+	
+	Kristal.showCursor()
 end
 
 function MiiChannel:update()
 	if self.state == "TRANSITIONIN" then
-		Kristal.showCursor()
 		if self.alpha < 1 then
 			self.alpha = self.alpha + 0.05
 		else
 			self.mii = self:getMii()
 			if not self.mii then
 				self.state = "INTRO"
+				self.popUp = popUp("Use the Vii Channel to create\na digital vessel called a\nVii. You can only create one\nVii at a time.", {"Ok"}, function(clicked) self:setState("CREATE") end)
+				self.screen_helper:addChild(self.popUp)
 			else
 				
 			end
 		end
 	end
+	
+	self.screen_helper:update()
 	
 	if self.state == "TRANSITIONOUT" then
 		if Game.musicplay then
@@ -53,7 +60,10 @@ function MiiChannel:update()
 end
 
 function MiiChannel:draw()
-
+	love.graphics.setColor(1, 1, 1, self.alpha)
+	love.graphics.draw(self.bg, 0, 0)
+	
+	self.screen_helper:draw()
 end
 
 function MiiChannel:getMii()
