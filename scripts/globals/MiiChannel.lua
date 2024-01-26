@@ -47,6 +47,9 @@ function MiiChannel:init()
 	table.insert(self.tabs, self.nametab)
 	self.screen_helper:addChild(self.nametab)
 	
+	self.lfb = LegFlipButton(541, 28)
+	self.screen_helper:addChild(self.lfb)
+	
 	self.mii = {
 		head = 1,
 		body = 1,
@@ -63,7 +66,7 @@ function MiiChannel:init()
 		feel = 1
 	}
 	
-	self.vii = ViiPreview(80, 120)
+	self.vii = ViiPreview(80, 80)
 	self.screen_helper:addChild(self.vii)
 end
 
@@ -118,6 +121,7 @@ function MiiChannel:update()
 	self.cooldown = self.cooldown - DT
 	
 	self.screen_helper:update()
+	self.lfb:update()
 	
 	if self.state == "TRANSITIONOUT" then
 		if Game.musicplay then

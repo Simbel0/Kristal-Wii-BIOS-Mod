@@ -3,18 +3,20 @@ local Button, super = Class(Object)
 function Button:init(x, y, image)
 	super:init(self, x, y, 0, 0)
 	
-	self.path = "button/" .. image
-	if love.filesystem.getInfo(Kristal.Mods.getMod("wii_kristal").path .. "/assets/sprites/button/" .. Game.wii_data["theme"] .. "/" .. image .. ".png") then
-		self.path = "button/" .. Game.wii_data["theme"] .. "/" ..image
+	if image then
+		self.path = "button/" .. image
+		if love.filesystem.getInfo(Kristal.Mods.getMod("wii_kristal").path .. "/assets/sprites/button/" .. Game.wii_data["theme"] .. "/" .. image .. ".png") then
+			self.path = "button/" .. Game.wii_data["theme"] .. "/" ..image
+		end
+		
+		self.sprite = Sprite(self.path)
+		self:addChild(self.sprite)
+		
+		self:setOrigin(0.5,0.5)
+		
+		self.width = self.sprite.width
+		self.height = self.sprite.height
 	end
-	
-	self.sprite = Sprite(self.path)
-	self:addChild(self.sprite)
-	
-	self:setOrigin(0.5,0.5)
-	
-	self.width = self.sprite.width
-	self.height = self.sprite.height
 
 	self.played_sound = false
 end

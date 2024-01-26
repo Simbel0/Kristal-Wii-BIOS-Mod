@@ -10,7 +10,7 @@ end
 function TextButtonInApp:draw()
 	super:draw(self)
 	
-	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["TEXT"], 1)
+	love.graphics.setColor(0, 0, 0, 1)
 	
 	love.graphics.setFont(self.font)
 	
