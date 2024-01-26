@@ -1,6 +1,6 @@
 local Tab, super = Class(Object)
 
-function Tab:init(x, y, image)
+function Tab:init(x, y, image, substate)
 	super:init(self, x+29, y+32, image)
 	
 	self.path = image
@@ -16,6 +16,8 @@ function Tab:init(x, y, image)
 	self.played_sound = false
 	
 	self.start_y = y+32
+	
+	self.substate = substate
 end
 
 function Tab:update() 
@@ -54,12 +56,13 @@ function Tab:onClick()
 			v.y = v.start_y
 		end
 	end
+	Game.wii_menu:setSubstate(self.substate)
 	self.pressed = false
 end
 
 function Tab:canClick()
 	return Game.wii_menu.cooldown <= 0
 end
-function Tab:canHover() return true end
+function Tab:canHover() return (Game.wii_menu.popUp and Game.wii_menu.popUp:isRemoved()) end
 
 return Tab
