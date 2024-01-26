@@ -82,10 +82,6 @@ function HealthAndSafetyScreen:draw()
 	love.graphics.printf("Press LMB to continue.", SCREEN_WIDTH/2-press_w/2, 390, press_w, "center")
 
     love.graphics.pop()
-
-    love.graphics.push()
-    Kristal.callEvent("postDraw")
-    love.graphics.pop()
 end
 
 return HealthAndSafetyScreen

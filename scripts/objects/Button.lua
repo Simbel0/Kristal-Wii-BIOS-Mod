@@ -49,7 +49,7 @@ function Button:update()
 			self.played_sound = false
 		end
 	else
-		if not self.flash.parent then
+		if self.flash and not self.flash.parent then
 			self.buttonPressed = true
 		end
 	end
