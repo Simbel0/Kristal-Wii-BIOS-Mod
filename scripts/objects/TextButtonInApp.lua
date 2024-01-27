@@ -24,7 +24,7 @@ end
 function TextButtonInApp:canClick()
 	return Game.wii_menu.cooldown <= 0
 end
-function TextButtonInApp:canHover() return (not Game.wii_menu.popUp or (Game.wii_menu.popUp and Game.wii_menu.popUp:isRemoved())) end
+function TextButtonInApp:canHover() return (not Game.wii_menu.popUp or (Game.wii_menu.popUp and Game.wii_menu.popUp:isRemoved())) and Game.wii_menu.clickable end
 
 function TextButtonInApp:onClick()
 	super:onClick(self)

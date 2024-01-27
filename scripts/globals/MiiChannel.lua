@@ -10,6 +10,9 @@ function MiiChannel:init()
 
 	self.screen_helper = ScreenHelper()
 	self.stage:addChild(self.screen_helper)
+
+	self.screen_helper_upper = ScreenHelper()
+	self.stage:addChild(self.screen_helper_upper)
 	
 	self.bg = Assets.getTexture("vii_channel/bg")
 	
@@ -34,6 +37,48 @@ function MiiChannel:init()
 	
 	self.vii = ViiPreview(50, 80)
 	self.screen_helper:addChild(self.vii)
+	
+	self.foods = {
+		"Sweet",
+		"Soft",
+		"Sour",
+		"Salty",
+		"Pain",
+		"Cold"
+	}
+	
+	self.bloods = {
+		"A",
+		"AB",
+		"B",
+		"C",
+		"D"
+	}
+	
+	self.colors = {
+		"Red",
+		"Blue",
+		"Green",
+		"Cyan"
+	}
+	
+	self.gifts = {
+		"Kindness",
+		"Mind",
+		"Ambition",
+		"Bravery",
+		"Voice",
+	}
+	
+	self.feels = {
+		"Love",
+		"Hope",
+		"Disgust",
+		"Fear"
+	}
+	
+	self.namer = ViiNameText(320,220)
+	self.screen_helper:addChild(self.namer)
 end
 
 function MiiChannel:enter(_, maintenance)
@@ -52,6 +97,8 @@ function MiiChannel:enter(_, maintenance)
 	self.cooldown = 0
 	
 	self.mii = self:getMii()
+	
+	self.clickable = true
 end
 
 function MiiChannel:update()
@@ -87,6 +134,7 @@ function MiiChannel:update()
 	self.cooldown = self.cooldown - DT
 	
 	self.screen_helper:update()
+	self.screen_helper_upper:update()
 	self.lfb:update()
 	if self.panel then
 		self.panel.alpha = self.alpha
@@ -155,7 +203,21 @@ function MiiChannel:draw()
 		love.graphics.printf("< Body " .. self.mii.body .. " >", 255, 70, 354, "center")
 		love.graphics.printf("MAIN COLOR", 255, 125, 354, "center")
 		love.graphics.printf("STRIPE COLOR", 255, 300, 354, "center")
+	elseif self.substate == "FOOD" then
+		love.graphics.printf("Favorite food: " .. self.foods[self.mii.food], 255, 100, 354, "center")
+	elseif self.substate == "BLOOD" then
+		love.graphics.printf("Favorite blood: " .. self.bloods[self.mii.blood], 255, 100, 354, "center")
+	elseif self.substate == "COLOR" then
+		love.graphics.printf("Favorite color: " .. self.colors[self.mii.color], 255, 100, 354, "center")
+	elseif self.substate == "GIFT" then
+		love.graphics.printf("Gift: " .. self.gifts[self.mii.gift], 255, 100, 354, "center")
+	elseif self.substate == "FEEL" then
+		love.graphics.printf("You feel: " .. self.feels[self.mii.feel], 255, 100, 354, "center")
+	elseif self.substate == "NAME" then
+		love.graphics.printf("Your Vii's name", 320, 180, 238, "center")
 	end
+	
+	self.screen_helper_upper:draw()
 
     love.graphics.pop()
 
@@ -230,12 +292,12 @@ function MiiChannel:initButtons()
 				Game.wii_menu.popUp = popUp("Successfully saved your Vii.", {"OK"}, function(clicked)
 					self:setState("TRANSITIONOUT")
 				end)
-				Game.wii_menu.screen_helper:addChild(Game.wii_menu.popUp)
+				Game.wii_menu.screen_helper_upper:addChild(Game.wii_menu.popUp)
 			else
 				self:setState("TRANSITIONOUT")
 			end
 		end)
-		Game.wii_menu.screen_helper:addChild(Game.wii_menu.popUp)
+		Game.wii_menu.screen_helper_upper:addChild(Game.wii_menu.popUp)
 	end)
 	self.screen_helper:addChild(self.leave_button)
 	
@@ -278,6 +340,35 @@ function MiiChannel:initButtons()
 	self.screen_helper:addChild(ColorButton(432, 436, "BODY", {224/255, 141/255, 69/255},  "stripe"))
 	self.screen_helper:addChild(ColorButton(503, 436, "BODY", {255/255, 0,      203/255},  "stripe"))
 	self.screen_helper:addChild(ColorButton(574, 436, "BODY", {255/255, 255/255, 255/255}, "stripe"))
+	
+	self.screen_helper:addChild(CondTextButton(354, 166, "Sweet", "FOOD", function() Game.wii_menu.mii.food = 1 end))
+	self.screen_helper:addChild(CondTextButton(535, 166, "Soft", "FOOD", function() Game.wii_menu.mii.food = 2 end))
+	self.screen_helper:addChild(CondTextButton(354, 226, "Sour", "FOOD", function() Game.wii_menu.mii.food = 3 end))
+	self.screen_helper:addChild(CondTextButton(535, 226, "Salty", "FOOD", function() Game.wii_menu.mii.food = 4 end))
+	self.screen_helper:addChild(CondTextButton(354, 286, "Pain", "FOOD", function() Game.wii_menu.mii.food = 5 end))
+	self.screen_helper:addChild(CondTextButton(535, 286, "Cold", "FOOD", function() Game.wii_menu.mii.food = 6 end))
+	
+	self.screen_helper:addChild(CondTextButton(354, 166, "A", "BLOOD", function() Game.wii_menu.mii.blood = 1 end))
+	self.screen_helper:addChild(CondTextButton(535, 166, "AB", "BLOOD", function() Game.wii_menu.mii.blood = 2 end))
+	self.screen_helper:addChild(CondTextButton(354, 226, "B", "BLOOD", function() Game.wii_menu.mii.blood = 3 end))
+	self.screen_helper:addChild(CondTextButton(535, 226, "C", "BLOOD", function() Game.wii_menu.mii.blood = 4 end))
+	self.screen_helper:addChild(CondTextButton(444, 286, "D", "BLOOD", function() Game.wii_menu.mii.blood = 5 end))
+	
+	self.screen_helper:addChild(CondTextButton(354, 166, "Red", "COLOR", function() Game.wii_menu.mii.color = 1 end))
+	self.screen_helper:addChild(CondTextButton(535, 166, "Blue", "COLOR", function() Game.wii_menu.mii.color = 2 end))
+	self.screen_helper:addChild(CondTextButton(354, 226, "Green", "COLOR", function() Game.wii_menu.mii.color = 3 end))
+	self.screen_helper:addChild(CondTextButton(535, 226, "Cyan", "COLOR", function() Game.wii_menu.mii.color = 4 end))
+	
+	self.screen_helper:addChild(CondTextButton(354, 166, "Kindness", "GIFT", function() Game.wii_menu.mii.gift = 1 end))
+	self.screen_helper:addChild(CondTextButton(535, 166, "Mind", "GIFT", function() Game.wii_menu.mii.gift = 2 end))
+	self.screen_helper:addChild(CondTextButton(354, 226, "Ambition", "GIFT", function() Game.wii_menu.mii.gift = 3 end))
+	self.screen_helper:addChild(CondTextButton(535, 226, "Bravery", "GIFT", function() Game.wii_menu.mii.gift = 4 end))
+	self.screen_helper:addChild(CondTextButton(444, 286, "Voice", "GIFT", function() Game.wii_menu.mii.gift = 5 end))
+	
+	self.screen_helper:addChild(CondTextButton(354, 166, "Love", "FEEL", function() Game.wii_menu.mii.feel = 1 end))
+	self.screen_helper:addChild(CondTextButton(535, 166, "Hope", "FEEL", function() Game.wii_menu.mii.feel = 2 end))
+	self.screen_helper:addChild(CondTextButton(354, 226, "Disgust", "FEEL", function() Game.wii_menu.mii.feel = 3 end))
+	self.screen_helper:addChild(CondTextButton(535, 226, "Fear", "FEEL", function() Game.wii_menu.mii.feel = 4 end))
 end
 
 return MiiChannel

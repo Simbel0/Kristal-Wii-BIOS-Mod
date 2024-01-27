@@ -63,6 +63,6 @@ end
 function Tab:canClick()
 	return Game.wii_menu.cooldown <= 0
 end
-function Tab:canHover() return (not Game.wii_menu.popUp or (Game.wii_menu.popUp and Game.wii_menu.popUp:isRemoved())) end
+function Tab:canHover() return (not Game.wii_menu.popUp or (Game.wii_menu.popUp and Game.wii_menu.popUp:isRemoved())) and Game.wii_menu.clickable end
 
 return Tab

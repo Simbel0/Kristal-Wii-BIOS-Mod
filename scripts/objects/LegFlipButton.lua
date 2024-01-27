@@ -16,6 +16,6 @@ end
 function LegFlipButton:canClick()
 	return Game.wii_menu.cooldown <= 0
 end
-function LegFlipButton:canHover() return (not Game.wii_menu.popUp or (Game.wii_menu.popUp and Game.wii_menu.popUp:isRemoved())) end
+function LegFlipButton:canHover() return (not Game.wii_menu.popUp or (Game.wii_menu.popUp and Game.wii_menu.popUp:isRemoved())) and Game.wii_menu.clickable end
 
 return LegFlipButton
