@@ -68,6 +68,23 @@ function MiiChannel:init()
 	
 	self.vii = ViiPreview(80, 80)
 	self.screen_helper:addChild(self.vii)
+	
+	self.leave_button = TextButtonInApp(90, 453, "Wii Menu", function()
+		Game.wii_menu.popUp = popUp("Would you like to save your Vii first?\nIf not, it will reset when you restart\nthe Wii BIOS Mod!", {"Yes", "No"}, function(clicked)
+			if clicked == 1 then
+				Game.wii_data["vii"] = Game.wii_menu.mii
+				love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
+				Game.wii_menu.popUp = popUp("Successfully saved your Vii.", {"OK"}, function(clicked)
+					self:setState("TRANSITIONOUT")
+				end)
+				Game.wii_menu.screen_helper:addChild(Game.wii_menu.popUp)
+			else
+				self:setState("TRANSITIONOUT")
+			end
+		end)
+		Game.wii_menu.screen_helper:addChild(Game.wii_menu.popUp)
+	end)
+	self.screen_helper:addChild(self.leave_button)
 end
 
 function MiiChannel:enter(_, maintenance)

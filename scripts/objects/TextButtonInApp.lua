@@ -1,10 +1,12 @@
 local TextButtonInApp, super = Class("ButtonInApp")
 
-function TextButtonInApp:init(x, y, text)
+function TextButtonInApp:init(x, y, text, func)
 	super:init(self, x, y, "button/blank_button")
 	
 	self.text = text
 	self.font = Assets.getFont("main_mono")
+	
+	self.func = func
 end
 
 function TextButtonInApp:draw()
@@ -20,7 +22,17 @@ function TextButtonInApp:draw()
 end
 
 function TextButtonInApp:canClick()
-	return true
+	return Game.wii_menu.cooldown <= 0
+end
+function TextButtonInApp:canHover() return (not Game.wii_menu.popUp or (Game.wii_menu.popUp and Game.wii_menu.popUp:isRemoved())) end
+
+function TextButtonInApp:onClick()
+	super:onClick(self)
+	self.pressed = false
+	Game.wii_menu.cooldown = 0.5
+	if self.func then
+		self.func()
+	end
 end
 
 return TextButtonInApp
