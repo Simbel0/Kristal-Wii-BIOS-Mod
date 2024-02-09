@@ -195,26 +195,28 @@ function MiiChannel:draw()
 	self.screen_helper:draw()
 	
 	love.graphics.setColor(0, 0, 0, self.alpha)
-	if self.substate == "HEAD" then
-		love.graphics.printf("< Head " .. self.mii.head .. " >", 255, 70, 354, "center")
-		love.graphics.printf("SKIN COLOR", 255, 125, 354, "center")
-		love.graphics.printf("HAIR COLOR", 255, 340, 354, "center")
-	elseif self.substate == "BODY" then
-		love.graphics.printf("< Body " .. self.mii.body .. " >", 255, 70, 354, "center")
-		love.graphics.printf("MAIN COLOR", 255, 125, 354, "center")
-		love.graphics.printf("STRIPE COLOR", 255, 300, 354, "center")
-	elseif self.substate == "FOOD" then
-		love.graphics.printf("Favorite food: " .. self.foods[self.mii.food], 255, 100, 354, "center")
-	elseif self.substate == "BLOOD" then
-		love.graphics.printf("Favorite blood: " .. self.bloods[self.mii.blood], 255, 100, 354, "center")
-	elseif self.substate == "COLOR" then
-		love.graphics.printf("Favorite color: " .. self.colors[self.mii.color], 255, 100, 354, "center")
-	elseif self.substate == "GIFT" then
-		love.graphics.printf("Gift: " .. self.gifts[self.mii.gift], 255, 100, 354, "center")
-	elseif self.substate == "FEEL" then
-		love.graphics.printf("You feel: " .. self.feels[self.mii.feel], 255, 100, 354, "center")
-	elseif self.substate == "NAME" then
-		love.graphics.printf("Your Vii's name", 320, 180, 238, "center")
+	if self.mii then
+		if self.substate == "HEAD" then
+			love.graphics.printf("< Head " .. self.mii.head .. " >", 255, 70, 354, "center")
+			love.graphics.printf("SKIN COLOR", 255, 125, 354, "center")
+			love.graphics.printf("HAIR COLOR", 255, 340, 354, "center")
+		elseif self.substate == "BODY" then
+			love.graphics.printf("< Body " .. self.mii.body .. " >", 255, 70, 354, "center")
+			love.graphics.printf("MAIN COLOR", 255, 125, 354, "center")
+			love.graphics.printf("STRIPE COLOR", 255, 300, 354, "center")
+		elseif self.substate == "FOOD" then
+			love.graphics.printf("Favorite food: " .. self.foods[self.mii.food], 255, 100, 354, "center")
+		elseif self.substate == "BLOOD" then
+			love.graphics.printf("Favorite blood: " .. self.bloods[self.mii.blood], 255, 100, 354, "center")
+		elseif self.substate == "COLOR" then
+			love.graphics.printf("Favorite color: " .. self.colors[self.mii.color], 255, 100, 354, "center")
+		elseif self.substate == "GIFT" then
+			love.graphics.printf("Gift: " .. self.gifts[self.mii.gift], 255, 100, 354, "center")
+		elseif self.substate == "FEEL" then
+			love.graphics.printf("You feel: " .. self.feels[self.mii.feel], 255, 100, 354, "center")
+		elseif self.substate == "NAME" then
+			love.graphics.printf("Your Vii's name", 320, 180, 238, "center")
+		end
 	end
 	
 	self.screen_helper_upper:draw()
