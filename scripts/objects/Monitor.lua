@@ -104,7 +104,7 @@ function Monitor:init(mod_id, index)
 	
 	if self.result then
 		if self.result.iconInit then
-			self.previewdata = self.result:iconInit(mod_id)
+			self.previewdata = self.result:iconInit(mod_id, Game.wii_menu.maintenance)
 			print(self.previewdata)
 		end
 	end
@@ -140,7 +140,7 @@ function Monitor:update()
 	end
 	
 	if self.previewdata then
-		self.previewdata = self.result:iconUpdate(self.previewdata, self.tick)
+		self.previewdata = self.result:iconUpdate(self.previewdata, self.tick, Game.wii_menu.maintenance)
 	end
 	
 	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and Game.wii_menu.tvSheet and self.page == Game.wii_menu.tvSheet.page and self:canHover() then
@@ -186,7 +186,7 @@ function Monitor:draw()
 	if self.previewdata then
 		Draw.pushScissor()
 		Draw.scissor(6, 5, 123, 95)
-		self.result:iconDraw(self.previewdata, self.tick)
+		self.result:iconDraw(self.previewdata, self.tick, Game.wii_menu.maintenance)
 		Draw.popScissor()
 	end
 	
