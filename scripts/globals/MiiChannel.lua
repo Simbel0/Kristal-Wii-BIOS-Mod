@@ -99,6 +99,7 @@ function MiiChannel:enter(_, maintenance)
 	self.mii = self:getMii()
 	
 	if not self.mii then
+		self.pop_up_initial = true
 		self.mii = {
 			head = 1,
 			body = 1,
@@ -124,25 +125,10 @@ function MiiChannel:update()
 		if self.alpha < 1 then
 			self.alpha = self.alpha + 0.05
 		else
-			if not self.mii then
+			if self.pop_up_initial then
 				self:setState("INTRO")
 				self.popUp = popUp("Use the Vii Channel to create\na digital vessel called a\nVii. You can only create one\nVii at a time.", {"OK"}, function(clicked) self:setState("CREATE") end)
-				self.screen_helper:addChild(self.popUp)
-				self.mii = {
-					head = 1,
-					body = 1,
-					legs_left = true,
-					skin_color = {195/255, 195/255, 195/255},
-					hair_color = {61/255, 18/255, 14/255},
-					shirt_color_1 = {127/255, 127/255, 127/255},
-					shirt_color_2 = {1, 1, 1},
-					name = "VESSEL",
-					food = 1,
-					blood = 1,
-					color = 1,
-					gift = 1,
-					feel = 1
-				}
+				self.screen_helper_upper:addChild(self.popUp)
 			else
 				self:setState("CREATE")
 			end
