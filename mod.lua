@@ -11,7 +11,8 @@ Mod.Shaders = {}
 
 Mod.wiiwares = {
     ["wii_food"] = "channels/food",
-    ["wii_rtk"] = "channels/kristal"
+    ["wii_rtk"] = "channels/kristal",
+    ["wii_mii"] = "channels/vii_maker"
 }
 
 Mod.Themes = {
@@ -130,7 +131,8 @@ function Mod:init()
         ["HealthAndSafety"] = HealthAndSafetyScreen,
         ["MainMenu"] = MainMenu,
         ["SettingsMenu"] = SettingsMenu,
-        ["Pregame"] = Pregame
+        ["Pregame"] = Pregame,
+        ["MiiChannel"] = MiiChannel
     }
 
     self._mouse_sprite_bak = MOUSE_SPRITE
