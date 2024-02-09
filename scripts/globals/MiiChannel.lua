@@ -98,6 +98,24 @@ function MiiChannel:enter(_, maintenance)
 	
 	self.mii = self:getMii()
 	
+	if not self.mii then
+		self.mii = {
+			head = 1,
+			body = 1,
+			legs_left = true,
+			skin_color = {195/255, 195/255, 195/255},
+			hair_color = {61/255, 18/255, 14/255},
+			shirt_color_1 = {127/255, 127/255, 127/255},
+			shirt_color_2 = {1, 1, 1},
+			name = "VESSEL",
+			food = 1,
+			blood = 1,
+			color = 1,
+			gift = 1,
+			feel = 1
+		}
+	end
+	
 	self.clickable = true
 end
 
