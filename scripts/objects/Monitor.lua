@@ -21,9 +21,8 @@ function Monitor:init(mod_id, index)
 		-- Get the sprite at the path
 		self.icon = love.graphics.newImage(mod_data.path .. "/assets/sprites/wii_channel.png")
 	else
-		-- TODO: check for the library
 		self.icon = "channels/gc_disc"
-		if love.filesystem.getInfo(mod_data.path .. "/libraries/wii_bios_lib") or love.filesystem.getInfo(mod_data.path .. "/libraries/wii_bios_lib.zip") or love.filesystem.getInfo(mod_data.path .. "/libraries/Kristal-Wii-BIOS-Library-main") or love.filesystem.getInfo(mod_data.path .. "/libraries/Kristal-Wii-BIOS-Library-main.zip") then
+		if mod_data and mod_data.libs["wii_bios_lib"] then
 			self.icon = "channels/wii_disc"
 		end
 	end
