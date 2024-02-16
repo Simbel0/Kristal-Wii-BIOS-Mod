@@ -2,7 +2,7 @@
     "id": "wii_kristal",
     "name": "Wii BIOS Mod Loader",
 
-    "version": "v0.0.0",
+    "version": "v0.2.0",
     "engineVer": "v0.8.1-dev",
 	
 	"useSaves": false
