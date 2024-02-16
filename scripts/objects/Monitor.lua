@@ -23,7 +23,7 @@ function Monitor:init(mod_id, index)
 	else
 		-- TODO: check for the library
 		self.icon = "channels/gc_disc"
-		if love.filesystem.getInfo(mod_data.path .. "/libraries/wii_bios_lib") or love.filesystem.getInfo(mod_data.path .. "/libraries/wii_bios_lib.zip") then
+		if love.filesystem.getInfo(mod_data.path .. "/libraries/wii_bios_lib") or love.filesystem.getInfo(mod_data.path .. "/libraries/wii_bios_lib.zip") or love.filesystem.getInfo(mod_data.path .. "/libraries/Kristal-Wii-BIOS-Library-main") or love.filesystem.getInfo(mod_data.path .. "/libraries/Kristal-Wii-BIOS-Library-main.zip") then
 			self.icon = "channels/wii_disc"
 		end
 	end
