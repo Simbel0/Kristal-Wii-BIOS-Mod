@@ -22,7 +22,7 @@ function Monitor:init(mod_id, index)
 		self.icon = love.graphics.newImage(mod_data.path .. "/assets/sprites/wii_channel.png")
 	else
 		self.icon = "channels/gc_disc"
-		if mod_data and mod_data.libs["wii_bios_lib"] then
+		if mod_data and mod_data.libs["wii_bios_library"] then
 			self.icon = "channels/wii_disc"
 		end
 	end
