@@ -22,14 +22,7 @@ function Monitor:init(mod_id, index)
 		self.icon = love.graphics.newImage(mod_data.path .. "/assets/sprites/wii_channel.png")
 	else
 		self.icon = "channels/gc_disc"
-		local lib_id = "wii_bios_lib"
-		--local repo_name = "Kristal-Wii-BIOS-Library" + "-main"
-		if mod_data and (
-			mod_data.libs[lib_id]
-			--[[or love.filesystem.getInfo(mod_data.path .. "/libraries/" .. lib_id) or love.filesystem.getInfo(mod_data.path .. "/libraries/" .. lib_id .. ".zip")
-			or love.filesystem.getInfo(mod_data.path .. "/libraries/" .. repo_name) or love.filesystem.getInfo(mod_data.path .. "/libraries/" .. repo_name ..".zip")]]
-		)
-		then
+		if mod_data and mod_data.libs["wii_bios_lib"] then
 			self.icon = "channels/wii_disc"
 		end
 	end
