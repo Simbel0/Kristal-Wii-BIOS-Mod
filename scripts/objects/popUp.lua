@@ -12,6 +12,9 @@ function popUp:init(text, buttons, callback)
 	self.state = "IDLE"
 
 	self.font = Assets.getFont("maintenance")
+	if not self.font then
+		self.font = Assets.getFont("main")
+	end
 
 	self.timer = 0
 	if type(buttons) == "number" then

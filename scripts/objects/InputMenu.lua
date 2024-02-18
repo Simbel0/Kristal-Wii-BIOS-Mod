@@ -15,6 +15,9 @@ function InputMenu:init(length)
     self:addChild(self.box)
 
     self.font = Assets.getFont("maintenance")
+    if not self.font then
+        self.font = Assets.getFont("main")
+    end
     self.char_w = 32
     self.char_h = self.char_w
     self.char_spacing = 2

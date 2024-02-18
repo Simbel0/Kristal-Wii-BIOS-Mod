@@ -43,7 +43,11 @@ function ViiNameText:draw()
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.rectangle("fill", 0, 0, 238, 36)
 		
-		love.graphics.setFont(Assets.getFont("maintenance"))
+		local font = Assets.getFont("maintenance")
+		if not font then
+        	font = Assets.getFont("main")
+    	end
+    	love.graphics.setFont(font)
 		love.graphics.setColor(0, 0, 0, 1)
 		love.graphics.printf(Game.wii_menu.mii.name, 0, 0, 238, "center")
 		

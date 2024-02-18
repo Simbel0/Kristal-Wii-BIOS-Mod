@@ -36,6 +36,9 @@ function MessagePopUp:init(data, buttons, callback, game_message)
 	self.state = "IDLE"
 
 	self.font = Assets.getFont("maintenance")
+	if not self.font then
+        self.font = Assets.getFont("main")
+    end
 
 	local suffix = game_message and "" or "_pt"
 	self.top = Assets.getTexture("memo/top"..suffix)

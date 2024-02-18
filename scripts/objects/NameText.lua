@@ -42,7 +42,11 @@ function NameText:draw()
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.rectangle("fill", 0, 0, 476, 72)
 		
-		love.graphics.setFont(Assets.getFont("maintenance_2x"))
+		local font = Assets.getFont("maintenance_2x")
+		if not font then
+			font = Assets.getFont("main")
+		end
+		love.graphics.setFont(font)
 		love.graphics.setColor(0, 0, 0, 1)
 		love.graphics.printf(Game.wii_data["name"], 0, 0, 476, "center")
 	end
