@@ -156,6 +156,7 @@ function Mod:init()
 
         love.mouse.setVisible(false)
     end)
+	Kristal.showCursor()
     ---@diagnostic disable-next-line: redundant-return-value
     Utils.hook(Game, "save", function() return {} end)
 
@@ -179,14 +180,14 @@ function Mod:unload()
 
     if MOUSE_VISIBLE then
         Kristal.showCursor()
-    elseif not MOUSE_VISIBLE then
+    else
         Kristal.hideCursor()
     end
 
     if not Kristal.Config["systemCursor"] then
         love.mouse.setVisible(false)
-    else
-        if Kristal.Config["alwaysShowCursor"] then love.mouse.setVisible(true) end
+    elseif Kristal.Config["alwaysShowCursor"] then
+        love.mouse.setVisible(true)
     end
 end
 
@@ -194,7 +195,6 @@ function Mod:postInit()
     Game.state = nil
 
     local mods = Kristal.Mods.getMods()
-    -- FIXME: its not like other mods cant access mods/wii_kristal
 	if not love.filesystem.getInfo("wii_settings.json") then
 		Game.wii_data = {
 			["american"] = self:localeIs("US"),
@@ -321,41 +321,15 @@ end
 ---@param ... any Arguments passed to the gamestate.
 function Mod:setState(state, ...)
     if type(state) == "string" then
-        Gamestate.switch(Mod.States[state] or Kristal.States[state], ...)
-    else
-        Gamestate.switch(state, ...)
+        state = Mod.States[state] or Kristal.States[state]
     end
-end
-
---- Swaps into a mod
---- If an `after` callback is not provided, enters the mod, including dark transition if enabled.
----@param mod_id     string   The id of the mod to load.
----@param save_id?   number   The id of the save to load the mod from. (1-3)
----@param save_name? string   The name to use for the save file.
-function Mod:loadMod(mod_id)
-    assert(Kristal.Mods.data[mod_id], "No mod \""..tostring(mod_id).."\"")
-    local mod = Kristal.Mods.getAndLoadMod(mod_id)
-	local name = Game.wii_data["name"]
-    local savemenu_vanilla = SaveMenu
-    Gamestate.switch({})
-    Kristal.clearModState()
-	Kristal.load_wii_mod = true
-    Kristal.loadAssets("","mods","", function()
-        Kristal.loadMod(mod_id, 0, name, function ()
-            if Kristal.preInitMod(mod.id) then
-                if SaveMenu ~= savemenu_vanilla then
-                    print("WARNING: SaveMenu is not vanilla")
-                end
-                if WiiSaveMenu then
-                    Registry.registerGlobal("SaveMenu", WiiSaveMenu, true)
-                else
-                    Registry.registerGlobal("SaveMenu", SimpleSaveMenu, true)
-                end
-                -- TODO: save_id, save_name
-                Gamestate.switch(Kristal.States["Game"], 0, name)
-            end
-        end)
-    end)
+    local current = Gamestate.current()
+    assert(
+        not current == Mod.States["Pregame"]
+        or not (current.loading_mod ~= nil and Utils.containsValue(Mod.States, state)),
+        "cannot exit from mod-loading Pregame to other BIOS-scoped states"
+    )
+    Gamestate.switch(state, ...)
 end
 
 function Mod:localeIs(short_name, long_name)
@@ -366,7 +340,6 @@ function Mod:localeIs(short_name, long_name)
 
     local locale
     if love.system.getOS() == "Windows" then
-        -- On MS-Win LOCALE is probably not set normally
         locale = os.setlocale("")
         local start = locale:find("_")
         local end_str = locale:find("%.", start+1)

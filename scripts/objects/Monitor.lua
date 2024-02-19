@@ -149,11 +149,10 @@ function Monitor:update()
 			self:setLayer(1)
 		end
 		if self:canClick() and not self.pressed and love.mouse.isDown(1) then
-			Game:setFlag("selected_mod", self.mod_id)
 			Assets.playSound("wii/button_pressed")
 			Game.musicplay:stop()
 			Game.musicplay = nil
-			Mod:setState("Pregame", false)
+			Mod:setState("Pregame", self.mod_id)
 		elseif self:canClick() and not self.pressed and love.mouse.isDown(2) then
 			print("Dragging " .. self.mod_id)
 		end
