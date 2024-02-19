@@ -10,7 +10,9 @@ end
 Pregame.LOAD_STATUS = {
 	["NOT_STARTED"] = nil,
 	["WAITING"] = 0,
-	["LOADING"] = 1,
+	["LOADING_0"] = 0.5,
+	["LOADING_1"] = 1,
+	["LOADING_2"] = 1.5,
 	["LOADED"] = 2,
 }
 
@@ -20,9 +22,10 @@ function Pregame:enter(_, selection)
 	self.wii_data = Utils.copy(Game.wii_data)
 
 	self.loading_mod = nil
-	self.going_to_miiware = select(1, Utils.startsWith(self.selected_mod, "wii_"))
-	if not self.going_to_miiware then
+	self.going_to_wiiware = select(1, Utils.startsWith(self.selected_mod, "wii_"))
+	if not self.going_to_wiiware then
 		assert(Kristal.Mods.data[self.selected_mod], "No mod \""..tostring(self.selected_mod).."\"")
+		Kristal.load_wii_mod = true
 		self.loading_mod = Pregame.LOAD_STATUS["WAITING"]
 	end
 
@@ -86,6 +89,8 @@ function Pregame:clearModStatePhase2()
 
 	love.window.setIcon(Kristal.icon)
 	love.window.setTitle(Kristal.getDesiredWindowTitle())
+
+	Gamestate.switch({})
 end
 
 function Pregame:startInit()
@@ -109,7 +114,7 @@ end
 
 function Pregame:enterGame()
 	if self.mouse_prev then Kristal.showCursor() end
-	if self.going_to_miiware then
+	if self.going_to_wiiware then
 		if self.selected_mod == "wii_rtk" then -- All of this is temporary
 			Kristal.load_wii_mod = false
 			Kristal.load_wii = false
@@ -119,8 +124,10 @@ function Pregame:enterGame()
 			Mod:setState("MainMenu", false)
 		elseif self.selected_mod == "wii_mii" then
 			Mod:setState("MiiChannel", false)
+		else
+			Mod:setState("MainMenu", false)
 		end
-	elseif self.loading_mod ~= 2 then
+	elseif self.loading_mod ~= self.LOAD_STATUS["LOADED"] then
 		return
 	else
 		self:clearModStatePhase2()
@@ -142,14 +149,16 @@ end
 
 function Pregame:update()
 	if self.loading_mod == self.LOAD_STATUS["WAITING"] then
-		self.loading_mod = self.LOAD_STATUS["LOADING"]
 		self:clearModStatePhase1()
-		Kristal.load_wii_mod = true
 
+		self.loading_mod = self.LOAD_STATUS["LOADING_0"]
 		Kristal.loadAssets("","mods","", function()
-			Kristal.loadMod(self.selected_mod, 0, self.wii_data["name"], function()
-				self.loading_mod = self.LOAD_STATUS["LOADED"]
-			end)
+			self.loading_mod = self.LOAD_STATUS["LOADING_1"]
+		end)
+	elseif self.loading_mod == self.LOAD_STATUS["LOADING_1"] then
+		self.loading_mod = self.LOAD_STATUS["LOADING_2"]
+		Kristal.loadMod(self.selected_mod, 0, self.wii_data["name"], function()
+			self.loading_mod = self.LOAD_STATUS["LOADED"]
 		end)
 	end
 
