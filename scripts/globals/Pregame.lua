@@ -84,6 +84,8 @@ function Pregame:clearModStatePhase2()
     Object._clearCache()
     Draw._clearStacks()
 
+    love.audio.stop()
+
     love.window.setIcon(Kristal.icon)
     love.window.setTitle(Kristal.getDesiredWindowTitle())
 
@@ -159,6 +161,10 @@ function Pregame:update()
         Kristal.loadMod(self.selected_mod, 0, self.wii_data["name"], function()
             self.loading_mod = self.LOAD_STATUS["LOADED"]
         end)
+    elseif self.loading_mod == self.LOAD_STATUS["LOADED"]
+        and not (self.state_manager.state == "EXIT" or self.state_manager.state == "DONE")
+        and Input.down("menu") then
+        self:setState("EXIT")
     end
 
     self.state_manager:update()
