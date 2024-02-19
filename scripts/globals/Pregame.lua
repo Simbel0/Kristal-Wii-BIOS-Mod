@@ -22,6 +22,7 @@ function Pregame:enter(_, selection)
 	self.loading_mod = nil
 	self.going_to_miiware = select(1, Utils.startsWith(self.selected_mod, "wii_"))
 	if not self.going_to_miiware then
+		assert(Kristal.Mods.data[self.selected_mod], "No mod \""..tostring(self.selected_mod).."\"")
 		self.loading_mod = Pregame.LOAD_STATUS["WAITING"]
 	end
 
@@ -141,7 +142,6 @@ end
 
 function Pregame:update()
 	if self.loading_mod == self.LOAD_STATUS["WAITING"] then
-		assert(Kristal.Mods.data[self.selected_mod], "No mod \""..tostring(self.selected_mod).."\"")
 		self.loading_mod = self.LOAD_STATUS["LOADING"]
 		self:clearModStatePhase1()
 		Kristal.load_wii_mod = true
