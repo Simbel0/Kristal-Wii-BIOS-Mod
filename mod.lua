@@ -156,6 +156,7 @@ function Mod:init()
 
         love.mouse.setVisible(false)
     end)
+	Kristal.showCursor()
     ---@diagnostic disable-next-line: redundant-return-value
     Utils.hook(Game, "save", function() return {} end)
 
