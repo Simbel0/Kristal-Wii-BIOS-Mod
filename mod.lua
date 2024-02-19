@@ -179,14 +179,14 @@ function Mod:unload()
 
     if MOUSE_VISIBLE then
         Kristal.showCursor()
-    elseif not MOUSE_VISIBLE then
+    else
         Kristal.hideCursor()
     end
 
     if not Kristal.Config["systemCursor"] then
         love.mouse.setVisible(false)
-    else
-        if Kristal.Config["alwaysShowCursor"] then love.mouse.setVisible(true) end
+    elseif Kristal.Config["alwaysShowCursor"] then
+        love.mouse.setVisible(true)
     end
 end
 

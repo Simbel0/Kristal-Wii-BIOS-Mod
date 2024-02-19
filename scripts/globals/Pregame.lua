@@ -42,9 +42,6 @@ function Pregame:enter(_, selection)
     self.stage:addChild(self.slide)
     self.slide_no = 1
 
-    self.mouse_prev = MOUSE_VISIBLE
-    Kristal.hideCursor()
-
     self.state_manager = StateManager("", self, true)
     self.state_manager:addState("INIT", {enter = self.startInit})
     self.state_manager:addState("PRESENTING", {enter = self.startPresenting})
@@ -150,6 +147,8 @@ end
 function Pregame:update()
     if self.loading_mod == self.LOAD_STATUS["WAITING"] then
         self:clearModStatePhase1()
+        self.mouse_prev = MOUSE_VISIBLE
+        Kristal.hideCursor()
 
         self.loading_mod = self.LOAD_STATUS["LOADING_0"]
         Kristal.loadAssets("", "mods", "", function()
