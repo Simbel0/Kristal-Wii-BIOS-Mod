@@ -46,6 +46,7 @@ function Pregame:enter(_, selection)
     self.state_manager:addState("INIT", {enter = self.startInit})
     self.state_manager:addState("PRESENTING", {enter = self.startPresenting})
     self.state_manager:addState("FADE", {enter = self.startFade})
+    self.state_manager:addState("FADEOUT", {enter = self.startFadeout})
     self.state_manager:addState("EXIT", {update = self.enterGame})
     self.state_manager:addState("DONE")
     self.state_manager:setState("INIT")
@@ -107,13 +108,18 @@ function Pregame:startFade()
             self:setState("PRESENTING")
         end)
     else
-        self.slide:fadeTo(0, 1, function() self:setState("EXIT") end)
+        self:setState("FADEOUT")
     end
+end
+
+function Pregame:startFadeout()
+    self.slide:fadeTo(0, 1, function() self:setState("EXIT") end)
 end
 
 function Pregame:enterGame()
     if self.mouse_prev then Kristal.showCursor() end
     if self.going_to_wiiware then
+        love.audio.stop()
         if self.selected_mod == "wii_rtk" then -- All of this is temporary
             Kristal.load_wii_mod = false
             Kristal.load_wii = false
@@ -162,9 +168,14 @@ function Pregame:update()
             self.loading_mod = self.LOAD_STATUS["LOADED"]
         end)
     elseif (self.going_to_wiiware or self.loading_mod == self.LOAD_STATUS["LOADED"])
-        and not (self.state_manager.state == "EXIT" or self.state_manager.state == "DONE")
-        and Input.down("menu") then
-        self:setState("EXIT")
+        and not (
+            self.state_manager.state == "FADEOUT"
+            or self.state_manager.state == "EXIT"
+            or self.state_manager.state == "DONE"
+        )
+        and Input.pressed("cancel")
+    then
+        self:setState("FADEOUT")
     end
 
     self.state_manager:update()
