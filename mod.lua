@@ -232,6 +232,11 @@ function Mod:postInit()
 		love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
 	else
 		Game.wii_data = JSON.decode(love.filesystem.read("wii_settings.json"))
+		
+		if (not Game.wii_data["name"]) then
+			Game.wii_data["name"] = "WII"
+			love.filesystem.write("wii_settings.json", JSON.encode(Game.wii_data))
+		end
 
         --Check if there's any new mods in the mod list
         local new_mods = Utils.filter(mods, function(mod)
