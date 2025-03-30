@@ -314,7 +314,7 @@ function Mod:postDraw()
         if self.cursor_troll then
             cursor_tex = self.cursor_1t_tex
         end
-        --[[if love.mouse.isDown(1) then
+        --[[if Input.mousePressed(1) then
             cursor_tex = self.cursor_2_tex
         end]]
         love.graphics.draw(cursor_tex, x - 10, y)
