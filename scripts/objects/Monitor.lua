@@ -148,12 +148,12 @@ function Monitor:update()
 			self.hovered = true
 			self:setLayer(1)
 		end
-		if self:canClick() and not self.pressed and love.mouse.isDown(1) then
+		if self:canClick() and not self.pressed and Input.mousePressed(1) then
 			Assets.playSound("wii/button_pressed")
 			Game.musicplay:stop()
 			Game.musicplay = nil
 			Mod:setState("Pregame", self.mod_id)
-		elseif self:canClick() and not self.pressed and love.mouse.isDown(2) then
+		elseif self:canClick() and not self.pressed and Input.mousePressed(2) then
 			print("Dragging " .. self.mod_id)
 		end
 	else
