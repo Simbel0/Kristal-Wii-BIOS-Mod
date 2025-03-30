@@ -14,7 +14,7 @@ function ViiNameText:update()
 	if not self.pressed and self:canHover() then
 		if (mx / Kristal.getGameScale() > self.x) and (mx / Kristal.getGameScale() < (self.x + self.width)) and (my / Kristal.getGameScale() > self.y) and (my / Kristal.getGameScale() < (self.y + self.height)) then
 			if self:canClick() then
-				if love.mouse.isDown(1) and Game.wii_menu.cooldown <= 0 then
+				if Input.mousePressed(1) and Game.wii_menu.cooldown <= 0 then
 					Game.wii_menu.stage.timer:script(function(wait)
 						Game.wii_menu.clickable = false
 						
