@@ -36,7 +36,7 @@ function EnableButton:update()
 					self.played_sound = true
 					Assets.playSound("wii/hover")
 				end
-				if not self.pressed and love.mouse.isDown(1) then
+				if not self.pressed and Input.mousePressed(1) then
 					self.pressed = true
 					self:onClick()
 				end
