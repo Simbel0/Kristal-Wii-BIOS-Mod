@@ -43,14 +43,14 @@ function HealthAndSafetyScreen:update(dt)
 	if self.show_confirm then
 		self.siner = self.siner + DTMULT / 25
 
-		if love.mouse.isDown(1) and self.state == "IDLE" then
+		if Input.mousePressed(1) and self.state == "IDLE" then
 			self.state = "TRANSITIONING"
 			self.timer:tween(0.5, self, { alpha = 0 }, "linear")
 			self.timer:after(3, function() Mod:setState("MainMenu", false) end)
 			Assets.playSound("wii/click")
 		end
 
-		if love.mouse.isDown(3) and self.state == "IDLE" then
+		if Input.mousePressed(3) and self.state == "IDLE" then
 			self.maintenance_timer = self.maintenance_timer + DTMULT
 
 			if self.maintenance_timer >= 180 then
