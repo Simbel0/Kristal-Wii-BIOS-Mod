@@ -47,7 +47,7 @@ function DataBlock:update()
 	if not self.pressed and self:canHover() then
 		if (mx / Kristal.getGameScale() > self.x) and (mx / Kristal.getGameScale() < (self.x + self.width)) and (my / Kristal.getGameScale() > self.y) and (my / Kristal.getGameScale() < (self.y + self.height)) then
 			if self:canClick() then
-				if love.mouse.isDown(1) and Game.wii_menu.cooldown <= 0 then
+				if Input.mousePressed(1) and Game.wii_menu.cooldown <= 0 then
 					if self.name then
 						Game.wii_menu.popUp = popUp("Are you sure you would\nlike to delete the\nsave file for\n" .. self.name .. "?", {"Yes", "No"}, function(clicked)
 							Game.wii_menu.popUp = nil
