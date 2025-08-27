@@ -3,7 +3,7 @@
     "name": "Wii BIOS Mod Loader",
 
     "version": "v0.2.0",
-    "engineVer": "v0.8.1-dev",
+    "engineVer": "v0.10.0-dev",
 	
 	"useSaves": false
 }
