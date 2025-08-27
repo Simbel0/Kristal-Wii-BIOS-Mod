@@ -129,7 +129,7 @@ Mod.Shaders["RemoveColor"] = love.graphics.newShader([[
 function Mod:init()
     Mod.States = {
         ["HealthAndSafety"] = HealthAndSafetyScreen,
-        ["MainMenu"] = MainMenu,
+        ["MainMenu"] = WiiMainMenu,
         ["SettingsMenu"] = SettingsMenu,
         ["Pregame"] = Pregame,
         ["MiiChannel"] = MiiChannel

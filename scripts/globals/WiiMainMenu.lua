@@ -1,7 +1,7 @@
----@class MainMenu
-local MainMenu = {}
+---@class WiiMainMenu
+local WiiMainMenu = {}
 
-function MainMenu:init()
+function WiiMainMenu:init()
 	self.stage = Stage()
 
 	Game.wii_menu = self
@@ -37,7 +37,7 @@ function MainMenu:init()
 	self.screen_helper:addChild(self.message_out_button)
 end
 
-function MainMenu:enter(_, maintenance)
+function WiiMainMenu:enter(_, maintenance)
 	Game.wii_menu = self
 
 	self.alpha = 0
@@ -80,7 +80,7 @@ function MainMenu:enter(_, maintenance)
 	print("[BIOS] Found " .. found .. " message(s) for " .. dater)
 end
 
-function MainMenu:update()
+function WiiMainMenu:update()
 	if self.state == "TRANSITIONIN" then
 		if self.alpha < 1 then
 			self.alpha = self.alpha + 0.05
@@ -101,7 +101,7 @@ function MainMenu:update()
 	end
 end
 
-function MainMenu:draw()
+function WiiMainMenu:draw()
     love.graphics.clear(0, 0, 0, 1)
     love.graphics.push()
 
@@ -144,7 +144,7 @@ function MainMenu:draw()
 	end
 end
 
-function MainMenu:onWheelMoved(x, y)
+function WiiMainMenu:onWheelMoved(x, y)
 	local function callOnWheelMoved(children, x, y)
         for i,child in ipairs(children) do
             if isClass(child) then
@@ -161,4 +161,4 @@ function MainMenu:onWheelMoved(x, y)
     callOnWheelMoved(self.stage.children, x, y)
 end
 
-return MainMenu
+return WiiMainMenu
