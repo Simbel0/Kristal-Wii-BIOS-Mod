@@ -64,6 +64,7 @@ function MessagePopUp:init(data, buttons, callback, game_message)
 	end
 	
 	self.clickables = {}
+	self.clicked_button = nil
 
 	if self.buttons then
 		self.start_x = 265 - ((#self.buttons - 1) * 100)
@@ -128,12 +129,12 @@ function MessagePopUp:update()
 	-- Temporary while waiting for the buttons object
 	for k,v in pairs(self.clickables) do
 		if v.buttonPressed then
-			self.clicked = k
+			self.clicked_button = k
 			break
 		end
 	end
 	
-	if (self.max_timer and self.max_timer <= self.timer + 20) or (self.clicked and self.state ~= "TRANSITION") then
+	if (self.max_timer and self.max_timer <= self.timer + 20) or (self.clicked_button and self.state ~= "TRANSITION") then
 		self.state = "TRANSITION"
 		self.timer = 0
 	end
