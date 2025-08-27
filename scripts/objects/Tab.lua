@@ -1,7 +1,7 @@
 local Tab, super = Class(Object)
 
 function Tab:init(x, y, image, substate)
-	super:init(self, x+29, y+32, image)
+	super.init(self, x+29, y+32, image)
 	
 	self.path = image
 	
@@ -44,7 +44,7 @@ function Tab:update()
 	end
 end
 
-function Tab:draw() super:draw(self) end
+function Tab:draw() super.draw(self) end
 
 function Tab:onClick()
 	Assets.playSound("wii/button_pressed")

@@ -1,12 +1,12 @@
 local MessageBoardButton, super = Class("Button")
 
 function MessageBoardButton:init(x, y)
-	super:init(self, x, y, "message_board")
+	super.init(self, x, y, "message_board")
 	self.cd = 0
 end
 
 function MessageBoardButton:onClick()
-	super:onClick(self)
+	super.onClick(self)
 	
 	if not Game.wii_menu.maintenance then
 		Game.wii_menu.tvSheet.page_debounce = true
@@ -41,7 +41,7 @@ function MessageBoardButton:onClick()
 end
 
 function MessageBoardButton:update()
-	super:update(self)
+	super.update(self)
 	
 	self.sprite.alpha = Game.wii_menu.alpha
 	
@@ -49,7 +49,7 @@ function MessageBoardButton:update()
 end
 
 function MessageBoardButton:draw()
-	super:draw(self)
+	super.draw(self)
 end
 
 function MessageBoardButton:canHover()

@@ -92,7 +92,7 @@ function MenuTVSheet:draw(alpha)
 end
 
 function MenuTVSheet:update()
-	super:update(self)
+	super.update(self)
 	
 	self.clock:update()
 

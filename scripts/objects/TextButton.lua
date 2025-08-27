@@ -1,14 +1,14 @@
 local TextButton, super = Class("Button")
 
 function TextButton:init(x, y, text)
-	super:init(self, x, y, "blank_button")
+	super.init(self, x, y, "blank_button")
 	
 	self.text = text
 	self.font = Assets.getFont("main_mono")
 end
 
 function TextButton:draw()
-	super:draw(self)
+	super.draw(self)
 	
 	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["TEXT"], 1)
 	

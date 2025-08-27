@@ -39,7 +39,7 @@ function DataBlock:getDebugInfo()
 end
 
 function DataBlock:update()
-	super:update(self)
+	super.update(self)
 	
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
@@ -91,7 +91,7 @@ function DataBlock:update()
 end
 
 function DataBlock:draw()
-	super:draw(self)
+	super.draw(self)
 	
 	if self.icon then
 		love.graphics.setColor(1, 1, 1, 1)

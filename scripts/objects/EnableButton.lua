@@ -1,7 +1,7 @@
 local EnableButton, super = Class("Button")
 
 function EnableButton:init(x, y, enable)
-	super:init(self, x, y, "bar")
+	super.init(self, x, y, "bar")
 	
 	self.text = enable and "Enable" or "Disable"
 	self.font = Assets.getFont("main_mono")
@@ -11,7 +11,7 @@ end
 
 function EnableButton:draw()
 	if Game.wii_menu.substate == "SETTING" and Utils.containsValue({"autoload", "american", "military", "timestamp"}, Game.wii_menu.reason) then
-		super:draw(self)
+		super.draw(self)
 		
 		love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["TEXT"], 1)
 		
@@ -58,7 +58,7 @@ function EnableButton:update()
 end
 
 function EnableButton:onClick()
-	super:onClick(self)
+	super.onClick(self)
 	
 	if Game.wii_menu.reason == "autoload" then
 		Game.wii_data["load_early"] = self.enable

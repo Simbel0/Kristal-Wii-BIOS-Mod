@@ -1,7 +1,7 @@
 local ISettingButton, super = Class("Button")
 
 function ISettingButton:init(x, y, text, setting, page)
-	super:init(self, x, y, "bar")
+	super.init(self, x, y, "bar")
 	
 	self.text = text
 	self.font = Assets.getFont("main_mono")
@@ -14,7 +14,7 @@ end
 
 function ISettingButton:draw()
 	if Game.wii_menu.page == self.page and Game.wii_menu.substate == "SETTINGS" then
-		super:draw(self)
+		super.draw(self)
 		
 		love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["TEXT"], 1)
 		
@@ -55,7 +55,7 @@ function ISettingButton:update()
 end
 
 function ISettingButton:onClick()
-	super:onClick(self)
+	super.onClick(self)
 	
 	Game.wii_menu.substate = "SETTING"
 	Game.wii_menu.reason = self.setting

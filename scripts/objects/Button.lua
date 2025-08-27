@@ -1,7 +1,7 @@
 local Button, super = Class(Object)
 
 function Button:init(x, y, image)
-	super:init(self, x, y, 0, 0)
+	super.init(self, x, y, 0, 0)
 	
 	if image then
 		self.path = "button/" .. image
@@ -57,7 +57,7 @@ function Button:update()
 	end
 end
 
-function Button:draw() super:draw(self) end
+function Button:draw() super.draw(self) end
 
 function Button:onClick()
 	Assets.playSound("wii/button_pressed")

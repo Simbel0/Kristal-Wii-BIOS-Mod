@@ -1,7 +1,7 @@
 local ThemeButton, super = Class("Button")
 
 function ThemeButton:init(x, y, theme)
-	super:init(self, x, y, 0, 0)
+	super.init(self, x, y, 0, 0)
 	
 	self.path = "button/settings"
 	if theme ~= "DEFAULT" and love.filesystem.getInfo(Kristal.Mods.getMod("wii_kristal").path .. "/assets/sprites/button/" .. theme .. "/settings.png") then
@@ -22,7 +22,7 @@ function ThemeButton:init(x, y, theme)
 end
 
 function ThemeButton:onClick()
-	super:onClick(self)
+	super.onClick(self)
 	
 	self.wii_data = Game.wii_data
 	self.wii_data["theme"] = self.theme
@@ -36,7 +36,7 @@ end
 
 function ThemeButton:draw()
 	if Game.wii_menu.substate == "SETTING" and Game.wii_menu.reason == "theme" then
-		super:draw(self)
+		super.draw(self)
 	end
 end
 

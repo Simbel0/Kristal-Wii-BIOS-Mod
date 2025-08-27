@@ -2,7 +2,7 @@
 local Message, super = Class(Object)
 
 function Message:init(index, message)
-	super:init(self, 0, 0, 144, 96)
+	super.init(self, 0, 0, 144, 96)
 
 	self.message = message
 	
@@ -27,7 +27,7 @@ function Message:init(index, message)
 end
 
 function Message:update()
-	super:update(self)
+	super.update(self)
 
 	if Mod.popup_on then return end
 	
@@ -51,7 +51,7 @@ end
 
 function Message:draw()
 	if Game.wii_menu.state ~= "TRANSITIONIN" and Game.wii_menu.state ~= "TRANSITIONOUT" then
-		super:draw(self)
+		super.draw(self)
 	end
 end
 

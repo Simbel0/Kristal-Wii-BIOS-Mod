@@ -2,9 +2,9 @@ local BackButton, super = Class("Button")
 
 function BackButton:init(x, y, gray)
 	if gray then
-		super:init(self, x, y, "back_gray")
+		super.init(self, x, y, "back_gray")
 	else
-		super:init(self, x, y, "back")
+		super.init(self, x, y, "back")
 	end
 	self.sprite:setOrigin(0.5,0.5)
 	self.sprite:setPosition(x, y)
@@ -12,7 +12,7 @@ function BackButton:init(x, y, gray)
 end
 
 function BackButton:onClick()
-	super:onClick(self)
+	super.onClick(self)
 	
 	if Game.wii_menu.substate == "MAIN" then
 		Game.wii_menu.state = "TRANSITIONOUT"
@@ -28,7 +28,7 @@ function BackButton:onClick()
 end
 
 function BackButton:update()
-	super:update(self)
+	super.update(self)
 	self.cd = self.cd - DT
 end
 

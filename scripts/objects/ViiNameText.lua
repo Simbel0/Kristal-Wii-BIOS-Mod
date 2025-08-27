@@ -6,7 +6,7 @@ function ViiNameText:init(x, y)
 end
 
 function ViiNameText:update()
-	super:update(self)
+	super.update(self)
 	
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
@@ -36,7 +36,7 @@ end
 
 function ViiNameText:draw()
 	if Game.wii_menu.substate == "NAME" then
-		super:draw(self)
+		super.draw(self)
 		
 		love.graphics.push()
 		

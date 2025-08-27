@@ -1,7 +1,7 @@
 local ViiPreview, super = Class(Object)
 
 function ViiPreview:init(x, y)
-	super:init(self, x, y)
+	super.init(self, x, y)
 	
 	self.width = 152
 	self.height = 336
@@ -12,7 +12,7 @@ function ViiPreview:update()
 end
 
 function ViiPreview:draw()
-	super:draw(self)
+	super.draw(self)
 	
 	if Game.wii_menu.mii then
 		love.graphics.push()

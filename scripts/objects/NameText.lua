@@ -6,7 +6,7 @@ function NameText:init(x, y)
 end
 
 function NameText:update()
-	super:update(self)
+	super.update(self)
 	
 	local mx, my = love.mouse.getPosition()
 	local screen_x, screen_y = self:getScreenPos()
@@ -37,7 +37,7 @@ end
 
 function NameText:draw()
 	if Game.wii_menu.substate == "SETTING" and Game.wii_menu.reason == "name" then
-		super:draw(self)
+		super.draw(self)
 		
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.rectangle("fill", 0, 0, 476, 72)

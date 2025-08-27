@@ -1,7 +1,7 @@
 local ColorButton, super = Class("ButtonInApp")
 
 function ColorButton:init(x, y, substate, color, part)
-	super:init(self, x, y, "vii_channel/color_button")
+	super.init(self, x, y, "vii_channel/color_button")
 	self.sprite:setOrigin(0.5,0.5)
 	self.sprite:setPosition(35, 35)
 	self.cd = 0
@@ -12,7 +12,7 @@ function ColorButton:init(x, y, substate, color, part)
 end
 
 function ColorButton:onClick()
-	super:onClick(self)
+	super.onClick(self)
 	
 	Game.wii_menu.cooldown = 0.5
 
@@ -30,13 +30,13 @@ function ColorButton:onClick()
 end
 
 function ColorButton:update()
-	super:update(self)
+	super.update(self)
 	self.cd = self.cd - DT
 end
 
 function ColorButton:draw()
 	if self.substate == Game.wii_menu.substate then
-		super:draw(self)
+		super.draw(self)
 	
 		love.graphics.push()
 		

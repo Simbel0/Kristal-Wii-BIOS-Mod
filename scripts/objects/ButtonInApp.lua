@@ -1,7 +1,7 @@
 local ButtonInApp, super = Class(Object)
 
 function ButtonInApp:init(x, y, image)
-	super:init(self, x, y, 0, 0)
+	super.init(self, x, y, 0, 0)
 	
 	self.sprite = Sprite(image)
 	self:addChild(self.sprite)
@@ -50,7 +50,7 @@ function ButtonInApp:update()
 	end
 end
 
-function ButtonInApp:draw() super:draw(self) end
+function ButtonInApp:draw() super.draw(self) end
 
 function ButtonInApp:onClick()
 	Assets.playSound("wii/button_pressed")
