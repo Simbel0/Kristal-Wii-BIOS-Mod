@@ -326,13 +326,13 @@ function Mod:setState(state, ...)
     if type(state) == "string" then
         state = Mod.States[state] or Kristal.States[state]
     end
-    local current = Kristal.getState()
+    local current = (Kristal.getState or Gamestate.current)()
     assert(
         not current == Mod.States["Pregame"]
         or not (current.loading_mod ~= nil and Utils.containsValue(Mod.States, state)),
         "cannot exit from mod-loading Pregame to other BIOS-scoped states"
     )
-    Kristal.setState(state, ...)
+    (Kristal.setState or Gamestate.switch)(state, ...)
 end
 
 function Mod:localeIs(short_name, long_name)
