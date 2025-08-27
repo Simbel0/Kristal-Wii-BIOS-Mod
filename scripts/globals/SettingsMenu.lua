@@ -1,4 +1,4 @@
----@class SettingsMenu : GamestateState
+---@class SettingsMenu
 local SettingsMenu = {}
 
 function SettingsMenu:init()

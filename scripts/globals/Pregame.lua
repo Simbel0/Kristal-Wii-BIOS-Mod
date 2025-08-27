@@ -1,4 +1,4 @@
----@class Pregame : GamestateState
+---@class Pregame
 local Pregame = {}
 
 function Pregame:init()
@@ -90,7 +90,7 @@ function Pregame:clearModStatePhase2()
     love.window.setIcon(Kristal.icon)
     love.window.setTitle(Kristal.getDesiredWindowTitle())
 
-    Gamestate.switch({})
+    Kristal.setState({})
 end
 
 function Pregame:startInit()
@@ -146,7 +146,7 @@ function Pregame:enterGame()
             else
                 Registry.registerGlobal("SaveMenu", SimpleSaveMenu, true)
             end
-            Gamestate.switch(Kristal.States["Game"], 0, name)
+            Kristal.setState(Kristal.States["Game"], 0, name)
         end
     end
     self:setState("DONE")

@@ -1,4 +1,4 @@
----@class MainMenu : GamestateState
+---@class MainMenu
 local MainMenu = {}
 
 function MainMenu:init()

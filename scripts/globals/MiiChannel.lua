@@ -1,4 +1,4 @@
----@class MiiChannel : GamestateState
+---@class MiiChannel
 local MiiChannel = {}
 
 function MiiChannel:init()

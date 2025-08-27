@@ -1,4 +1,4 @@
----@class HealthAndSafetyScreen : GamestateState
+---@class HealthAndSafetyScreen
 local HealthAndSafetyScreen = {}
 
 function HealthAndSafetyScreen:init()
