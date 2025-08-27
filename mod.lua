@@ -323,16 +323,19 @@ end
 ---@param state table|WiiStates|string The gamestate to switch to.
 ---@param ... any Arguments passed to the gamestate.
 function Mod:setState(state, ...)
+    local getState = Kristal.getState or Gamestate.current
+    local setState = Kristal.setState or Gamestate.switch
+
     if type(state) == "string" then
         state = Mod.States[state] or Kristal.States[state]
     end
-    local current = (Kristal.getState or Gamestate.current)()
+    local current = getState()
     assert(
         not current == Mod.States["Pregame"]
         or not (current.loading_mod ~= nil and Utils.containsValue(Mod.States, state)),
         "cannot exit from mod-loading Pregame to other BIOS-scoped states"
     )
-    (Kristal.setState or Gamestate.switch)(state, ...)
+    setState(state, ...)
 end
 
 function Mod:localeIs(short_name, long_name)
