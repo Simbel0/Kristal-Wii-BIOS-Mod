@@ -41,11 +41,11 @@ end
 function DataBlock:update()
 	super.update(self)
 	
-	local mx, my = love.mouse.getPosition()
+	local mx, my = Input.getMousePosition()
 	local screen_x, screen_y = self:getScreenPos()
 	screen_x, screen_y = screen_x-self.width/2, screen_y-self.height/2
 	if not self.pressed and self:canHover() then
-		if (mx / Kristal.getGameScale() > self.x) and (mx / Kristal.getGameScale() < (self.x + self.width)) and (my / Kristal.getGameScale() > self.y) and (my / Kristal.getGameScale() < (self.y + self.height)) then
+		if (mx > self.x) and (mx < (self.x + self.width)) and (my > self.y) and (my < (self.y + self.height)) then
 			if self:canClick() then
 				if Input.mousePressed(1) and Game.wii_menu.cooldown <= 0 then
 					if self.name then

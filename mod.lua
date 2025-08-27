@@ -304,11 +304,9 @@ function Mod:postDraw()
         and (Input.usingGamepad() or love.window.hasMouseFocus()) then
         local x, y
         if Input.usingGamepad() then
-            x = Input.gamepad_cursor_x
-            y = Input.gamepad_cursor_y
+            x, y = Input.getGamepadCursorPosition()
         else
-            x, y = love.mouse.getPosition()
-            x, y = x / Kristal.getGameScale(), y / Kristal.getGameScale()
+            x, y = Input.getMousePosition()
         end
         local cursor_tex = self.cursor_1_tex
         if self.cursor_troll then

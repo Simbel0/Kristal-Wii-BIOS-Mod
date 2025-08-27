@@ -23,11 +23,11 @@ end
 function Tab:update() 
 	super.update(self)
 
-	local mx, my = love.mouse.getPosition()
+	local mx, my = Input.getMousePosition()
 	local screen_x, screen_y = self:getScreenPos()
 	screen_x, screen_y = screen_x-self.width/2, screen_y-self.height/2
 	if not self.pressed then
-		if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and self:canHover() then
+		if (mx > screen_x) and (mx < (screen_x + self.width)) and (my > screen_y) and (my < (screen_y + self.height)) and self:canHover() then
 			if self:canClick() then
 				if not self.played_sound then
 					self.played_sound = true

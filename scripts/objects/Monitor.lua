@@ -130,7 +130,7 @@ function Monitor:update()
 	self.cd = self.cd - DT
 	self.tick = self.tick + DT
 	if Mod.popup_on then return end
-	local mx, my = love.mouse.getPosition()
+	local mx, my = Input.getMousePosition()
 	local screen_x, screen_y = self:getScreenPos()
 	
 	if self.anim then
@@ -142,7 +142,7 @@ function Monitor:update()
 		self.previewdata = self.result:iconUpdate(self.previewdata, self.tick, Game.wii_menu.maintenance)
 	end
 	
-	if (mx / Kristal.getGameScale() > screen_x) and (mx / Kristal.getGameScale() < (screen_x + self.width)) and (my / Kristal.getGameScale() > screen_y) and (my / Kristal.getGameScale() < (screen_y + self.height)) and Game.wii_menu.tvSheet and self.page == Game.wii_menu.tvSheet.page and self:canHover() then
+	if (mx > screen_x) and (mx < (screen_x + self.width)) and (my > screen_y) and (my < (screen_y + self.height)) and Game.wii_menu.tvSheet and self.page == Game.wii_menu.tvSheet.page and self:canHover() then
 		if not self.hovered then
 			self.hover:play()
 			self.hovered = true
