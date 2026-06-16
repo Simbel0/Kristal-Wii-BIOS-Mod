@@ -339,6 +339,9 @@ function Mod:setState(state, ...)
 end
 
 function Mod:localeIs(short_name, long_name)
+    if love.system.getOS() ~= "Windows" then -- Make it work on Mac (idk about Linux)
+        return short_name == "US"
+    end
     long_name = long_name or ({
         ["US"] = "United States",
         ["JP"] = "Japan",
@@ -352,7 +355,7 @@ function Mod:localeIs(short_name, long_name)
         return locale:sub(start+1, end_str-1) == long_name
     end
 
-    locale = os.getenv("LC_ALL") or os.getenv("LANG")
+    locale = os.getenv("LC_ALL") or os.getenv("LANG") -- Doesn't work on Mac apparently
     return locale:match("%a%a.(%a%a)") == short_name
 end
 
