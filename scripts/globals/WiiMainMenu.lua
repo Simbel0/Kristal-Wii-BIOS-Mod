@@ -50,6 +50,8 @@ function WiiMainMenu:enter(_, maintenance)
 	
 	self.tvSheet:handleMaintenance()
 
+	self.font = Assets.getFont("main")
+
 	self.message_date = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
 	
 	if not Game.musicplay then
@@ -109,6 +111,7 @@ function WiiMainMenu:draw()
 	love.graphics.setColor(r, g, b, self.alpha)
 	love.graphics.rectangle("fill", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
+	love.graphics.setFont(self.font)
 	love.graphics.setColor(Mod.Themes[Game.wii_data["theme"]]["DATE"], self.alpha)
 	if self.substate == "MAIN" then
 		love.graphics.print(Utils.titleCase(Utils.sub(os.date("%a"), 1, 3)), 230, 400, 0, 1.25, 1.25)
